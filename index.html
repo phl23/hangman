@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <title>Hangman</title>
+        <meta name="viewport"
+                content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="main.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="dark.css">
+
+</head>
+
+<body>
+        <!-- Erste page -->
+        <div data-role="page" id="page1" data-theme="b" data-title="Hangman">
+
+                <header data-role="header" style="text-align: center">Hangman</header>
+                <main data-role="content">
+                        <div class="row">
+                                <div id="spielstand" class="miscdiv col-sm-6"><span id="level"></span> <br> <span
+                                                id="score"></span></div>
+                                <div id="timer" class="miscdiv col-sm-6"></div>
+                        </div>
+
+                        <div class="row">
+
+                                <div class="miscdiv col-sm-6">
+                                        <div id="leftwrapper" class="outer">
+                                                <img id="fails" class="bg"
+                                                        src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"
+                                                        height="200em"></img>
+                                                <img id="auto" class="fg"
+                                                        src="http://clipart-library.com/images_k/police-car-transparent/police-car-transparent-23.png"
+                                                        height="40em"></img>
+                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                        <div id="rightwrapper">
+                                                <div id="console">
+                                                        <div id="inputcontainer">
+                                                                <div id="consoleheader"><img
+                                                                                src="/user579/hangmanbeta/images/cmd2.png"
+                                                                                height="60%"></div>
+
+                                                                <div id="flavortext">
+                                                                        <p>root>init network<br>Initializing network...
+                                                                                [COMPLETE]</p>
+                                                                        <p>root>connect <span
+                                                                                        id="ip">XX.XXX.XX.XX</span><br>Connecting...
+                                                                        </p>Server is secured. Login required:<br>login:
+                                                                        root<br><span
+                                                                                style="float: left">password:&#160;</span>
+                                                                </div>
+                                                                <span id="inputwrapper">
+                                                                        <span class='input' id='input1'
+                                                                                display="none"><span id='input1inner'
+                                                                                        style="visibility: hidden">E</span></span>
+                                                                        <span class='input' id='input2'
+                                                                                display="none"><span id='input2inner'
+                                                                                        style="visibility: hidden">A</span></span>
+                                                                        <span class='input' id='input3'
+                                                                                display="none"><span id='input3inner'
+                                                                                        style="visibility: hidden">I</span></span>
+                                                                        <span class='input' id='input4'
+                                                                                display="none"><span id='input4inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                        <span class='input' id='input5'
+                                                                                display="none"><span id='input5inner'
+                                                                                        style="visibility: hidden">W</span></span>
+                                                                        <span class='input' id='input6'
+                                                                                display="none"><span id='input6inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                        <span class='input' id='input7'
+                                                                                display="none"><span id='input7inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                        <span class='input' id='input8'
+                                                                                display="none"><span id='input8inner'
+                                                                                        style="visibility: hidden">E</span></span>
+                                                                        <span class='input' id='input9'
+                                                                                display="none"><span id='input9inner'
+                                                                                        style="visibility: hidden">A</span></span>
+                                                                        <span class='input' id='input10'
+                                                                                display="none"><span id='input10inner'
+                                                                                        style="visibility: hidden">I</span></span>
+                                                                        <span class='input' id='input11'
+                                                                                display="none"><span id='input11inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                        <span class='input' id='input12'
+                                                                                display="none"><span id='input12inner'
+                                                                                        style="visibility: hidden">W</span></span>
+                                                                        <span class='input' id='input13'
+                                                                                display="none"><span id='input13inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                        <span class='input' id='input14'
+                                                                                display="none"><span id='input14inner'
+                                                                                        style="visibility: hidden">C</span></span>
+                                                                </span>
+                                                                <p><br></p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
+                        </div>
+                        <div class="spacer1"></div>
+                        <div id="tastaturcontainer">
+                                <div id="tastaturwrapper">
+                                        <table>
+                                                <tr>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Qkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Q')">Q</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Wkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('W')">W</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ekey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('E')">E</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Rkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('R')">R</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Tkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('T')">T</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Zkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Z')">Z</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ukey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('U')">U</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ikey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('I')">I</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Okey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('O')">O</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Pkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('P')">P</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ükey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ü')">Ü</button></td>
+                                                </tr>
+                                        </table>
+                                        <table>
+                                                <tr>
+
+                                                        <td><button class="ui-btn ui-btn-inline" id="Akey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('A')">A</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Skey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('S')">S</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Dkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('D')">D</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Fkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('F')">F</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Gkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('G')">G</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Hkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('H')">H</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Jkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('J')">J</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Kkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('K')">K</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Lkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('L')">L</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ökey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ö')">Ö</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Äkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ä')">Ä</button></td>
+                                                </tr>
+                                        </table>
+                                        <table>
+                                                <tr>
+                                                        <td><button class="ui-btn ui-btn-inline"
+                                                                        style="visibility:hidden"></button></td>
+                                                        <td><button class="ui-btn ui-btn-inline"
+                                                                        style="visibility:hidden"></button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ykey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Y')">Y</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Xkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('X')">X</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Ckey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('C')">C</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Vkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('V')">V</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Bkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('B')">B</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Nkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('N')">N</button></td>
+                                                        <td><button class="ui-btn ui-btn-inline" id="Mkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('M')">M</button></td>
+                                                </tr>
+                                        </table>
+                                        <div class="spacer1"></div>
+
+                                </div>
+                                <br>
+                                <button class="ui-btn ui-btn-inline otherbtn" onclick="init()">Nochmal!</button>
+                                <button class="ui-btn ui-btn-inline otherbtn" onclick="ownWord()">Wort eingeben</button>
+                                <button class="ui-btn ui-btn-inline otherbtn" onclick="meldung(0)">Tutorial</button>
+                        </div>
+                </main>
+                <footer data-role="footer" data-position="fixed">
+                        <div data-role="navbar">
+                                <ul>
+                                        <li><a href="#page1" class="ui-disabled" data-role="button"
+                                                        data-transition="slidedown">Game</a></li>
+                                        <li><a href="#page2" data-role="button" data-transition="slideup">Karte</a></li>
+                                        <li><a href="#page3" data-role="button" data-transition="slideup">Info</a></li>
+                                </ul>
+                        </div><!-- /navbar -->
+                </footer>
+        </div><!-- Ende erste page -->
+        <!-- Zweite page -->
+        <div data-role="page" id="page2" data-theme="b" data-title="Zweite page">
+
+                <header data-role="header" style="text-align: center">Karte</header>
+                <main data-role="content">
+                        <div class="miscdiv col-sm-12">
+                                <div id="mapwrapper" class="outer">
+                                        <img id="map" class="bg"
+                                                src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"></img>
+                                        <img id="location1" class="fg"
+                                                src="https://img.icons8.com/pastel-glyph/2x/shop.png"
+                                                height="80em" onclick="locationAlert(1)"></img>
+                                </div>
+                        </div>
+                </main>
+                <footer data-role="footer" data-position="fixed">
+                        <div data-role="navbar">
+                                <ul>
+                                        <li><a href="#page1" data-role="button" data-transition="slidedown">Game</a>
+                                        </li>
+                                        <li><a href="#page2" class="ui-disabled" data-role="button"
+                                                        data-transition="slideup">Karte</a></li>
+                                        <li><a href="#page3" data-role="button" data-transition="slideup">Info</a></li>
+                                </ul>
+                        </div><!-- /navbar -->
+                </footer>
+        </div> <!-- Ende zweite page -->
+        <!-- Dritte page -->
+        <div data-role="page" id="page3" data-theme="b" data-title="Zweite page">
+
+                <header data-role="header" style="text-align: center">Info</header>
+                <main data-role="content">
+                        Impressum etc.
+                </main>
+                <footer data-role="footer" data-position="fixed">
+                        <div data-role="navbar">
+                                <ul>
+                                        <li><a href="#page1" data-role="button" data-transition="slidedown">Game</a>
+                                        </li>
+                                        <li><a href="#page2" data-role="button" data-transition="slidedown">Karte</a>
+                                        </li>
+                                        <li><a href="#page3" class="ui-disabled" data-role="button"
+                                                        data-transition="slideup">Info</a></li>
+                                </ul>
+                        </div><!-- /navbar -->
+                </footer>
+        </div> <!-- Ende dritte page -->
+        <!-- Meldungs-page -->
+        <div data-role="page" id="meldungspage" data-theme="b" data-title="!">
+                <header data-role="header" style="text-align: center"></header>
+                <main data-role="content">
+                        <div id="meldungsdiv" style="text-align: center">
+
+                        </div>
+                </main>
+                <footer data-role="footer" data-position="fixed">
+                        <div data-role="navbar">
+                                <ul>
+                                        <li><a href="#page1" data-role="button" data-transition="fade">X</a></li>
+                                </ul>
+                        </div><!-- /navbar -->
+                </footer>
+        </div> <!-- Ende Meldungs-page -->
+</body>
+
+</html>
