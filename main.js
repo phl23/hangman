@@ -44,7 +44,7 @@ function resetGame() {
 function startGame() {
     resetGame();
     input = getWord();
-    input = input.replace(/\/r/g, '/');
+    input = input.replace('\r','');
     document.getElementById("ip").innerHTML = getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + ":" + getRandomNumber(0, 65535);
     maxLength = 14 - (((level / 10) * 2) - 2);
     while (input.length > maxLength || input.length <= maxLength - 2) {
