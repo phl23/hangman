@@ -49,28 +49,7 @@ function startGame() {
     while (input.length > maxLength || input.length <= maxLength - 2) {
         input = getWord();
     }
-    inputToHangman();
-
-}
-
-function inputToHangman() {
-    for (var i = 1; i < 15; i++) {
-        var buchstabe = input.charAt(i - 1);
-        var inputSpan = "input" + i;
-        document.getElementById(inputSpan + "inner").style.visibility = 'hidden';
-        if (buchstabe !== undefined) { //Vorhandene Buchstabenplatzhalter sichtbar machen
-            if (buchstabe == " ") {
-                document.getElementById(inputSpan + "inner").textContent = 'x';
-                document.getElementById(inputSpan).display = "inline-block";
-                document.getElementById(inputSpan).style.visibility = 'hidden';
-                winCounter++;
-            } else {
-                document.getElementById(inputSpan + "inner").textContent = buchstabe;
-                document.getElementById(inputSpan).display = "inline-block";
-                document.getElementById(inputSpan).style.visibility = 'visible';
-            }
-        }
-    }
+    inputToHangman(input);
 }
 
 function eliminate(buchstabe) {
@@ -176,7 +155,7 @@ function ownWord() {
 
     resetGame();
     input = unsanitized.toUpperCase();
-    inputToHangman();
+    inputToHangman(input);
 }
 
 
