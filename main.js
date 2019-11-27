@@ -13,11 +13,6 @@ var keys = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "Ü", "A", "S", "D
 var keysPressed = [];
 
 
-
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
 function setFails() {
     var failImg = document.getElementById("leftwrapper");
     var autoImg = document.getElementById("auto");
