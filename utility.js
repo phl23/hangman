@@ -41,7 +41,7 @@ function inputToHangman(myInput) {
         var inputSpan = "input" + i;
         document.getElementById(inputSpan + "inner").style.visibility = 'hidden';
         if (buchstabe !== undefined) { //Vorhandene Buchstabenplatzhalter sichtbar machen
-            if (buchstabe == "\r") {input = input.replace('\r','')}
+            if (buchstabe == "\r") {input = input.replace(input[i],'')}
             if (buchstabe == " ") {
                 document.getElementById(inputSpan + "inner").textContent = 'x';
                 document.getElementById(inputSpan).display = "inline-block";
