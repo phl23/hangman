@@ -13,7 +13,7 @@ $.getJSON('msgs.json', function (messages) {
     success: console.log('msgs.JSON geladen');
 });
 
-$(window).bind('hashchange',function(event){
+$(window).bind('hashchange', function (event) {
     history.pushState("", document.title, window.location.pathname + window.location.search);
 });
 
@@ -70,15 +70,15 @@ function locationAlert(locationID) {
     Swal.fire({
         title: meldungen.location.title[locationID],
         text: meldungen.location.text[locationID],
-        icon: 'info', 
-        confirmButtonText: 'Los gehts!', 
+        icon: 'info',
+        confirmButtonText: 'Los gehts!',
         showCloseButton: 'true'
-    }).then(function(result) {
+    }).then(function (result) {
         if (result.value) {
             window.location.href = "#page1";
         }
     });
-    
+
 }
 
 function startTimer(zeitInSec) {
@@ -112,21 +112,21 @@ function polizeiKommtNaeher() {
     var autoImg = document.getElementById("auto");
     var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("height"), 10);
     var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("width"), 10);
-    var failInterval = (failCounter-1)/10;
+    var failInterval = (failCounter - 1) / 10;
     var y = 10;
     var debugDate = new Date;
-    console.log('Auto fährt los: '+debugDate.toString());
+    console.log('Auto fährt los: ' + debugDate.toString());
     var x = setInterval(function () {
 
-        autoImg.style.top = (failHeight * failInterval)+'px';
-        autoImg.style.left = (failWidth * failInterval)+'px';
-        
+        autoImg.style.top = (failHeight * failInterval) + 'px';
+        autoImg.style.left = (failWidth * failInterval) + 'px';
+
         failInterval = failInterval + 0.01;
-        y = y-1;
-        
+        y = y - 1;
+
         if (y <= 0) {
             debugDate = new Date;
-            console.log('Auto angekommen: '+debugDate.toString());
+            console.log('Auto angekommen: ' + debugDate.toString());
             clearInterval(x);
         }
     }, 100);
@@ -139,6 +139,6 @@ function setPolizeiPosition() {
     var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("height"), 10);
     var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("width"), 10);
 
-    autoImg.style.top = (failHeight * (failCounter/10))+'px';
-    autoImg.style.left = (failWidth * (failCounter/10))+'px';
+    autoImg.style.top = (failHeight * (failCounter / 10)) + 'px';
+    autoImg.style.left = (failWidth * (failCounter / 10)) + 'px';
 }

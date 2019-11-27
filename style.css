@@ -42,8 +42,8 @@ input:focus {
 }
 
 .outer {
-  position: relative; 
-  left: 0; 
+  position: relative;
+  left: 0;
   top: 0;
   display: inline-block;
 }
@@ -110,7 +110,7 @@ input:focus {
   background-color: #333;
 }
 
-#consoleheader span{
+#consoleheader span {
   display: table-cell;
   vertical-align: middle;
 }
