@@ -2,8 +2,8 @@ const maxLevel = 30;
 const timerZeitInSec = 120;
 
 var input;
-var level = parseInt(localStorage.getItem('savedLevel'));
-var score = parseInt(localStorage.getItem('savedScore'));
+var level = 10;//parseInt(localStorage.getItem('savedLevel'));
+var score = 0;//parseInt(localStorage.getItem('savedScore'));
 var maxLength = 14;
 var winCounter,
 	failCounter = 0;
@@ -73,6 +73,7 @@ function resetGame() {
 }
 
 function startGame() {
+	meldung(level/10);
 	resetGame();
 	input = getWord().replace('\r', '');
 	document.getElementById('ip').innerHTML =
@@ -139,6 +140,7 @@ function checkWin() {
 		});
 		score = score + punkte;
 		if (level < maxLevel) {
+			meldung(level/10);
 			level = level + 10;
 			document.getElementById('level').innerHTML = 'Level ' + level / 10;
 		} else {

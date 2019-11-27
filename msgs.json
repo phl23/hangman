@@ -1,8 +1,8 @@
 {
 	"tutorial": [
-		"<h1>-Tutorial-</h1>",
-		"Einführung Level 2",
-		"Einführung Level 3"
+		"<h1>-Tutorial beim ersten Launch-</h1>",
+		"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+		"Einführung Level 2"
 	],
 	"location": {
 		"title": [
