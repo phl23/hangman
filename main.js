@@ -1,4 +1,5 @@
 const maxLevel = 30;
+const timerZeitInSec = 120;
 
 var input;
 var level = parseInt(localStorage.getItem('savedLevel'));
@@ -8,6 +9,7 @@ var winCounter,
 	failCounter = 0;
 var firstButtonPressed = false;
 var timerStop = false;
+var versuchsZeit = 0;
 var keys = [
 	'Q',
 	'W',
@@ -49,7 +51,6 @@ function init() {
 		localStorage.setItem('hasBeenLaunched', true);
 	}
 	timerStop = true;
-	firstButtonPressed = false;
 	score = 0;
 	document.getElementById('timer').innerHTML = '';
 	if (!level) {
@@ -89,6 +90,8 @@ function startGame() {
 		input = getWord().replace('\r', '');
 	}
 	inputToHangman(input);
+	versuchsZeit = 0;
+	firstButtonPressed = false;
 }
 
 function eliminate(buchstabe) {
@@ -97,8 +100,10 @@ function eliminate(buchstabe) {
 	if (document.getElementById(buchstabe + 'key') != undefined) {
 		//Tastatureingabe-Validität per DOM-Abfrage
 		if (firstButtonPressed == false) {
-			timerStop = false;
-			startTimer(120);
+			if (level == 10) {
+				timerStop = false;
+				startTimer(timerZeitInSec);
+			}
 			firstButtonPressed = true;
 		}
 		if (index == -1) {
@@ -124,11 +129,11 @@ function eliminate(buchstabe) {
 }
 
 function checkWin() {
-	var punkte = 10 - failCounter;
+	var punkte = (10 - failCounter) * (timerZeitInSec-versuchsZeit);
 	if (winCounter == input.length) {
 		Swal.fire({
 			title: 'Richtig!',
-			html: input + ' war richtig.<br>Du hast ' + punkte + ' Punkte erreicht!',
+			html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + (10 - failCounter) + ' = ' + punkte + ' Punkte erreicht!',
 			icon: 'success',
 			confirmButtonText: 'Weiter'
 		});
@@ -139,7 +144,7 @@ function checkWin() {
 		} else {
 			Swal.fire({
 				title: 'Level ' + maxLevel / 10 + ' gemeistert!',
-				text: 'Punktestand: ' + score,
+				html: input+' war richtig!<br>Punktestand: ' + score,
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
@@ -158,18 +163,7 @@ function checkWin() {
 			icon: 'error',
 			confirmButtonText: 'Weiter'
 		});
-		if (level > 10) {
-			level = level - 10;
-			document.getElementById('level').innerHTML = 'Level ' + level / 10;
-		}
-		if (score - 10 > 0) {
-			score = score - 10;
-		} else {
-			score = 0;
-		}
-		localStorage.setItem('savedLevel', level);
-		localStorage.setItem('savedScore', score);
-		startGame();
+		init();
 	}
 }
 

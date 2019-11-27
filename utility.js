@@ -94,7 +94,10 @@ function startTimer(zeitInSec) {
 	var zeroM, zeroS;
 	var x = setInterval(function() {
 		verbleibendeZeit = verbleibendeZeit - 1;
-		versuchZeit++
+		if (firstButtonPressed == true) {
+		console.log(versuchsZeit);
+		versuchsZeit++;
+		}
 		var mins = Math.floor(verbleibendeZeit / 60);
 		var secs = Math.floor(verbleibendeZeit % 60);
 		if (secs >= 10) {
@@ -108,11 +111,26 @@ function startTimer(zeitInSec) {
 			zeroM = '0';
 		}
 		document.getElementById('timer').innerHTML = zeroM + mins + ':' + zeroS + secs;
-		if (verbleibendeZeit < 0 || timerStop == true) {
+		if (verbleibendeZeit < 0) {
+			clearInterval(x);
+			document.getElementById('timer').innerHTML = 'GAME OVER';
+			gameOver();
+		}
+		if (timerStop == true) {
 			clearInterval(x);
 			document.getElementById('timer').innerHTML = '';
 		}
 	}, 1000);
+}
+
+function gameOver() {
+	Swal.fire({
+		title: 'Zeit abgelaufen!',
+		text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
+		icon: 'error',
+		confirmButtonText: 'Neues Spiel'
+	});
+	init();
 }
 
 function polizeiKommtNaeher() {
@@ -122,8 +140,6 @@ function polizeiKommtNaeher() {
 	var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue('width'), 10);
 	var failInterval = (failCounter - 1) / 10;
 	var y = 10;
-	var debugDate = new Date();
-	console.log('Auto fährt los: ' + debugDate.toString());
 	var x = setInterval(function() {
 		autoImg.style.top = failHeight * failInterval + 'px';
 		autoImg.style.left = failWidth * failInterval + 'px';
@@ -133,7 +149,6 @@ function polizeiKommtNaeher() {
 
 		if (y <= 0) {
 			debugDate = new Date();
-			console.log('Auto angekommen: ' + debugDate.toString());
 			clearInterval(x);
 		}
 	}, 100);
