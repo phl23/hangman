@@ -3,50 +3,17 @@ const maxLevel = 30;
 var input;
 var level = parseInt(localStorage.getItem("savedLevel"));
 var score = parseInt(localStorage.getItem("savedScore"));
-var Wortsammlung;
 var maxLength = 14;
 var winCounter, failCounter = 0;
 var firstButtonPressed = false;
 var timerStop = false;
-var meldungen;
 var keys = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "Ü", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ö", "Ä", "Y", "X", "C", "V", "B", "N", "M"]
 var keysPressed = [];
 
 
-
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-function setFails() {
-    var failImg = document.getElementById("leftwrapper");
-    var autoImg = document.getElementById("auto");
-    var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("height"), 10);
-    var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("width"), 10);
-
-    autoImg.style.top = (failHeight * (failCounter/10))+'px';
-    autoImg.style.left = (failWidth * (failCounter/10))+'px';
-}
-
-$.getJSON('msgs.json', function (messages) {
-    meldungen = messages;
-
-    success: init();
-});
-
-$.get('deutsch.txt', function (data) { //Wortliste abrufen und auf Array aufteilen
-    Wortsammlung = data.split("\n");
-
-    success: startGame();
-}, "text");
-
-$(window).bind('hashchange',function(event){
-    history.pushState("", document.title, window.location.pathname + window.location.search);
-});
-
 function init() {
     var hasBeenLaunched = localStorage.getItem("hasBeenLaunched");
-    setFails();
+    setPolizeiPosition();
     if (!hasBeenLaunched || hasBeenLaunched === false) {
         meldung(0);
         localStorage.setItem("hasBeenLaunched", true)
@@ -61,15 +28,7 @@ function init() {
     document.getElementById("level").innerHTML = "Level " + level / 10;
     document.getElementById("score").innerHTML = score + ' Punkte';
     resetGame();
-}
-
-
-
-function getWord() {
-    var randomWort;
-    randomWort = Wortsammlung[getRandomNumber(0, Wortsammlung.length)];
-    randomWort = randomWort.toUpperCase();
-    return randomWort;
+    startGame();
 }
 
 function resetGame() {
@@ -79,7 +38,7 @@ function resetGame() {
     }
     winCounter = 0;
     failCounter = 0;
-    setFails();
+    setPolizeiPosition();
 }
 
 function startGame() {
@@ -125,7 +84,7 @@ function eliminate(buchstabe) {
         }
         if (index == -1) {
             failCounter++;
-            failed();
+            polizeiKommtNaeher();
         } else {
             while (index != -1) {
                 index = input.indexOf(buchstabe, index)
@@ -160,7 +119,7 @@ function checkWin() {
             document.getElementById("level").innerHTML = "Level " + level / 10;
         } else {
             Swal.fire({
-                title: 'Level 5 gemeistert!',
+                title: 'Level '+maxLevel/10+' gemeistert!',
                 text: 'Punktestand: ' + score,
                 icon: 'success',
                 confirmButtonText: 'Weiter'
@@ -196,29 +155,6 @@ function checkWin() {
 
 }
 
-function failed() {
-    var failImg = document.getElementById("leftwrapper");
-    var autoImg = document.getElementById("auto");
-    var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("height"), 10);
-    var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue("width"), 10);
-    var failInterval = (failCounter-1)/10;
-    var y = 10;
-    var x = setInterval(function () {
-
-        autoImg.style.top = (failHeight * failInterval)+'px';
-        autoImg.style.left = (failWidth * failInterval)+'px';
-        
-        failInterval = failInterval + 0.01;
-        console.log(y);
-        y = y-1;
-        
-        if (y <= 0) {
-            clearInterval(x);
-        }
-    }, 100);
-
-}
-
 function ownWord() {
     var Leerzeichen = 0;
     var unsanitized = window.prompt("Wort eingeben (max. 14 Zeichen):", '')
@@ -243,60 +179,7 @@ function ownWord() {
     inputToHangman();
 }
 
-document.addEventListener('keydown', function (event) {
-    if (document.getElementById(String.fromCharCode(event.keyCode) + 'key') && document.getElementById(String.fromCharCode(event.keyCode) + 'key').disabled != true) { //Buchstabe nur eliminieren, wenn der dazugehörige Button nicht bereits disabled ist
-        eliminate(String.fromCharCode(event.keyCode));
-    }
-});
-
-function startTimer(zeitInSec) {
-    console.log("timer started");
-    var verbleibendeZeit = zeitInSec;
-    var zeroM, zeroS;
-    var x = setInterval(function () {
-        verbleibendeZeit = verbleibendeZeit - 1;
-        var mins = Math.floor((verbleibendeZeit / 60));
-        var secs = Math.floor((verbleibendeZeit % 60));
-        if (secs >= 10) {
-            zeroS = "";
-        } else {
-            zeroS = "0";
-        }
-        if (mins >= 10) {
-            zeroM = "";
-        } else {
-            zeroM = "0";
-        }
-        document.getElementById("timer").innerHTML = zeroM + mins + ":" + zeroS + secs;
-        if (verbleibendeZeit < 0 || timerStop == true) {
-            clearInterval(x);
-            document.getElementById("timer").innerHTML = "";
-        }
-    }, 1000);
-}
-
-function locationAlert(locationID) {
-    if (locationID === 1) {
-    Swal.fire({
-        title: 'Tante Emma Laden',
-        text: 'Brich bei Tante Emma ein!',
-        icon: 'info', 
-        confirmButtonText: 'Los gehts!', 
-        showCloseButton: 'true'
-    }).then(function(result) {
-        if (result.value) {
-            window.location.href = "#page1";
-        }
-    });
-    }
-}
-
-function meldung(id) {
-    var meldungsDiv = document.getElementById("meldungsdiv");
-
-    console.log(meldungen);
-    meldungsDiv.innerHTML = meldungen.id[id];
 
 
-    window.location.href = "#meldungspage";
-}
+
+
