@@ -15,7 +15,7 @@ $.get(
 $.getJSON('msgs.json', function(messages) {
 	meldungen = messages;
 
-	success: console.log('msgs.JSON geladen');
+	success: meldung(level/10);;
 });
 
 $(window).bind('hashchange', function(event) {

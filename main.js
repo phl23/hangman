@@ -53,13 +53,14 @@ function init() {
 	timerStop = true;
 	score = 0;
 	document.getElementById('timer').innerHTML = '';
-	if (!level) {
+	
 		level = 10;
-	}
+	
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;
 	document.getElementById('score').innerHTML = score + ' Punkte';
 	resetGame();
 	startGame();
+
 }
 
 function resetGame() {
@@ -73,7 +74,6 @@ function resetGame() {
 }
 
 function startGame() {
-	meldung(level/10);
 	resetGame();
 	input = getWord().replace('\r', '');
 	document.getElementById('ip').innerHTML =
@@ -93,6 +93,8 @@ function startGame() {
 	inputToHangman(input);
 	versuchsZeit = 0;
 	firstButtonPressed = false;
+	
+	
 }
 
 function eliminate(buchstabe) {
@@ -140,8 +142,9 @@ function checkWin() {
 		});
 		score = score + punkte;
 		if (level < maxLevel) {
-			meldung(level/10);
+			
 			level = level + 10;
+			meldung(level/10);
 			document.getElementById('level').innerHTML = 'Level ' + level / 10;
 		} else {
 			Swal.fire({
