@@ -29,11 +29,7 @@ $.getJSON('msgs.json', function (messages) {
     success: init();
 });
 
-$.get('deutsch.txt', function (data) { //Wortliste abrufen und auf Array aufteilen
-    Wortsammlung = data.split("\n");
 
-    success: startGame();
-}, "text");
 
 $(window).bind('hashchange',function(event){
     history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -60,12 +56,7 @@ function init() {
 
 
 
-function getWord() {
-    var randomWort;
-    randomWort = Wortsammlung[getRandomNumber(0, Wortsammlung.length)];
-    randomWort = randomWort.toUpperCase();
-    return randomWort;
-}
+
 
 function resetGame() {
     for (i = 0; i < keys.length; i++) {
