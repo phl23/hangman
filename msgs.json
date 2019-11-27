@@ -1,7 +1,21 @@
 {
- "id": [
-	"-Tutorial-",
-	"Einführung Level 2",
-	"Einführung Level 3"
- ]
+	"tutorial": [
+		"-Tutorial-",
+		"Einführung Level 2",
+		"Einführung Level 3"
+	],
+	"location": {
+		"title": [
+			null,
+			"Tante Emma Laden",
+			"Titel2",
+			"Titel3"
+		],
+		"text": [
+			null,
+			"Brich bei Tante Emma ein!",
+			"Text2",
+			"Text3"
+		]
+	}
 }
