@@ -148,9 +148,7 @@ function checkWin() {
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
-			level = 10;
-			score = 0;
-			document.getElementById('level').innerHTML = 'Level ' + level / 10;
+			init();
 		}
 		localStorage.setItem('savedLevel', level);
 		localStorage.setItem('savedScore', score);
