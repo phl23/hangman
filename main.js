@@ -44,9 +44,7 @@ function resetGame() {
 function startGame() {
     resetGame();
     input = getWord();
-    console.log('A newline at '+input.indexOf('\r'));
-    input = input.replace('\r','');
-    console.log('B newline at '+input.indexOf('\r'));
+    input = input.replace('\r',''); //Zeilenumbruch-Charaktere löschen
     document.getElementById("ip").innerHTML = getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + "." + getRandomNumber(0, 255) + ":" + getRandomNumber(0, 65535);
     maxLength = 14 - (((level / 10) * 2) - 2);
     while (input.length > maxLength || input.length <= maxLength - 2) {
