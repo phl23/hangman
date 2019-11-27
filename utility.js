@@ -95,7 +95,6 @@ function startTimer(zeitInSec) {
 	var x = setInterval(function() {
 		verbleibendeZeit = verbleibendeZeit - 1;
 		if (firstButtonPressed == true) {
-		console.log(versuchsZeit);
 		versuchsZeit++;
 		}
 		var mins = Math.floor(verbleibendeZeit / 60);
