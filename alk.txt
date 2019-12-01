@@ -1,0 +1,52 @@
+Tequila
+Amarula
+Aperol
+Bacardi
+Baileys
+Berentzen
+Bombay
+Captain Morgan
+Campari
+Fernet-Branca
+Friesengeist
+Gordons
+Havana
+Jägermeister
+Killepitsch
+Konjak
+Ramazotti
+Sechsämtertropfen
+Tanqueray
+Underberg
+American Spirit
+Auslese
+Benson Hedges
+Black Devil
+Camel
+Chesterfield
+Davidoff
+Pall Mall
+Pueblo
+Stuyvesant
+West
+Winston
+Absinth
+Altbier
+Cognac
+Portwein
+Vodka
+Whisky
+Guinness
+Krombacher
+Bitburger
+Veltins
+Warsteiner
+Rotwein
+Weißwein
+Aperitif
+Champagner
+Eierlikör
+Grappa
+Melissengeist
+Kräuterlikör
+Weinbrand
