@@ -1,12 +1,13 @@
 const maxLevel = 30;
 const timerZeitInSec = 120;
+const maxLength = 30;
 
 var input;
 var level = 10;//parseInt(localStorage.getItem('savedLevel'));
 var score = 0;//parseInt(localStorage.getItem('savedScore'));
-var maxLength = 14;
 var winCounter,
 	failCounter = 0;
+var newMaxLength = maxLength;
 var firstButtonPressed = false;
 var timerStop = false;
 var versuchsZeit = 0;
@@ -61,32 +62,6 @@ function init() {
 	
 	resetGame();
 	startGame();
-
-}
-
-function generateInputSpans() {
-	var outerSpan;
-	var innerSpan;
-	var generatedOuterSpan;
-	var generatedInnerSpan;
-	var spanArray = [];
-
-	for (var i = 0; i < input.length; i++) {
-		outerSpan = document.createElement("span");
-		outerSpan.setAttribute("id", "input"+(i+1));
-		outerSpan.setAttribute("class", "input");
-		outerSpan.setAttribute("display", "none");
-
-		innerSpan = document.createElement("span");
-		innerSpan.setAttribute("id", "input"+(i+1)+"inner");
-		innerSpan.setAttribute("style", "visibility:hidden");
-
-		generatedOuterSpan = document.getElementById('inputwrapper').appendChild(outerSpan);
-		generatedInnerSpan = document.getElementById('input'+(i+1)).appendChild(innerSpan);
-
-		spanArray[(i+1)] = generatedOuterSpan;
-		console.log(spanArray);
-	}
 }
 
 function resetGame() {
@@ -112,16 +87,19 @@ function startGame() {
 		getRandomNumber(0, 255) +
 		':' +
 		getRandomNumber(0, 65535);
-	maxLength = 14 - (level / 10 * 2 - 2);
-	while (input.length > maxLength || input.length <= maxLength - 2) {
+	newMaxLength = (newMaxLength/2) - (level / 10 * 2 - 2);
+	console.log("newMaxLength: "+newMaxLength)
+	while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
 		input = getWord().replace('\r', '');
+		if (input.length > maxLength) {
+			console.log("INPUT.LENGTH: "+input.length)
+			break;
+		}
 	}
 	generateInputSpans();
 	inputToHangman(input);
 	versuchsZeit = 0;
 	firstButtonPressed = false;
-	
-	
 }
 
 function eliminate(buchstabe) {

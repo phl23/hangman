@@ -43,6 +43,31 @@ function getRandomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
 }
 
+function generateInputSpans() {
+	var outerSpan;
+	var innerSpan;
+	var generatedOuterSpan;
+	var generatedInnerSpan;
+	var spanArray = [];
+
+	for (var i = 0; i < input.length; i++) {
+		outerSpan = document.createElement("span");
+		outerSpan.setAttribute("id", "input"+(i+1));
+		outerSpan.setAttribute("class", "input");
+		outerSpan.setAttribute("display", "none");
+
+		innerSpan = document.createElement("span");
+		innerSpan.setAttribute("id", "input"+(i+1)+"inner");
+		innerSpan.setAttribute("style", "visibility:hidden");
+
+		generatedOuterSpan = document.getElementById('inputwrapper').appendChild(outerSpan);
+		generatedInnerSpan = document.getElementById('input'+(i+1)).appendChild(innerSpan);
+
+		spanArray[(i+1)] = generatedOuterSpan;
+		console.log(spanArray);
+	}
+}
+
 function inputToHangman(myInput) {
 	for (var i = 1; i < 15; i++) {
 		var input = myInput;
