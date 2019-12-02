@@ -1,6 +1,6 @@
 const maxLevel = 30;
 const timerZeitInSec = 120;
-const maxLength = 30;
+const maxLength = 45;
 
 var input;
 var level = 10;//parseInt(localStorage.getItem('savedLevel'));
@@ -87,7 +87,7 @@ function startGame() {
 		getRandomNumber(0, 255) +
 		':' +
 		getRandomNumber(0, 65535);
-	newMaxLength = (newMaxLength/2) - (level / 10 * 2 - 2);
+	newMaxLength = Math.floor((newMaxLength-(newMaxLength/2))) - (level / 10 * 2 - 2);
 	console.log("newMaxLength: "+newMaxLength)
 	while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
 		input = getWord().replace('\r', '');

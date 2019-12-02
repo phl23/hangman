@@ -50,6 +50,8 @@ function generateInputSpans() {
 	var generatedInnerSpan;
 	var spanArray = [];
 
+	generatedOuterSpan = document.getElementById('inputwrapper').innerHTML = ('');
+
 	for (var i = 0; i < input.length; i++) {
 		outerSpan = document.createElement("span");
 		outerSpan.setAttribute("id", "input"+(i+1));
@@ -64,16 +66,15 @@ function generateInputSpans() {
 		generatedInnerSpan = document.getElementById('input'+(i+1)).appendChild(innerSpan);
 
 		spanArray[(i+1)] = generatedOuterSpan;
-		console.log(spanArray);
 	}
+	console.log(spanArray);
 }
 
 function inputToHangman(myInput) {
-	for (var i = 1; i < 15; i++) {
+	for (var i = 1; i < (myInput.length+1); i++) {
 		var input = myInput;
 		var buchstabe = input.charAt(i - 1);
 		var inputSpan = 'input' + i;
-		document.getElementById(inputSpan + 'inner').style.visibility = 'hidden';
 		if (buchstabe !== undefined) {
 			//Vorhandene Buchstabenplatzhalter sichtbar machen
 			if (buchstabe == ' ') {

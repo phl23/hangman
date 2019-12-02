@@ -11,7 +11,7 @@ input:focus {
   text-align: center;
   font: 1em consolas, monospace;
   border-bottom: 0.1em solid rgb(255, 255, 255);
-  margin-left: 0.4em;
+  margin-left: 0.3em;
 }
 
 .swal2-popup {
