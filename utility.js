@@ -1,11 +1,31 @@
-var Wortsammlung;
+'use strict'
+
+var Wortsammlung = {deutsch: [], spiele: [], alk: []};
 var meldungen;
+
+$.get(
+	'spiele.txt',
+	function(data) {
+		//Wortliste abrufen und auf Array aufteilen
+		Wortsammlung.spiele = data.split('\n');
+	},
+	'text'
+);
+
+$.get(
+	'alk.txt',
+	function(data) {
+		//Wortliste abrufen und auf Array aufteilen
+		Wortsammlung.alk = data.split('\n');
+	},
+	'text'
+);
 
 $.get(
 	'deutsch.txt',
 	function(data) {
 		//Wortliste abrufen und auf Array aufteilen
-		Wortsammlung = data.split('\n');
+		Wortsammlung.deutsch = data.split('\n');
 
 		success: init();
 	},
@@ -32,9 +52,9 @@ document.addEventListener('keydown', function(event) {
 	}
 });
 
-function getWord() {
+function getWord(wortliste) {
 	var randomWort;
-	randomWort = Wortsammlung[getRandomNumber(0, Wortsammlung.length)];
+	randomWort = Wortsammlung[wortliste][getRandomNumber(0, Wortsammlung[wortliste].length)];
 	randomWort = randomWort.toUpperCase();
 	return randomWort;
 }
@@ -173,7 +193,6 @@ function polizeiKommtNaeher() {
 		y = y - 1;
 
 		if (y <= 0) {
-			debugDate = new Date();
 			clearInterval(x);
 		}
 	}, 100);
@@ -187,4 +206,17 @@ function setPolizeiPosition() {
 
 	autoImg.style.top = failHeight * (failCounter / 10) + 'px';
 	autoImg.style.left = failWidth * (failCounter / 10) + 'px';
+}
+
+function setIp() {
+	document.getElementById('ip').innerHTML =
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	':' +
+	getRandomNumber(0, 65535);
 }

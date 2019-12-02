@@ -1,6 +1,8 @@
+'use strict'
 const maxLevel = 30;
 const timerZeitInSec = 120;
 const maxLength = 35;
+var liste = "alk"
 
 var input;
 var level = 10;//parseInt(localStorage.getItem('savedLevel'));
@@ -11,6 +13,7 @@ var newMaxLength = maxLength;
 var firstButtonPressed = false;
 var timerStop = false;
 var versuchsZeit = 0;
+var usedWords = [];
 var keys = [
 	'Q',
 	'W',
@@ -57,6 +60,7 @@ function init() {
 	
 	level = 10;
 	newMaxLength = maxLength;
+	liste = document.getElementById("listenauswahl").value;
 
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;
 	document.getElementById('score').innerHTML = score + ' Punkte';
@@ -66,38 +70,36 @@ function init() {
 }
 
 function resetGame() {
-	for (i = 0; i < keys.length; i++) {
+	for (var i = 0; i < keys.length; i++) {
 		document.getElementById(keys[i] + 'key').disabled = false;
 		keysPressed[i] = 0;
 	}
 	winCounter = 0;
 	failCounter = 0;
+
+	setIp();
+
 	setPolizeiPosition();
 }
 
 function startGame() {
 	resetGame();
-	input = getWord().replace('\r', '');
-	document.getElementById('ip').innerHTML =
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255) +
-		':' +
-		getRandomNumber(0, 65535);
+	input = getWord(liste).replace('\r', '');
 
-	newMaxLength = Math.floor((newMaxLength-(newMaxLength/4))) - ((level / 10) * 2 - 2);
-	console.log("newMaxLength: "+newMaxLength)
-	while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
-		input = getWord().replace('\r', '');
-		if (input.length > maxLength) {
-			console.log("INPUT.LENGTH: "+input.length)
-			break;
-		}
+	// newMaxLength = Math.floor((newMaxLength-(newMaxLength/4))) - ((level / 10) * 2 - 2);
+	// console.log("newMaxLength: "+newMaxLength)
+	// while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
+	// 	input = getWord().replace('\r', '');
+	// 	if (input.length > maxLength) {
+	// 		console.log("INPUT.LENGTH: "+input.length)
+	// 		break;
+	// 	}
+	// }
+
+	while (usedWords.includes(input)) {
+		input = getWord(liste).replace('\r', '');
 	}
+	usedWords.push(input);
 
 	generateInputSpans();
 	inputToHangman(input);

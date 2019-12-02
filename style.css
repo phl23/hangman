@@ -140,6 +140,10 @@ input:focus {
   width: 10em !important;
 }
 
+#listenauswahl option{
+  width: 10em !important;
+}
+
 td {
   margin: 0px;
   padding: 0px;

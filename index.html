@@ -60,7 +60,7 @@
                                                                                 style="float: left">password:&#160;</span>
                                                                 </div>
                                                                 <span id="inputwrapper">
-                                                                        
+
                                                                 </span>
                                                                 <p><br></p>
                                                         </div>
@@ -181,8 +181,13 @@
                                 </div>
                                 <br>
                                 <button class="ui-btn ui-btn-inline otherbtn" onclick="init()">Nochmal!</button>
-                                <button class="ui-btn ui-btn-inline otherbtn" onclick="ownWord()">Wort eingeben</button>
-                                <button class="ui-btn ui-btn-inline otherbtn" onclick="meldung(level/10)">Tutorial</button>
+                                <select id="listenauswahl" onchange="init()">
+                                        <option value="deutsch">Deutsche Wörter</option>
+                                        <option value="spiele">Computerspiele</option>
+                                        <option value="alk">Alk/Zigaretten</option>
+                                </select>
+                                <button class="ui-btn ui-btn-inline otherbtn"
+                                        onclick="meldung(level/10)">Tutorial</button>
                         </div>
                 </main>
                 <footer data-role="footer" data-position="fixed">
