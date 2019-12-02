@@ -1,6 +1,6 @@
 const maxLevel = 30;
 const timerZeitInSec = 120;
-const maxLength = 45;
+const maxLength = 35;
 
 var input;
 var level = 10;//parseInt(localStorage.getItem('savedLevel'));
@@ -55,8 +55,9 @@ function init() {
 	score = 0;
 	document.getElementById('timer').innerHTML = '';
 	
-		level = 10;
-	
+	level = 10;
+	newMaxLength = maxLength;
+
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;
 	document.getElementById('score').innerHTML = score + ' Punkte';
 	
@@ -87,7 +88,8 @@ function startGame() {
 		getRandomNumber(0, 255) +
 		':' +
 		getRandomNumber(0, 65535);
-	newMaxLength = Math.floor((newMaxLength-(newMaxLength/2))) - (level / 10 * 2 - 2);
+
+	newMaxLength = Math.floor((newMaxLength-(newMaxLength/4))) - ((level / 10) * 2 - 2);
 	console.log("newMaxLength: "+newMaxLength)
 	while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
 		input = getWord().replace('\r', '');
@@ -96,6 +98,7 @@ function startGame() {
 			break;
 		}
 	}
+
 	generateInputSpans();
 	inputToHangman(input);
 	versuchsZeit = 0;
@@ -151,6 +154,7 @@ function checkWin() {
 			level = level + 10;
 			meldung(level/10);
 			document.getElementById('level').innerHTML = 'Level ' + level / 10;
+			startGame();
 		} else {
 			Swal.fire({
 				title: 'Level ' + maxLevel / 10 + ' gemeistert!',
@@ -162,7 +166,6 @@ function checkWin() {
 		}
 		localStorage.setItem('savedLevel', level);
 		localStorage.setItem('savedScore', score);
-		startGame();
 	}
 	if (failCounter == 10) {
 		Swal.fire({
