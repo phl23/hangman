@@ -11,6 +11,7 @@ input:focus {
   text-align: center;
   font: 1em consolas, monospace;
   border-bottom: 0.1em solid rgb(255, 255, 255);
+  margin-left: 0.3em;
 }
 
 .swal2-popup {
@@ -51,7 +52,7 @@ input:focus {
 
 
 #map {
-  width: 100vw;
+  width: 100%;
 }
 
 #location1 {
@@ -136,6 +137,10 @@ input:focus {
 }
 
 .otherbtn {
+  width: 10em !important;
+}
+
+#listenauswahl option{
   width: 10em !important;
 }
 

@@ -1,11 +1,31 @@
-var Wortsammlung;
+'use strict'
+
+var Wortsammlung = {deutsch: [], spiele: [], alk: []};
 var meldungen;
+
+$.get(
+	'spiele.txt',
+	function(data) {
+		//Wortliste abrufen und auf Array aufteilen
+		Wortsammlung.spiele = data.split('\n');
+	},
+	'text'
+);
+
+$.get(
+	'alk.txt',
+	function(data) {
+		//Wortliste abrufen und auf Array aufteilen
+		Wortsammlung.alk = data.split('\n');
+	},
+	'text'
+);
 
 $.get(
 	'deutsch.txt',
 	function(data) {
 		//Wortliste abrufen und auf Array aufteilen
-		Wortsammlung = data.split('\n');
+		Wortsammlung.deutsch = data.split('\n');
 
 		success: init();
 	},
@@ -32,9 +52,9 @@ document.addEventListener('keydown', function(event) {
 	}
 });
 
-function getWord() {
+function getWord(wortliste) {
 	var randomWort;
-	randomWort = Wortsammlung[getRandomNumber(0, Wortsammlung.length)];
+	randomWort = Wortsammlung[wortliste][getRandomNumber(0, Wortsammlung[wortliste].length)];
 	randomWort = randomWort.toUpperCase();
 	return randomWort;
 }
@@ -43,12 +63,38 @@ function getRandomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
 }
 
+function generateInputSpans() {
+	var outerSpan;
+	var innerSpan;
+	var generatedOuterSpan;
+	var generatedInnerSpan;
+	var spanArray = [];
+
+	generatedOuterSpan = document.getElementById('inputwrapper').innerHTML = ('');
+
+	for (var i = 0; i < input.length; i++) {
+		outerSpan = document.createElement("span");
+		outerSpan.setAttribute("id", "input"+(i+1));
+		outerSpan.setAttribute("class", "input");
+		outerSpan.setAttribute("display", "none");
+
+		innerSpan = document.createElement("span");
+		innerSpan.setAttribute("id", "input"+(i+1)+"inner");
+		innerSpan.setAttribute("style", "visibility:hidden");
+
+		generatedOuterSpan = document.getElementById('inputwrapper').appendChild(outerSpan);
+		generatedInnerSpan = document.getElementById('input'+(i+1)).appendChild(innerSpan);
+
+		spanArray[(i+1)] = generatedOuterSpan;
+	}
+	console.log(spanArray);
+}
+
 function inputToHangman(myInput) {
-	for (var i = 1; i < 15; i++) {
+	for (var i = 1; i < (myInput.length+1); i++) {
 		var input = myInput;
 		var buchstabe = input.charAt(i - 1);
 		var inputSpan = 'input' + i;
-		document.getElementById(inputSpan + 'inner').style.visibility = 'hidden';
 		if (buchstabe !== undefined) {
 			//Vorhandene Buchstabenplatzhalter sichtbar machen
 			if (buchstabe == ' ') {
@@ -147,7 +193,6 @@ function polizeiKommtNaeher() {
 		y = y - 1;
 
 		if (y <= 0) {
-			debugDate = new Date();
 			clearInterval(x);
 		}
 	}, 100);
@@ -161,4 +206,17 @@ function setPolizeiPosition() {
 
 	autoImg.style.top = failHeight * (failCounter / 10) + 'px';
 	autoImg.style.left = failWidth * (failCounter / 10) + 'px';
+}
+
+function setIp() {
+	document.getElementById('ip').innerHTML =
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	':' +
+	getRandomNumber(0, 65535);
 }
