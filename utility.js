@@ -97,6 +97,14 @@ function inputToHangman(myInput) {
 		var inputSpan = 'input' + i;
 		if (buchstabe !== undefined) {
 			//Vorhandene Buchstabenplatzhalter sichtbar machen
+			if (buchstabe == '-') {
+				document.getElementById(inputSpan + 'inner').textContent = '-';
+				document.getElementById(inputSpan).display = 'inline-block';
+				document.getElementById(inputSpan).style.visibility = 'visible';
+				document.getElementById(inputSpan).style.borderBottom = 'none';
+				document.getElementById(inputSpan+'inner').style.visibility = 'visible';
+				winCounter++;
+			}
 			if (buchstabe == ' ') {
 				document.getElementById(inputSpan + 'inner').textContent = 'x';
 				document.getElementById(inputSpan).display = 'inline-block';
