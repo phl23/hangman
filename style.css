@@ -163,3 +163,8 @@ table {
   padding: 0px !important;
   margin: -0.1em !important;
 }
+
+
+iframe[seamless] {
+  border: none;
+}
