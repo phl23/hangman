@@ -168,3 +168,10 @@ table {
 iframe[seamless] {
   border: none;
 }
+
+g {
+  fill:#ff0000;
+  stroke:#ff0000;
+  stroke-width:4;
+  stroke-miterlimit:10;
+}

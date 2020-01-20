@@ -206,3 +206,7 @@ function ownWord() {
 	input = unsanitized.toUpperCase();
 	inputToHangman(input);
 }
+
+function polizeiKommtNaeher() {
+	document.getElementById('move_Weidenauer_Straße').setAttribute('style', 'display:inherit');
+}
