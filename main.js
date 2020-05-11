@@ -49,7 +49,6 @@ var keysPressed = [];
 
 function init() {
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
-	setPolizeiPosition();
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
 		meldung(0);
 		localStorage.setItem('hasBeenLaunched', true);
@@ -78,8 +77,6 @@ function resetGame() {
 	failCounter = 0;
 
 	setIp();
-
-	setPolizeiPosition();
 }
 
 function startGame() {
@@ -121,7 +118,6 @@ function eliminate(buchstabe) {
 		}
 		if (index == -1) {
 			failCounter++;
-			polizeiKommtNaeher();
 		} else {
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
@@ -205,8 +201,4 @@ function ownWord() {
 	resetGame();
 	input = unsanitized.toUpperCase();
 	inputToHangman(input);
-}
-
-function polizeiKommtNaeher() {
-	document.getElementById('move_Weidenauer_Straße').setAttribute('style', 'display:inherit');
 }
