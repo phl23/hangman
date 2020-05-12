@@ -75,7 +75,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 
 function resetGame() {
 /*
-Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level
+Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level 
 */
 	for (var i = 0; i < keys.length; i++) {	// Virtuelle Tastatur & benutzte Buchstaben freigeben
 		document.getElementById(keys[i] + 'key').disabled = false;
