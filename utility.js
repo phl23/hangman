@@ -186,6 +186,47 @@ function gameOver() {
 	init();
 }
 
+
+
+/*
+Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
+Bei jedem Fehlversuch also immer die nächste Function ausführen
+*/
+function setPolizeiPosition() {
+	var iframe = document.getElementById("iframegame");
+	var move1 = iframe.contentWindow.document.getElementById("move1");
+
+	/* Diesen Move anzeigbar machen */
+	var move1show = iframe.contentWindow.document.getElementById("move1hide");
+	move1show.style.display = "flex";
+
+	/* Diesen Move starten */
+	move1.beginElement();
+	
+
+}
+	
+function setPolizeiPosition2() {
+	var iframe = document.getElementById("iframegame");
+	var move2 = iframe.contentWindow.document.getElementById("move2");
+
+	/* Ersten/vorherigen Move verstecken - */
+	var move1hide = iframe.contentWindow.document.getElementById("move1hide");
+	move1hide.style.display = "none";
+
+	/* Diesen Move anzeigbar machen */
+	var move2show = iframe.contentWindow.document.getElementById("move2hide");
+	move2show.style.display = "flex";
+
+	/* Diesen Move starten */
+	move2.beginElement();
+
+}
+
+
+/*
+Alter Code
+
 function polizeiKommtNaeher() {
 	var failImg = document.getElementById('leftwrapper');
 	var autoImg = document.getElementById('auto');
@@ -215,6 +256,9 @@ function setPolizeiPosition() {
 	autoImg.style.top = failHeight * (failCounter / 10) + 'px';
 	autoImg.style.left = failWidth * (failCounter / 10) + 'px';
 }
+
+*/
+
 
 function setIp() {
 	document.getElementById('ip').innerHTML =
