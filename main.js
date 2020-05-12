@@ -231,3 +231,6 @@ Ermöglicht manuelle Worteingabe
 	input = unsanitized.toUpperCase();
 	inputToHangman(input);
 }
+/*
+test commit
+*/
