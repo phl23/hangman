@@ -210,7 +210,7 @@ function setPolizeiPosition2() {
 	var iframe = document.getElementById("iframegame");
 	var move2 = iframe.contentWindow.document.getElementById("move2");
 
-	/* Ersten/vorherigen Move verstecken */
+	/* Ersten/vorherigen Move verstecken - */
 	var move1hide = iframe.contentWindow.document.getElementById("move1hide");
 	move1hide.style.display = "none";
 
