@@ -85,6 +85,12 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level
 	failCounter = 0;
 	versuchsZeit = 0;
 	firstButtonPressed = false;
+	/* blendet das Polizeiauto wieder aus */
+	var iframe = document.getElementById("iframegame");
+	for (var i = 1; i <= 10; i++) {
+	var schrittverbergen = iframe.contentWindow.document.getElementById("move" + i + "hide");
+	schrittverbergen.style.display = "none";
+	}
 
 	setIp();
 }
@@ -135,6 +141,7 @@ Kernfunktion des Spiels
 		}
 		if (index == -1) {	// wenn für den eingegebenen Buchstaben im gesuchten Wort kein index gefunden wird, zählt es als Fail
 			failCounter++;
+			setPolizeiPosition(failCounter);	// ruft Function auf um das PolizeiFahrzeug zu bewegen
 		} else {	// Wenn ein index gefunden wird:
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
