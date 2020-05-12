@@ -190,39 +190,26 @@ function gameOver() {
 
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
-Bei jedem Fehlversuch also immer die nächste Function ausführen
+Bei jedem Fehlversuch wird ein anderer Pfad gecallt. 
 */
-function setPolizeiPosition() {
+function setPolizeiPosition(versuche) {
 	var iframe = document.getElementById("iframegame");
-	var move1 = iframe.contentWindow.document.getElementById("move1");
+	var schritt = iframe.contentWindow.document.getElementById("move" + versuche);
+
+	/* Vorherigen Move verstecken, sofern nicht der Erste */
+	if (versuche > 1) {
+		var last = versuche - 1;
+		var schrittverbergen = iframe.contentWindow.document.getElementById("move" + last + "hide");
+		schrittverbergen.style.display = "none";
+	}
 
 	/* Diesen Move anzeigbar machen */
-	var move1show = iframe.contentWindow.document.getElementById("move1hide");
-	move1show.style.display = "flex";
+	var schrittzeigen = iframe.contentWindow.document.getElementById("move" + versuche + "hide");
+	schrittzeigen.style.display = "flex";
 
 	/* Diesen Move starten */
-	move1.beginElement();
-	
-
+	schritt.beginElement();
 }
-	
-function setPolizeiPosition2() {
-	var iframe = document.getElementById("iframegame");
-	var move2 = iframe.contentWindow.document.getElementById("move2");
-
-	/* Ersten/vorherigen Move verstecken - */
-	var move1hide = iframe.contentWindow.document.getElementById("move1hide");
-	move1hide.style.display = "none";
-
-	/* Diesen Move anzeigbar machen */
-	var move2show = iframe.contentWindow.document.getElementById("move2hide");
-	move2show.style.display = "flex";
-
-	/* Diesen Move starten */
-	move2.beginElement();
-
-}
-
 
 /*
 Alter Code
