@@ -190,7 +190,7 @@ function gameOver() {
 
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
-Bei jedem Fehlversuch wird ein anderer Pfad gecallt. 
+Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
 */
 function setPolizeiPosition(versuche) {
 	var iframe = document.getElementById("iframegame");
