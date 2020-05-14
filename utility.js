@@ -1,6 +1,6 @@
 'use strict'
 
-var Wortsammlung = {deutsch: [], spiele: [], alk: []};
+var Wortsammlung = {deutsch: [],katzennamen: [], spiele: [], alk: []};
 var meldungen;
 
 $.get(
@@ -11,6 +11,16 @@ $.get(
 	},
 	'text'
 );
+
+$.get(
+	'katzennamen.txt',
+	function(data) {
+		//Wortliste abrufen und auf Array aufteilen
+		Wortsammlung.katzennamen = data.split('\n');
+	},
+	'text'
+);
+
 
 $.get(
 	'alk.txt',
@@ -128,7 +138,14 @@ function meldung(id) {
 	window.location.href = '#meldungspage';
 }
 
+
+
 function locationAlert(locationID) {
+
+/*
+Test Code für Location anklicken auf Map
+*/
+
 	Swal.fire({
 		title: meldungen.location.title[locationID],
 		text: meldungen.location.text[locationID],
@@ -137,6 +154,7 @@ function locationAlert(locationID) {
 		showCloseButton: 'true'
 	}).then(function(result) {
 		if (result.value) {
+			/* Hier Spiel starten (fehlt) */
 			window.location.href = '#page1';
 		}
 	});
