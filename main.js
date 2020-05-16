@@ -228,10 +228,9 @@ function MissionWahl(MissionZahl) {
 			confirmButton: 'confirm-button-map',
 			cancelButton: 'cancel-button-map'
 		},
-		width: '40em',
 		title: 'Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
 		html: 'Lorem Ipsum und so - Missionsbeschreibung',
-		icon: 'info',
+		imageUrl: './images/mission' + (MissionZahl / 10 - 0.1) + '.png',  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
 		showCancelButton: true,
 		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
 		cancelButtonText: 'Zurück zur Karte',
