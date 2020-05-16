@@ -45,7 +45,7 @@ $.get(
 $.getJSON('msgs.json', function(messages) {
 	meldungen = messages;
 
-	success: meldung(level/10);;
+	// success: stagemsg(level/10);;   /// ?????????????????????  Wofür benötigt?
 });
 
 $(window).bind('hashchange', function(event) {
@@ -129,35 +129,48 @@ function inputToHangman(myInput) {
 	}
 }
 
-function meldung(id) {
-	var meldungsDiv = document.getElementById('meldungsdiv');
+function tutorialmsg(id) {
+	var meldungsDiv = document.getElementById('tutorialdiv');
 
+	console.log(id);
 	console.log(meldungen);
+
 	meldungsDiv.innerHTML = meldungen.tutorial[id];
 
-	window.location.href = '#meldungspage';
+	window.location.href = '#tutorialpage';
 }
 
+function stagemsg(id) {
+	var meldungsDiv = document.getElementById('stagetextdiv');
+	
+	console.log(id);
+	console.log(meldungen);
 
+	meldungsDiv.innerHTML = meldungen.stages["mission" + Math.floor(level / 10)][id];   // [] ersetzt die .mission1  -  muss also OHNE punkt angesetzt werden.... ^.-
 
-function locationAlert(locationID) {
+	window.location.href = '#stagetextpage';
+}
 
-/*
-Test Code für Location anklicken auf Map
-*/
-
-	Swal.fire({
-		title: meldungen.location.title[locationID],
-		text: meldungen.location.text[locationID],
-		icon: 'info',
-		confirmButtonText: 'Los gehts!',
-		showCloseButton: 'true'
-	}).then(function(result) {
+function MissionWahl(MissionZahl) {
+	swal.fire({
+		customClass: {
+			container: 'missionwahlpopup',
+			confirmButton: 'confirm-button-map',
+			cancelButton: 'cancel-button-map'
+		},
+		title: meldungen.location.title[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		html: meldungen.location.text[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		imageUrl: './images/mission' + (MissionZahl / 10 - 0.1) + '.png',  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		showCancelButton: true,
+		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		cancelButtonText: 'Zurück zur Karte',
+		reverseButtons: true
+	})
+	.then((result) => {
 		if (result.value) {
-			/* Hier Spiel starten (fehlt) */
-			window.location.href = '#page1';
+			init(MissionZahl);
 		}
-	});
+	})
 }
 
 function startTimer(zeitInSec) {
