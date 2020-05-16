@@ -5,6 +5,9 @@
 		"<h1>Regeln Mission 2</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>",
 		"<h1>Regeln Mission 3</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>"
 	],
+	"sieg": [
+		"<h1>Du hast gewonnen</h1><br><br><br><br><p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>"
+	],
 	"stages": {
 		"mission1": [
 			null,

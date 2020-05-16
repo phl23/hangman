@@ -210,7 +210,8 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
-		init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Rickroll? Erstmal wieder von vorne für Testzwecke
+		// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
+		siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
 		else {
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
