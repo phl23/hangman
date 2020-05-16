@@ -1,10 +1,30 @@
 {
 	"tutorial": [
-		"<h1>Regeln</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>",
-		"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-		"<h1>Tante-Emma-Laden</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-		"<h1>Tante-Emma-Laden</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+		"<h1>Regeln Allgemein</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>",
+		"<h1>Regeln Mission 1</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>",
+		"<h1>Regeln Mission 2</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>",
+		"<h1>Regeln Mission 3</h1><br><br><p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li>Punkte = Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben erst später ausgegraut</li></ul></p>"
 	],
+	"stages": {
+		"mission1": [
+			null,
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+		],
+		"mission2": [
+			null,
+			"<h1>mission2</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+			"<h1>mission2</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
+			"<h1>mission2</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+		],
+		"mission3": [
+			null,
+			"<h1>mission3</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+			"<h1>mission3</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
+			"<h1>mission3</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+		]
+	},
 	"location": {
 		"title": [
 			null,
