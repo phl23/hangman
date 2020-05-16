@@ -4,7 +4,7 @@ const timerZeitInSec = 120;																// Konstante zur einfachen Regelung d
 const maxLength = 35;																	// Maximale Wortlänge, die in das Galgenmännchen-Feld passt
 var liste = "alk"																		// Voreingestellte Wortliste
 var input;																				// Initialisierung der Variable für User-Eingabe
-var level = 10;																			// Startlevel = 1 (* 10)
+var level = 11;																			// Startlevel = 1 (* 10)
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
 var score = 0;																			// Startscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
@@ -47,9 +47,10 @@ var keys = [																			// Array mit validen Tastatureingaben
 ];
 var keysPressed = [];																	// Array für bereits genutzte Tastatureingaben
 
-function init() {		
+function init(levelwahl) {		
 /*
 Generelle Initalisierung des "Spielfelds" und des UI - löscht Spielstand, Level etc.
+Levelwahl wird durch Levelauswahl Popup bestimmt
 
 Prüfe mittels localStorage (siehe Z.8), ob das Spiel in diesem Browser
 schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert), 
@@ -64,12 +65,24 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 	score = 0;
 	document.getElementById('timer').innerHTML = '';	// Lösche Inhalt von Timer-Div
-	level = 10;
+	if (typeof levelwahl === typeof undefined)  {  // Check ob ein Level gewählt wurde, nur zu Testzwecke, da später nicht die Spiele-Seite direkt geladen wird
+		levelwahl = 11;
+	}
+	level = levelwahl;
 	//newMaxLength = maxLength;		// siehe Z. 12
-	liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
+	if (11 <= level && level <= 19) {		// Prüft das gewählte Level und wählt die entsprechende Wortliste
+		liste = "spiele";
+	}
+	if (21 <= level && level <= 29) {
+		liste = "alk";
+	}
+	if (31 <= level && level <= 39) {
+		liste = "katzennamen";
+	}
+	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
 	document.getElementById('score').innerHTML = score + ' Punkte';
-	
+	window.location.href = '#page1';  // Gehe auf Seite 1 (Spiel)
 	startGame();
 }
 
@@ -106,6 +119,7 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 		input = getWord(liste).replace('\r', '');
 	}
 	usedWords.push(input);
+	console.log(usedWords);  // Testzwecke
 
 	//ANPASSUNG WORTLÄNGE ABHÄNGIG VON LEVEL - unausgereift
 	/*
@@ -133,7 +147,7 @@ Kernfunktion des Spiels
 	keysPressed[keys.indexOf(buchstabe)]++;	// mitzählen, wie oft ein Buchstabe schon eliminiert wurde
 	if (document.getElementById(buchstabe + 'key') != undefined) {	// Validiert Tastatureingabe, indem ihr Vorhandensein in der virtuellen Tastatur überprüft wird
 		if (firstButtonPressed == false) {	// Wenn es sich um die 1. Eingabe der Spielrunde und das 1. Level handelt, wird der Timer gestartet
-			if (level == 10) {
+			if (level == 11 || 21 || 31) {
 				timerStop = false;
 				startTimer(timerZeitInSec);
 			}
@@ -154,10 +168,11 @@ Kernfunktion des Spiels
 				}
 			}
 		}
-		if (keysPressed[keys.indexOf(buchstabe)] == level / 10) {	// Die virtuelle Taste wird erst nach einer Anzahl an Versuchen, die dem Level entspricht, ausgegraut (z.B. Level 2: Nach dem 2. Versuch, "E" zu eliminieren, wird es ausgegraut.)
+		// + 1 hier, da das Level immer eine dezimal Stelle hat bei geteilt durch 10
+		if (keysPressed[keys.indexOf(buchstabe)] + 1 > level / 10) {	// Die virtuelle Taste wird erst nach einer Anzahl an Versuchen, die dem Level entspricht, ausgegraut (z.B. Level 2: Nach dem 2. Versuch, "E" zu eliminieren, wird es ausgegraut.)
 			document.getElementById(buchstabe + 'key').disabled = true;
 		}
-	}
+	}									
 	checkWin();
 }
 
@@ -192,8 +207,8 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			});
 			init();
 		}
-		localStorage.setItem('savedLevel', level);
-		localStorage.setItem('savedScore', score);
+		localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
+		localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
 	}
 	if (failCounter == 10) {
 		Swal.fire({
@@ -205,6 +220,30 @@ Jeweilige Popup-Meldungen werden angezeigt.
 		init();
 	}
 }
+
+function MissionWahl(MissionZahl) {
+	swal.fire({
+		customClass: {
+			container: 'missionwahlpopup',
+			confirmButton: 'confirm-button-map',
+			cancelButton: 'cancel-button-map'
+		},
+		width: '40em',
+		title: 'Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		html: 'Lorem Ipsum und so - Missionsbeschreibung',
+		icon: 'info',
+		showCancelButton: true,
+		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		cancelButtonText: 'Zurück zur Karte',
+		reverseButtons: true
+	})
+	.then((result) => {
+		if (result.value) {
+			init(MissionZahl);
+		}
+	})
+}
+
 
 function ownWord() {
 /*
