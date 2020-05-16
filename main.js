@@ -1,8 +1,10 @@
 'use strict'
-const maxLevel = 30;																	// Maximal-Level (3) * 10, für eventuelle spätere Zwischenlevel
-const timerZeitInSec = 120;																// Konstante zur einfachen Regelung des Timers
+const maxLevel = 33;																	// Maximal-Level (3) * 10, für eventuelle spätere Zwischenlevel (33 da Level 3 Stage 3)
 const maxLength = 35;																	// Maximale Wortlänge, die in das Galgenmännchen-Feld passt
-var liste = "alk"																		// Voreingestellte Wortliste
+const maxStage = 3;																		// Maximale Stage pro Mission, danach ist die Mission geschafft
+const maxFails = 10;																	// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
+var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
+var liste = "spiele";																	// Voreingestellte Wortliste
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 11;																			// Startlevel = 1 (* 10)
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
@@ -56,12 +58,14 @@ Prüfe mittels localStorage (siehe Z.8), ob das Spiel in diesem Browser
 schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert), 
 zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 */																
+	
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
+	/* Hier später allgemeines Tutorial einbauen und in msg.json bei Tutorial auf Platz 0 eintragen
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
-		meldung(0);
+		tutorialmsg(0);
 		localStorage.setItem('hasBeenLaunched', true);
-	}
-
+	} */
+	
 	timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 	score = 0;
 	document.getElementById('timer').innerHTML = '';	// Lösche Inhalt von Timer-Div
@@ -84,6 +88,12 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	document.getElementById('score').innerHTML = score + ' Punkte';
 	window.location.href = '#page1';  // Gehe auf Seite 1 (Spiel)
 	startGame();
+	console.log(Math.floor(level % 10));
+
+	stagemsg(Math.floor(level % 10));	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2 
+
+	
+	
 }
 
 function resetGame() {
@@ -193,56 +203,42 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			confirmButtonText: 'Weiter'
 		});
 		score = score + punkte;
-		if (level < maxLevel) {
-			level = level + 10;
-			meldung(level/10);
-			document.getElementById('level').innerHTML = 'Level ' + level / 10;
-			startGame();
-		} else {
+		if (level == maxLevel) {				// Spiel komplett gewonnen!
 			Swal.fire({
-				title: 'Level ' + maxLevel / 10 + ' gemeistert!',
+				title: 'Spiel nach Mission ' + maxLevel / 10 + ' gemeistert!',
 				html: input+' war richtig!<br>Punktestand: ' + score,
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
-			init();
+		init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Rickroll? Erstmal wieder von vorne für Testzwecke
 		}
-		localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
-		localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
+		else {
+			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
+				level = level + 1;
+			stagemsg(Math.floor(level/10));			// Ohne Dezimal Zahl weitergeben
+			document.getElementById('level').innerHTML = 'Level ' + level / 10;
+			startGame();
+			// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
+			// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
+			}
+			else {
+				window.location.href = '#page3';  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+			}			
+		}		
 	}
-	if (failCounter == 10) {
+	if (failCounter == maxFails) {
 		Swal.fire({
 			title: 'Verloren!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
 			icon: 'error',
 			confirmButtonText: 'Weiter'
 		});
-		init();
+		init(level - (level % 10) + 1);   	// Bei max Fails Zurück auf Missionsstart
+											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
+											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
+		;  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
 	}
 }
-
-function MissionWahl(MissionZahl) {
-	swal.fire({
-		customClass: {
-			container: 'missionwahlpopup',
-			confirmButton: 'confirm-button-map',
-			cancelButton: 'cancel-button-map'
-		},
-		title: 'Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		html: 'Lorem Ipsum und so - Missionsbeschreibung',
-		imageUrl: './images/mission' + (MissionZahl / 10 - 0.1) + '.png',  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		showCancelButton: true,
-		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		cancelButtonText: 'Zurück zur Karte',
-		reverseButtons: true
-	})
-	.then((result) => {
-		if (result.value) {
-			init(MissionZahl);
-		}
-	})
-}
-
 
 function ownWord() {
 /*
