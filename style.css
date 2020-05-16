@@ -27,7 +27,7 @@ input:focus {
 }
 
 .swal2-confirm {
-  width: 5em !important;
+  width: auto;
 }
 
 .fg {
@@ -40,6 +40,9 @@ input:focus {
   position: relative;
   top: 0;
   left: 0;
+  margin: 10px;
+  height: 15em;
+  width: 100%;
 }
 
 .outer {

@@ -6,11 +6,11 @@
         <meta name="viewport"
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
         <meta charset="utf-8">
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script crossorigin src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="utility.js"></script>
         <script src="main.js"></script>
-        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script crossorigin src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script crossorigin src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
                 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -35,6 +35,8 @@
 
                                 <div class="miscdiv col-sm-6">
                                         <div id="leftwrapper" class="outer">
+                                                
+                                                <!-- Testzwecke
                                                 <div>
                                                         <p><button style="width:60px;float:left" onclick="setPolizeiPosition(1)">M1</button></p>
                                                         <p><button style="width:60px;float:left" onclick="setPolizeiPosition(2)">M2</button></p>
@@ -46,16 +48,11 @@
                                                         <p><button style="width:60px;float:left" onclick="setPolizeiPosition(8)">M8</button></p>
                                                         <p><button style="width:60px;float:left" onclick="setPolizeiPosition(9)">M9</button></p>
                                                         <p><button style="width:60px;float:left" onclick="setPolizeiPosition(10)">M0</button></p>
-                                                </div>  
+                                                </div>
+                                                -->
 
 
-						<iframe src="./map-game1.html" id="iframegame" seamless style="height: 35em;width: 43em;"></iframe>
-                                                <!-- <img id="fails" class="bg" 
-                                                        src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"
-                                                        height="199em"></img>
-                                                <img id="auto" class="fg"
-                                                        src="http://clipart-library.com/images_k/police-car-transparent/police-car-transparent-23.png"
-                                                        height="40em"></img> -->
+                                                <iframe src="./map-game1.html" id="iframegame"  class="bg" seamless></iframe>
                                         </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -195,6 +192,7 @@
 
                                 </div>
                                 <br>
+                                <!-- Testzwecke
                                 <button class="ui-btn ui-btn-inline otherbtn" onclick="init()">Nochmal!</button>
                                 <select id="listenauswahl" onchange="init()">
                                         <option value="deutsch">Deutsche Wörter</option>
@@ -202,6 +200,7 @@
                                         <option value="spiele">Computerspiele</option>
                                         <option value="alk">Alk/Zigaretten</option>
                                 </select>
+                                -->
                                 <button class="ui-btn ui-btn-inline otherbtn"
                                         onclick="meldung(0)">Regeln</button>
                                 <button class="ui-btn ui-btn-inline otherbtn"
@@ -267,7 +266,18 @@
 
                 <header data-role="header" style="text-align: center">Info</header>
                 <main data-role="content">
-                        Impressum etc.
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(11)">Level 1.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(12)">Level 1.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(13)">Level 1.3</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(21)">Level 2.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(22)">Level 2.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(23)">Level 2.3</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(31)">Level 3.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(32)">Level 3.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(33)">Level 3.3</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(11)">Mission 1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(21)">Mission 2</button>  
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(31)">Mission 3</button>         
                 </main>
                 <footer data-role="footer" data-position="fixed">
                         <div data-role="navbar">
