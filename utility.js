@@ -151,6 +151,17 @@ function stagemsg(id) {
 	window.location.href = '#stagetextpage';
 }
 
+function siegmsg(id) {
+	var meldungsDiv = document.getElementById('siegtextdiv');
+	
+	console.log(id);
+	console.log(meldungen);
+
+	meldungsDiv.innerHTML = meldungen.sieg[id];   // [] ersetzt die .mission1  -  muss also OHNE punkt angesetzt werden.... ^.-
+
+	window.location.href = '#siegtextpage';
+}
+
 function MissionWahl(MissionZahl) {
 	swal.fire({
 		customClass: {
