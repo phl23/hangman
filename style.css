@@ -34,6 +34,10 @@ input:focus {
   width: 220px;
 }
 
+.swal2-select option {
+  color: black;
+}
+
 .fg {
   position: absolute;
   z-index: 100;
