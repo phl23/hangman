@@ -14,7 +14,10 @@
 		]
 	},
 	"sieg": [
-		"<p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>"
+		"<p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
+		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>",
+		"<p>Sehr gut!<br><br>Text Mission 2 geschafft.</p>",
+		"<p>Sehr gut!<br><br>Text Mission 3 geschafft.</p>"
 	],
 	"stages": {
 		"mission1": [

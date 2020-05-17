@@ -10,7 +10,7 @@ var level = 11;																			// Startlevel = 1 (* 10)
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
 var score = 0;																			// Startscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
-var winCounter, failCounter = 0;														// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
+var winCounter, failCounter, failCounterMission = 0;									// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
@@ -67,7 +67,6 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	} */
 	
 	timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
-	score = 0;
 	document.getElementById('timer').innerHTML = '';	// Lösche Inhalt von Timer-Div
 	if (typeof levelwahl === typeof undefined)  {  // Check ob ein Level gewählt wurde, nur zu Testzwecke, da später nicht die Spiele-Seite direkt geladen wird
 		levelwahl = 11;
@@ -88,17 +87,12 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	document.getElementById('score').innerHTML = score + ' Punkte';
 	window.location.href = '#page1';  // Gehe auf Seite 1 (Spiel)
 	startGame();
-	console.log(Math.floor(level % 10));
-
-	stagemsg(Math.floor(level % 10));	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2 
-
-	
-	
+	stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2 
 }
 
 function resetGame() {
 /*
-Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level 
+Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht für neue Stage!
 */
 	for (var i = 0; i < keys.length; i++) {	// Virtuelle Tastatur & benutzte Buchstaben freigeben
 		document.getElementById(keys[i] + 'key').disabled = false;
@@ -106,8 +100,9 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level
 	}
 	winCounter = 0;
 	failCounter = 0;
-	if (level % 10 == 1) {			// VersuchsZeit wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
+	if (level % 10 == 1) {			// wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
 		versuchsZeit = 0;
+		failCounterMission = 0;
 	}
 	firstButtonPressed = false;
 	/* blendet das Polizeiauto wieder aus */
@@ -151,23 +146,26 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 }
 
 function eliminate(buchstabe) {
+	
 /*
 Kernfunktion des Spiels
-
 */
 	var index = input.indexOf(buchstabe);
 	keysPressed[keys.indexOf(buchstabe)]++;	// mitzählen, wie oft ein Buchstabe schon eliminiert wurde
 	if (document.getElementById(buchstabe + 'key') != undefined) {	// Validiert Tastatureingabe, indem ihr Vorhandensein in der virtuellen Tastatur überprüft wird
 		if (firstButtonPressed == false) {	// Wenn es sich um die 1. Eingabe der Spielrunde und das 1. Level handelt, wird der Timer gestartet
-			console.log(level);
 			if (level % 10 == 1) { 				// Prüfen von modulus 10 des levels, um zu schauen ob es die erste Stage ist
 				timerStop = false;
 				startTimer(timerZeitInSec);
 			}
 			firstButtonPressed = true;
 		}
+
+
+
 		if (index == -1) {	// wenn für den eingegebenen Buchstaben im gesuchten Wort kein index gefunden wird, zählt es als Fail
 			failCounter++;
+			failCounterMission++;
 			setPolizeiPosition(failCounter);	// ruft Function auf um das PolizeiFahrzeug zu bewegen
 		} else {	// Wenn ein index gefunden wird:
 			while (index != -1) {
@@ -178,13 +176,14 @@ Kernfunktion des Spiels
 						winCounter++;	
 					}
 					index++;	// index wird um 1 erhöht, dass Wort wird nach weiterem Vorkommen des Buchstabens durchsucht
+					document.getElementById(buchstabe + 'key').disabled = true;			// Blendet richtige Buchstaben aus
 				}
 			}
 		}
 		// + 1 hier, da das Level immer eine dezimal Stelle hat bei geteilt durch 10
-		if (keysPressed[keys.indexOf(buchstabe)] + 1 > level / 10) {	// Die virtuelle Taste wird erst nach einer Anzahl an Versuchen, die dem Level entspricht, ausgegraut (z.B. Level 2: Nach dem 2. Versuch, "E" zu eliminieren, wird es ausgegraut.)
-			document.getElementById(buchstabe + 'key').disabled = true;
-		}
+		if (keysPressed[keys.indexOf(buchstabe)] + 1 > level / 10) {		// Die virtuelle Taste wird erst nach einer Anzahl an Versuchen, 
+			document.getElementById(buchstabe + 'key').disabled = true;		// die dem Level entspricht, ausgegraut (z.B. Level 2: Nach dem 2. Versuch, "E" zu eliminieren, wird es ausgegraut.)	
+		}																	// Richtige Buchstaben werden allerdings schon weiter oben ausgeblendet!
 	}									
 	checkWin();
 }
@@ -196,40 +195,38 @@ Gewinnabfrage
 Überprüft, ob alle Versuche verbraucht sind. Wenn ja, ist das Spiel verloren.
 Jeweilige Popup-Meldungen werden angezeigt.
 */
-	var punkte = 0;  // Muss geändert werden nur zu Testzwecke
+	var punkte = 0;
 	if (winCounter == input.length) {
-		console.log("versuchsZeit:" + versuchsZeit);	// Testzwecke
-		console.log("timerZeitInSec:" + timerZeitInSec); // Testzwecke
-		punkte = (10 - failCounter) * (timerZeitInSec-versuchsZeit);
-		Swal.fire({
-			title: 'Richtig!',
-			html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + (10 - failCounter) + ' = ' + punkte + ' Punkte erreicht!',
-			icon: 'success',
-			confirmButtonText: 'Weiter'
-		});
+		punkte = ((maxFails * maxStage) - failCounterMission) * (timerZeitInSec-versuchsZeit);  // Maximale Fails pro Mission sind fails pro stage mal die anzahl an stages
 		score = score + punkte;
+		scoreAnzeige();
 		if (level == maxLevel) {				// Spiel komplett gewonnen!     // Hier muss noch die gesammtPunktzahl in die siegmsg(0) übernommen werden!
-			Swal.fire({
-				title: 'Spiel nach Mission ' + maxLevel / 10 + ' gemeistert!',
-				html: input+' war richtig!<br>Punktestand: ' + score,
-				icon: 'success',
-				confirmButtonText: 'Weiter'
-			});
-			timerStop = true;					// Sonst feuert der Timer bei der Siegbenachrichtigung
 			// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
 			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
 		else {
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
+				Swal.fire({
+					title: 'Richtig!',
+					html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + ((maxFails * maxStage) - failCounterMission) + ' = ' + punkte + ' Punkte erreicht!<br>(verbleibende Sekunden x verbleibende Fehler)',
+					icon: 'success',
+					confirmButtonText: 'Weiter'
+				});
 				level = level + 1;
-				stagemsg(Math.floor(level/10));			// Ohne Dezimal Zahl weitergeben
+				stagemsg(level % 10);			// Ohne Dezimal Zahl weitergeben
 				document.getElementById('level').innerHTML = 'Level ' + level / 10;
 				startGame();
 				// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
 				// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
 			}
 			else {
-				timerStop = true;		// Stoppe den Timer
+				Swal.fire({
+					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
+					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
+					icon: 'success',
+					confirmButtonText: 'Weiter'
+				});
+				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 				window.location.href = '#page3';  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
 			}			
 		}		
@@ -244,7 +241,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 		init(level - (level % 10) + 1);   	// Bei max Fails Zurück auf Missionsstart
 											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
 											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-		;  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
 	}
 }
 
