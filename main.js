@@ -106,7 +106,9 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level
 	}
 	winCounter = 0;
 	failCounter = 0;
-	versuchsZeit = 0;
+	if (level % 10 == 1) {			// VersuchsZeit wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
+		versuchsZeit = 0;
+	}
 	firstButtonPressed = false;
 	/* blendet das Polizeiauto wieder aus */
 	var iframe = document.getElementById("iframegame");
@@ -157,7 +159,8 @@ Kernfunktion des Spiels
 	keysPressed[keys.indexOf(buchstabe)]++;	// mitzählen, wie oft ein Buchstabe schon eliminiert wurde
 	if (document.getElementById(buchstabe + 'key') != undefined) {	// Validiert Tastatureingabe, indem ihr Vorhandensein in der virtuellen Tastatur überprüft wird
 		if (firstButtonPressed == false) {	// Wenn es sich um die 1. Eingabe der Spielrunde und das 1. Level handelt, wird der Timer gestartet
-			if (level == 11 || 21 || 31) {
+			console.log(level);
+			if (level % 10 == 1) { 				// Prüfen von modulus 10 des levels, um zu schauen ob es die erste Stage ist
 				timerStop = false;
 				startTimer(timerZeitInSec);
 			}
@@ -193,8 +196,10 @@ Gewinnabfrage
 Überprüft, ob alle Versuche verbraucht sind. Wenn ja, ist das Spiel verloren.
 Jeweilige Popup-Meldungen werden angezeigt.
 */
-	var punkte = 0;
+	var punkte = 0;  // Muss geändert werden nur zu Testzwecke
 	if (winCounter == input.length) {
+		console.log("versuchsZeit:" + versuchsZeit);	// Testzwecke
+		console.log("timerZeitInSec:" + timerZeitInSec); // Testzwecke
 		punkte = (10 - failCounter) * (timerZeitInSec-versuchsZeit);
 		Swal.fire({
 			title: 'Richtig!',
@@ -203,26 +208,28 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			confirmButtonText: 'Weiter'
 		});
 		score = score + punkte;
-		if (level == maxLevel) {				// Spiel komplett gewonnen!
+		if (level == maxLevel) {				// Spiel komplett gewonnen!     // Hier muss noch die gesammtPunktzahl in die siegmsg(0) übernommen werden!
 			Swal.fire({
 				title: 'Spiel nach Mission ' + maxLevel / 10 + ' gemeistert!',
 				html: input+' war richtig!<br>Punktestand: ' + score,
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
-		// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
-		siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
+			timerStop = true;					// Sonst feuert der Timer bei der Siegbenachrichtigung
+			// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
+			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
 		else {
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
 				level = level + 1;
-			stagemsg(Math.floor(level/10));			// Ohne Dezimal Zahl weitergeben
-			document.getElementById('level').innerHTML = 'Level ' + level / 10;
-			startGame();
-			// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
-			// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
+				stagemsg(Math.floor(level/10));			// Ohne Dezimal Zahl weitergeben
+				document.getElementById('level').innerHTML = 'Level ' + level / 10;
+				startGame();
+				// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
+				// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
 			}
 			else {
+				timerStop = true;		// Stoppe den Timer
 				window.location.href = '#page3';  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
 			}			
 		}		
