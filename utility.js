@@ -199,10 +199,12 @@ function siegmsg(id) {
 			confirmButton: 'confirm-button-siegmsg',
 		},
 		title: 'Du hast es geschafft!',
-		html: meldungen.sieg[id],
+		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
 			// imageUrl: './images/siegmsg.png',
 		icon: 'success',
 		showCancelButton: false,
+		allowOutsideClick: false,
+		allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
 		confirmButtonText: 'Katsching! Gimme ma moneh!',
 	})
 	.then((result) => {
