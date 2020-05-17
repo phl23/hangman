@@ -97,7 +97,7 @@ function generateInputSpans() {
 
 		spanArray[(i+1)] = generatedOuterSpan;
 	}
-	console.log(spanArray);
+	// console.log(spanArray);		// Testzwecke
 }
 
 function inputToHangman(myInput) {
@@ -136,9 +136,6 @@ Variante für Anzeige auf ganzem Bildschrim
 function tutorialmsg(id) {
 	var meldungsDiv = document.getElementById('tutorialdiv');
 
-	console.log(id);
-	console.log(meldungen);
-
 	meldungsDiv.innerHTML = meldungen.tutorial.text[id];
 
 	window.location.href = '#tutorialpage';
@@ -147,9 +144,6 @@ function tutorialmsg(id) {
 function stagemsg(id) {
 	var meldungsDiv = document.getElementById('stagetextdiv');
 	
-	console.log(id);
-	console.log(meldungen);
-
 	meldungsDiv.innerHTML = meldungen.stages["mission" + Math.floor(level / 10)][id];   // [] ersetzt die .mission1  -  muss also OHNE punkt angesetzt werden.... ^.-
 
 	window.location.href = '#stagetextpage';
@@ -157,9 +151,6 @@ function stagemsg(id) {
 
 function siegmsg(id) {
 	var meldungsDiv = document.getElementById('siegtextdiv');
-	
-	console.log(id);
-	console.log(meldungen);
 
 	meldungsDiv.innerHTML = meldungen.sieg[id];
 
@@ -169,7 +160,7 @@ function siegmsg(id) {
 */
 
 function tutorialmsg(id) {
-	console.log(meldungen);
+	// console.log(meldungen); // Testzwecke
 	swal.fire({
 		customClass: {
 			container: 'tutorialpopup',
@@ -185,14 +176,14 @@ function tutorialmsg(id) {
 }
 
 function stagemsg(MissionZahl) {
-	console.log(meldungen);
+	// console.log(meldungen); // Testzwecke
 	swal.fire({
 		customClass: {
 			container: 'stagemsgpopup',
 			confirmButton: 'confirm-button-stagemsg',
 		},
 		title: '', // Titel wird in der HTML mitgeliefert
-		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl],
+		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl % 10],
 			// imageUrl: './images/tutorial.png',
 		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
 		showCancelButton: false,
@@ -201,17 +192,19 @@ function stagemsg(MissionZahl) {
 }
 
 function siegmsg(id) {
-	console.log(meldungen);
+	// console.log(meldungen); // Testzwecke
 	swal.fire({
 		customClass: {
 			container: 'siegmsgpopup',
 			confirmButton: 'confirm-button-siegmsg',
 		},
 		title: 'Du hast es geschafft!',
-		html: meldungen.sieg[id],
+		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
 			// imageUrl: './images/siegmsg.png',
 		icon: 'success',
 		showCancelButton: false,
+		allowOutsideClick: false,
+		allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
 		confirmButtonText: 'Katsching! Gimme ma moneh!',
 	})
 	.then((result) => {
@@ -222,6 +215,7 @@ function siegmsg(id) {
 }
 
 function MissionWahl(MissionZahl) {
+	// console.log(meldungen); // Testzwecke
 	swal.fire({
 		customClass: {
 			container: 'missionwahlpopup',
@@ -244,14 +238,13 @@ function MissionWahl(MissionZahl) {
 }
 
 function startTimer(zeitInSec) {
-	console.log('timer started');
+	// console.log('timer started'); // Testzwecke
 	var verbleibendeZeit = zeitInSec;
 	var zeroM, zeroS;
 	var x = setInterval(function() {
 		if (firstButtonPressed == true) {
 			verbleibendeZeit = verbleibendeZeit - 1;
 		versuchsZeit++;
-		console.log("versuchsZeit" + versuchsZeit);		// Testzwecke
 		}
 		var mins = Math.floor(verbleibendeZeit / 60);
 		var secs = Math.floor(verbleibendeZeit % 60);
@@ -286,6 +279,10 @@ function gameOver() {
 		confirmButtonText: 'Neues Spiel'
 	});
 	init();
+}
+
+function scoreAnzeige() {
+	document.getElementById('scoreanzeige').innerHTML = score + ' Punkte';
 }
 
 
