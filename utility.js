@@ -310,41 +310,54 @@ function setPolizeiPosition(versuche) {
 	schritt.beginElement();
 }
 
-/*
-Alter Code
+function firstmsg() {
+	// console.log(meldungen); // Testzwecke
+	Swal.fire({
+		customClass: {
+			container: 'tutorialpopup',
+			confirmButton: 'confirm-button-tutorial',
+		},
+		input: 'select',
+		inputOptions: {
+			'1': 'EasyMode',
+			'2': 'Normal',
+			// '3': 'Schwer'
+		},
+		inputPlaceholder: 'Wähle eine Schwierigkeit',
+		title: meldungen.tutorial.title[0],
+		html: meldungen.tutorial.text[0],
+			// imageUrl: './images/firstmsg.png',
+		icon: 'info',
+		showCancelButton: false,
+		confirmButtonText: 'Bin Bereit!',
+	})
+	.then((result) => {
+			easymode = result.value;			// Result gibt aus: " Value {'1'} " oder 2 oder 3
+			
+			/*
+				Hier die Schwierigkeitsgrad-Optionen einstellen
+			*/
 
-function polizeiKommtNaeher() {
-	var failImg = document.getElementById('leftwrapper');
-	var autoImg = document.getElementById('auto');
-	var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue('height'), 10);
-	var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue('width'), 10);
-	var failInterval = (failCounter - 1) / 10;
-	var y = 10;
-	var x = setInterval(function() {
-		autoImg.style.top = failHeight * failInterval + 'px';
-		autoImg.style.left = failWidth * failInterval + 'px';
-
-		failInterval = failInterval + 0.01;
-		y = y - 1;
-
-		if (y <= 0) {
-			clearInterval(x);
-		}
-	}, 100);
+			if (easymode == 1) {
+				stagereset = true;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('EasyMode Aktiviert');		// Für Testzwecke
+			}
+			else if (easymode == 2) {
+				stagereset = false;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('Normal Aktiviert');		// Für Testzwecke
+			}
+			else {
+				stagereset = false;		
+				timerZeitInSec = 120;	// Estmal auf 120 gelassen
+				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
+			}
+			window.location.href = "#page3"		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
+	});
 }
-
-function setPolizeiPosition() {
-	var failImg = document.getElementById('leftwrapper');
-	var autoImg = document.getElementById('auto');
-	var failHeight = parseInt(window.getComputedStyle(failImg, null).getPropertyValue('height'), 10);
-	var failWidth = parseInt(window.getComputedStyle(failImg, null).getPropertyValue('width'), 10);
-
-	autoImg.style.top = failHeight * (failCounter / 10) + 'px';
-	autoImg.style.left = failWidth * (failCounter / 10) + 'px';
-}
-
-*/
-
 
 function setIp() {
 	document.getElementById('ip').innerHTML =

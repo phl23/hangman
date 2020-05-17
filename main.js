@@ -2,11 +2,13 @@
 const maxLevel = 33;																	// Maximal-Level (3) * 10, für eventuelle spätere Zwischenlevel (33 da Level 3 Stage 3)
 const maxLength = 35;																	// Maximale Wortlänge, die in das Galgenmännchen-Feld passt
 const maxStage = 3;																		// Maximale Stage pro Mission, danach ist die Mission geschafft
-const maxFails = 10;																	// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
+var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 11;																			// Startlevel = 1 (* 10)
+var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
+var stagereset = false;																	// Soll bei Verloren die Stage neugestartet werden? oder die Mission
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
 var score = 0;																			// Startscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
@@ -236,9 +238,25 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			title: 'Verloren!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
 			icon: 'error',
-			confirmButtonText: 'Weiter'
-		});
-		init(level - (level % 10) + 1);   	// Bei max Fails Zurück auf Missionsstart
+			showCancelButton: true,
+			reverseButtons: true,
+			confirmButtonText: 'Noch einmal Versuchen',
+			cancelButtonText: 'Zurück zur Karte'
+		})
+		.then((result) => {
+			if (result.value) {
+				if (stagereset = true) {
+					init(level);		// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+				}
+				else {
+					init(level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+				}
+			}
+			else {
+				window.location.href = '#page3';	// Für Testzwecke Page3 sonst auf Map Page2 
+			}
+		  });
+		   									// Bei max Fails Zurück auf Missionsstart
 											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
 											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
 		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
