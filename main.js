@@ -210,6 +210,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				icon: 'success',
 				confirmButtonText: 'Weiter'
 			});
+		timerStop = true;					// Sonst feuert der Timer bei der Siegbenachrichtigung
 		// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
 		siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
