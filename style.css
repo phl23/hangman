@@ -34,6 +34,10 @@ input:focus {
   width: 220px;
 }
 
+.swal2-select option {
+  color: black;
+}
+
 .fg {
   position: absolute;
   z-index: 100;
@@ -165,14 +169,21 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
   width: 170px;
 }
 
+#firstmsgbtn {
+  width: auto;
+  position: absolute;
+  left: 20px;
+  top: 370px;
+}
+
 #missionbtn1 {
   left: 160px;
-  top: 200px;
+  top: 230px;
 }
 
 #missionbtn2 {
   left: 260px;
-  top: 400px;
+  top: 430px;
 }
 
 #missionbtn3 {

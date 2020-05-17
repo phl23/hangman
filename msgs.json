@@ -1,7 +1,7 @@
 {
 	"tutorial": {
 		"title": [
-			null,
+			"<h1>Willkommen</h1>",
 			"<h1>Regeln Mission 1</h1>",
 			"<h1>Regeln Mission 2</h1>",
 			"<h1>Regeln Mission 3</h1>"
