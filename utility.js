@@ -129,13 +129,17 @@ function inputToHangman(myInput) {
 	}
 }
 
+/*
+
+Variante für Anzeige auf ganzem Bildschrim
+
 function tutorialmsg(id) {
 	var meldungsDiv = document.getElementById('tutorialdiv');
 
 	console.log(id);
 	console.log(meldungen);
 
-	meldungsDiv.innerHTML = meldungen.tutorial[id];
+	meldungsDiv.innerHTML = meldungen.tutorial.text[id];
 
 	window.location.href = '#tutorialpage';
 }
@@ -157,9 +161,64 @@ function siegmsg(id) {
 	console.log(id);
 	console.log(meldungen);
 
-	meldungsDiv.innerHTML = meldungen.sieg[id];   // [] ersetzt die .mission1  -  muss also OHNE punkt angesetzt werden.... ^.-
+	meldungsDiv.innerHTML = meldungen.sieg[id];
 
 	window.location.href = '#siegtextpage';
+}
+
+*/
+
+function tutorialmsg(id) {
+	console.log(meldungen);
+	swal.fire({
+		customClass: {
+			container: 'tutorialpopup',
+			confirmButton: 'confirm-button-tutorial',
+		},
+		title: meldungen.tutorial.title[id],
+		html: meldungen.tutorial.text[id],
+			// imageUrl: './images/tutorial.png',
+		icon: 'info',
+		showCancelButton: false,
+		confirmButtonText: 'Alles klar!',
+	})
+}
+
+function stagemsg(MissionZahl) {
+	console.log(meldungen);
+	swal.fire({
+		customClass: {
+			container: 'stagemsgpopup',
+			confirmButton: 'confirm-button-stagemsg',
+		},
+		title: '', // Titel wird in der HTML mitgeliefert
+		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl],
+			// imageUrl: './images/tutorial.png',
+		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
+		showCancelButton: false,
+		confirmButtonText: 'EZ PZ Lemon Squeezy!',
+	})
+}
+
+function siegmsg(id) {
+	console.log(meldungen);
+	swal.fire({
+		customClass: {
+			container: 'siegmsgpopup',
+			confirmButton: 'confirm-button-siegmsg',
+		},
+		title: 'Du hast es geschafft!',
+		html: meldungen.sieg[id],
+			// imageUrl: './images/siegmsg.png',
+		icon: 'success',
+		showCancelButton: false,
+		confirmButtonText: 'Katsching! Gimme ma moneh!',
+	})
+	.then((result) => {
+		if (result.value) {
+		  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+		}
+	  });
 }
 
 function MissionWahl(MissionZahl) {
@@ -181,7 +240,7 @@ function MissionWahl(MissionZahl) {
 		if (result.value) {
 			init(MissionZahl);
 		}
-	})
+	});
 }
 
 function startTimer(zeitInSec) {
@@ -192,6 +251,7 @@ function startTimer(zeitInSec) {
 		if (firstButtonPressed == true) {
 			verbleibendeZeit = verbleibendeZeit - 1;
 		versuchsZeit++;
+		console.log("versuchsZeit" + versuchsZeit);		// Testzwecke
 		}
 		var mins = Math.floor(verbleibendeZeit / 60);
 		var secs = Math.floor(verbleibendeZeit % 60);
