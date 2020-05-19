@@ -154,6 +154,10 @@ input:focus {
 button.otherbtn.ui-btn.ui-btn-inline {
   width: 10em;
 }
+button.btmbtn.ui-btn.ui-btn-inline:focus, button.btmbtn.ui-btn.ui-btn-inline:hover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
 
 #listenauswahl option{
   width: 10em !important;
@@ -171,13 +175,6 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
   padding: 15px;
   position: absolute;
   width: 170px;
-}
-
-#firstmsgbtn {
-  width: auto;
-  position: absolute;
-  left: 20px;
-  top: 370px;
 }
 
 #missionbtn1 {

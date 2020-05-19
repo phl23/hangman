@@ -131,7 +131,7 @@ function inputToHangman(myInput) {
 
 /*
 
-Variante für Anzeige auf ganzem Bildschrim
+Variante für Anzeige auf ganzem Bildschrim Testzwecke
 
 function tutorialmsg(id) {
 	var meldungsDiv = document.getElementById('tutorialdiv');
@@ -188,7 +188,7 @@ function stagemsg(MissionZahl) {
 		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
 		showCancelButton: false,
 		confirmButtonText: 'EZ PZ Lemon Squeezy!',
-	})
+	});
 }
 
 function siegmsg(id) {
@@ -199,7 +199,7 @@ function siegmsg(id) {
 			confirmButton: 'confirm-button-siegmsg',
 		},
 		title: 'Du hast es geschafft!',
-		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
+		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
 			// imageUrl: './images/siegmsg.png',
 		icon: 'success',
 		showCancelButton: false,
@@ -239,7 +239,10 @@ function MissionWahl(MissionZahl) {
 
 function startTimer(zeitInSec) {
 	// console.log('timer started'); // Testzwecke
-	var verbleibendeZeit = zeitInSec;
+	if (level % 10 == 1) {						// Checkt ob erste Stage oder spätere, bei späteren stages läuft der timer weiter
+		timerLeft = zeitInSec;
+	}
+	verbleibendeZeit = timerLeft;
 	var zeroM, zeroS;
 	var x = setInterval(function() {
 		if (firstButtonPressed == true) {
@@ -262,7 +265,7 @@ function startTimer(zeitInSec) {
 		if (verbleibendeZeit < 0) {
 			clearInterval(x);
 			document.getElementById('timer').innerHTML = 'GAME OVER';
-			gameOver();
+			gameOver(true);
 		}
 		if (timerStop == true) {
 			clearInterval(x);
@@ -271,14 +274,72 @@ function startTimer(zeitInSec) {
 	}, 1000);
 }
 
-function gameOver() {
-	Swal.fire({
-		title: 'Zeit abgelaufen!',
-		text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
-		icon: 'error',
-		confirmButtonText: 'Neues Spiel'
-	});
-	init();
+function gameOver(timerloss) {
+	if (timerloss != 'true') {
+		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
+		Swal.fire({
+			title: 'Verloren!',
+			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
+			icon: 'error',
+			showCancelButton: true,
+			reverseButtons: true,
+			allowOutsideClick: false,
+			confirmButtonText: 'Noch einmal Versuchen',
+			cancelButtonText: 'Zurück zur Karte'
+		})
+		.then((result) => {
+			if (result.value) {
+				if (stagereset == true) {		
+					punktereset = false;
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1     // ist aber noch problematisch wegen den Punkten
+				}
+				else {
+					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					punktereset = true;
+					startGame()
+				}
+			}
+			else {
+				window.location.href = '#page3';	// Für Testzwecke Page3 sonst auf Map Page2 
+			}
+		  });
+											   // Bei max Fails Zurück auf Missionsstart
+											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
+											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
+		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+	}
+	else {
+		Swal.fire({
+			title: 'Zeit abgelaufen!',
+			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
+			icon: 'error',
+			showCancelButton: true,
+			reverseButtons: true,
+			allowOutsideClick: false,
+			confirmButtonText: 'Noch einmal Versuchen',
+			cancelButtonText: 'Zurück zur Karte'
+		})
+		.then((result) => {
+			if (result.value) {
+				if (stagereset == true) {		
+					punktereset = false;
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1     // ist aber noch problematisch wegen den Punkten
+				}
+				else {
+					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					punktereset = true;
+					startGame()
+				}
+			}
+			else {
+				window.location.href = '#page3';	// Für Testzwecke Page3 sonst auf Map Page2 
+			}
+		  });
+											   // Bei max Fails Zurück auf Missionsstart
+											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
+											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
+		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+	}
 }
 
 function scoreAnzeige() {
@@ -355,7 +416,7 @@ function firstmsg() {
 				timerZeitInSec = 120;	// Estmal auf 120 gelassen
 				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
 			}
-			window.location.href = "#page3"		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
+			// window.location.href = "#page3";		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
 	});
 }
 
@@ -370,4 +431,32 @@ function setIp() {
 	getRandomNumber(0, 255) +
 	':' +
 	getRandomNumber(0, 65535);
+}
+
+
+function backtomap() {
+	swal.fire({
+		customClass: {
+			container: 'backtomappopup',
+			confirmButton: 'confirm-button-backtomap',
+			cancelButton: 'cancel-button-backtomap'
+		},
+		title: '',
+		html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ja, das ist mir zu Heikel',
+		cancelButtonText: 'Nein, hab mich nur verklickt',
+		reverseButtons: false,
+		allowOutsideClick: false
+	})
+	.then((result) => {
+		if (result.value) {
+			timerStop = true;
+			missionscore = 0;
+			level = (level - (level % 10) + 1);
+			resetGame('karte');				// Löst keine Spielstartmeldung aus
+			window.location.href = "#page3";		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
+		}
+	});
 }
