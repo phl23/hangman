@@ -269,7 +269,7 @@ function startTimer(zeitInSec) {
 		}
 		if (timerStop == true) {
 			clearInterval(x);
-			document.getElementById('timer').innerHTML = '';
+			
 		}
 	}, 1000);
 }
@@ -342,11 +342,17 @@ function gameOver(timerloss) {
 	}
 }
 
-function scoreAnzeige() {
-	document.getElementById('scoreanzeige').innerHTML = score + ' Punkte';
+function scoreAnzeige() {		// get by Name statt Class, da der Header immer fest class von Bootstrap bekommt
+	var myClasses = document.getElementsByName("scoreanzeige");
+
+	for (var i = 0; i < myClasses.length; i++) {
+  	myClasses[i].innerHTML = score + ' Gesamtpunkte';
+  	}
 }
 
-
+function missionScoreAnzeige() {
+	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
+}
 
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")

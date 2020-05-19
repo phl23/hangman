@@ -153,7 +153,7 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 		missionscore = 0;
 		punktereset = false;
 	}
-	document.getElementById('score').innerHTML = missionscore + ' Punkte';
+	missionScoreAnzeige();
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
 	if (windowtarget != 'karte') {
 		stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2
@@ -211,9 +211,11 @@ Jeweilige Popup-Meldungen werden angezeigt.
 	if (winCounter == input.length) {
 		punkte = ((maxFails) - failCounterMission) * (timerZeitInSec-versuchsZeit);  // Maximale Fails pro Mission sind fails pro stage mal die anzahl an stages
 		missionscore = missionscore + punkte;
-		document.getElementById('score').innerHTML = missionscore + ' Punkte';
+		missionScoreAnzeige();
 		if (level == maxLevel) {				// Spiel komplett gewonnen!
 			score = missionscore + score;
+			timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
+			scoreAnzeige();
 			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
 		else {
