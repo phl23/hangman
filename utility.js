@@ -280,7 +280,8 @@ function gameOver(timerloss) {
 		Swal.fire({
 			title: 'Verloren!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
-			icon: 'error',
+			// icon: 'error',
+			imageUrl: './images/fail.webp',			// Für Testzwecke
 			showCancelButton: true,
 			reverseButtons: true,
 			allowOutsideClick: false,
@@ -312,7 +313,8 @@ function gameOver(timerloss) {
 		Swal.fire({
 			title: 'Zeit abgelaufen!',
 			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
-			icon: 'error',
+			// icon: 'error',
+			imageUrl: './images/fail.webp',			// Für Testzwecke
 			showCancelButton: true,
 			reverseButtons: true,
 			allowOutsideClick: false,
