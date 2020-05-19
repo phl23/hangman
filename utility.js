@@ -245,9 +245,13 @@ function startTimer(zeitInSec) {
 	verbleibendeZeit = timerLeft;
 	var zeroM, zeroS;
 	var x = setInterval(function() {
+		if (timerStop == true) {
+			clearInterval(x);
+			return;
+		}
 		if (firstButtonPressed == true) {
 			verbleibendeZeit = verbleibendeZeit - 1;
-		versuchsZeit++;
+			versuchsZeit++;
 		}
 		var mins = Math.floor(verbleibendeZeit / 60);
 		var secs = Math.floor(verbleibendeZeit % 60);
@@ -267,11 +271,7 @@ function startTimer(zeitInSec) {
 			document.getElementById('timer').innerHTML = 'GAME OVER';
 			gameOver(true);
 		}
-		if (timerStop == true) {
-			clearInterval(x);
-			
-		}
-	}, 1000);
+	}, 1000);		// ms pro Tick des Intervalls
 }
 
 function gameOver(timerloss) {
