@@ -6,7 +6,7 @@ var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsa
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
 var input;																				// Initialisierung der Variable für User-Eingabe
-var level = 11;																			// Startlevel = 1 (* 10)
+var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel auf der Karte beginnt!
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
 var stagereset = false;																	// Soll bei Verloren die Stage neugestartet werden? oder die Mission
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
@@ -14,7 +14,7 @@ var score = 0;																			// Startscore = 0
 var missionscore = 0;																	// Missionsscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
 var winCounter, failCounter, failCounterMission = 0;									// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
-//var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86
+//var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
 var punktereset = false;																// Hilfsvariable für Punktereset bei verloren (nicht score)
@@ -61,11 +61,12 @@ function init(levelwahl) {
 Generelle Initalisierung des "Spielfelds" und des UI - löscht Spielstand, Level etc.
 Levelwahl wird durch Levelauswahl Popup bestimmt
 
-Prüfe mittels localStorage (siehe Z.8), ob das Spiel in diesem Browser
+Prüfe mittels localStorage (siehe variablen am Anfang der main.js), ob das Spiel in diesem Browser
 schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert), 
 zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 */																
 	
+
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
 	/* Hier später allgemeines Tutorial einbauen und in msg.json bei Tutorial auf Platz 0 eintragen
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
@@ -76,10 +77,13 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 	document.getElementById('timer').innerHTML = '';	// Lösche Inhalt von Timer-Div
 	if (typeof levelwahl === typeof undefined)  {  // Check ob ein Level gewählt wurde, nur zu Testzwecke, da später nicht die Spiele-Seite direkt geladen wird
-		levelwahl = 11;
+		levelwahl = 0;
 	}
 	level = levelwahl;
-	//newMaxLength = maxLength;		// siehe Z. 12
+	if (level == 0) {		// Checke ob Firststart! Hier alles reinschreiben, was beim ersten Start kommt. z.B.: Tutorial
+		return;
+	}
+	//newMaxLength = maxLength;		// siehe Z. 12 (Am Anfang der main.js)
 	if (11 <= level && level <= 19) {		// Prüft das gewählte Level und wählt die entsprechende Wortliste
 		liste = "spiele";
 	}
@@ -90,7 +94,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 		liste = "katzennamen";
 	}
 	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
-	window.location.href = '#page1';  // Gehe auf Seite 1 (Spiel)
+	window.location.href = '#page2';  // Gehe auf Seite 2 (Spiel)
 	missionscore = 0;
 	startGame();
 	 
@@ -218,7 +222,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			scoreAnzeige();
 			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
 		}
-		else {
+		else {					// Stage gewonnen!
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
 				timerLeft = verbleibendeZeit;
 				timerStop = true;
@@ -254,7 +258,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				})
 				.then((result) => {
 					if (result.value) {
-						window.location.href = '#page3';  // Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+						window.location.href = '#page1';  
 					}
 				  });			
 			}			
@@ -265,12 +269,17 @@ Jeweilige Popup-Meldungen werden angezeigt.
 	}
 }
 
-function ownWord() {
 /*
 
 	*** Derzeit ungenutzt ***
 
-Ermöglicht manuelle Worteingabe
+*/
+
+function ownWord() {
+/*
+
+	Ermöglicht manuelle Worteingabe
+
 */
 	var Leerzeichen = 0;
 	var unsanitized = window.prompt('Wort eingeben (max. 14 Zeichen):', '');
