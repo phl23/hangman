@@ -10,12 +10,16 @@ var level = 11;																			// Startlevel = 1 (* 10)
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
 var stagereset = false;																	// Soll bei Verloren die Stage neugestartet werden? oder die Mission
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
+
 var score = 0;																			// Startscore = 0
+var missionscore = 0;																	// Missionsscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
 var winCounter, failCounter, failCounterMission = 0;									// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
+var punktereset = false;																// Hilfsvariable für Punktereset bei verloren (nicht score)
+var scorereset = false;																	// Hilfsvariable um die Score bei Fehlverusch in der Mission zu resetten.
 var versuchsZeit = 0;																	// Zähler für verbrauchte Zeit im jeweiligen Versuch
 var usedWords = [];																		// Array für bereits genutzte Wörter, um Doppel-Verwendungen zu umgehen
 var keys = [																			// Array mit validen Tastatureingaben
@@ -85,11 +89,9 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 		liste = "katzennamen";
 	}
 	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
-	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
-	document.getElementById('score').innerHTML = score + ' Punkte';
 	window.location.href = '#page1';  // Gehe auf Seite 1 (Spiel)
 	startGame();
-	stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2 
+	 
 }
 
 function resetGame() {
@@ -145,6 +147,13 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 
 	generateInputSpans(); 
 	inputToHangman(input);
+	if (punktereset == true) {
+		missionscore = 0;
+		punktereset = false;
+	}
+	document.getElementById('score').innerHTML = missionscore + ' Punkte';
+	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
+	stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2
 }
 
 function eliminate(buchstabe) {
@@ -200,7 +209,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 	var punkte = 0;
 	if (winCounter == input.length) {
 		punkte = ((maxFails * maxStage) - failCounterMission) * (timerZeitInSec-versuchsZeit);  // Maximale Fails pro Mission sind fails pro stage mal die anzahl an stages
-		score = score + punkte;
+		missionscore = missionscore + punkte;
 		scoreAnzeige();
 		if (level == maxLevel) {				// Spiel komplett gewonnen!     // Hier muss noch die gesammtPunktzahl in die siegmsg(0) übernommen werden!
 			// init(11);							// Was machen nachdem das Spiel durchgespielt wurde? Erstmal wieder von vorne für Testzwecke
@@ -221,7 +230,9 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
 				// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
 			}
-			else {
+			else {				// Hier passiert das was bei Missionsabschluss passiert
+				score = missionscore;
+				scoreAnzeige();
 				Swal.fire({
 					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
 					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
@@ -234,6 +245,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 		}		
 	}
 	if (failCounter == maxFails) {
+		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 		Swal.fire({
 			title: 'Verloren!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
@@ -246,11 +258,14 @@ Jeweilige Popup-Meldungen werden angezeigt.
 		})
 		.then((result) => {
 			if (result.value) {
-				if (stagereset == true) {
-					init(level);		// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+				if (stagereset == true) {		
+					punktereset = false;
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1     // ist aber noch problematisch wegen den Punkten
 				}
 				else {
-					init(level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					punktereset = true;
+					startGame()
 				}
 			}
 			else {

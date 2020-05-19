@@ -14,6 +14,10 @@ input:focus {
   margin-left: 0.3em;
 }
 
+#timer {
+  height: 24px;
+}
+
 .swal2-popup {
   background: #333;
 }
