@@ -275,7 +275,7 @@ function startTimer(zeitInSec) {
 }
 
 function gameOver(timerloss) {
-	if (timerloss != 'true') {
+	if (timerloss != true) {
 		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 		Swal.fire({
 			title: 'Verloren!',
@@ -314,7 +314,7 @@ function gameOver(timerloss) {
 			title: 'Zeit abgelaufen!',
 			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
 			// icon: 'error',
-			imageUrl: './images/fail.webp',			// Für Testzwecke
+			imageUrl: './images/failtime.gif',			// Für Testzwecke
 			showCancelButton: true,
 			reverseButtons: true,
 			allowOutsideClick: false,
