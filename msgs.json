@@ -1,5 +1,39 @@
-{
+{	
 	"tutorial": {
+		"title": [
+			"<h1>Tutorial</h1>"
+		],
+		"text": [
+			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
+		],
+		"confirm": [
+			"Danke!"
+		]
+	},
+	"schwierigkeit": {
+		"confirm": [
+			"OK"
+		],
+		"title": [
+			"<h1>Schwierigkeitsgrad</h1>"
+		],
+		"text": [
+			""
+		],
+		"placeholder": [
+			"Wähle einen Schwierigkeitsgrad"
+		],
+		"grad": [
+			null,
+			"Easy Mode",
+			"Normal",
+			"Schwer"
+		]
+	},
+	"regeln": {
+		"confirm": [
+			"Alles klar!"
+		],
 		"title": [
 			"<h1>Willkommen</h1>",
 			"<h1>Regeln Mission 1</h1>",
@@ -20,6 +54,12 @@
 		"<p>Sehr gut!<br><br>Text Mission 3 geschafft.</p>"
 	],
 	"stages": {
+		"confirm": [
+			"EZ PZ Lemon Squeezy!"
+		],
+		"cancel": [
+			"EZ PZ Lemon Squeezy!"
+		],
 		"mission1": [
 			null,
 			"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",

@@ -64,8 +64,6 @@ input:focus {
   display: inline-block;
 }
 
-
-
 #map {
   width: 100%;
 }
@@ -237,10 +235,10 @@ table {
   margin: -0.1em !important;
 }
 
-
 iframe[seamless] {
   border: none;
 }
+
 iframe#main {
   height: 300px;
   width: 100%;
@@ -252,4 +250,3 @@ g {
   stroke-width:4;
   stroke-miterlimit:10;
 }
-

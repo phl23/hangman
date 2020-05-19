@@ -130,48 +130,82 @@ function inputToHangman(myInput) {
 }
 
 /*
-
-Variante für Anzeige auf ganzem Bildschrim Testzwecke
-
-function tutorialmsg(id) {
-	var meldungsDiv = document.getElementById('tutorialdiv');
-
-	meldungsDiv.innerHTML = meldungen.tutorial.text[id];
-
-	window.location.href = '#tutorialpage';
-}
-
-function stagemsg(id) {
-	var meldungsDiv = document.getElementById('stagetextdiv');
-	
-	meldungsDiv.innerHTML = meldungen.stages["mission" + Math.floor(level / 10)][id];   // [] ersetzt die .mission1  -  muss also OHNE punkt angesetzt werden.... ^.-
-
-	window.location.href = '#stagetextpage';
-}
-
-function siegmsg(id) {
-	var meldungsDiv = document.getElementById('siegtextdiv');
-
-	meldungsDiv.innerHTML = meldungen.sieg[id];
-
-	window.location.href = '#siegtextpage';
-}
-
+Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
+Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
 */
+function setPolizeiPosition(versuche) {
+	var iframe = document.getElementById("iframegame");
+	var schritt = iframe.contentWindow.document.getElementById("move" + versuche);
 
-function tutorialmsg(id) {
+	/* Vorherigen Move verstecken, sofern nicht der Erste */
+	if (versuche > 1) {
+		var last = versuche - 1;
+		var schrittverbergen = iframe.contentWindow.document.getElementById("move" + last + "hide");
+		schrittverbergen.style.display = "none";
+	}
+
+	/* Diesen Move anzeigbar machen */
+	var schrittzeigen = iframe.contentWindow.document.getElementById("move" + versuche + "hide");
+	schrittzeigen.style.display = "flex";
+
+	/* Diesen Move starten */
+	schritt.beginElement();
+}
+
+function setIp() {
+	document.getElementById('ip').innerHTML =
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	'.' +
+	getRandomNumber(0, 255) +
+	':' +
+	getRandomNumber(0, 65535);
+}
+
+function backtomap() {
+	swal.fire({
+		customClass: {
+			container: 'backtomappopup',
+			confirmButton: 'confirm-button-backtomap',
+			cancelButton: 'cancel-button-backtomap'
+		},
+		title: '',
+		html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ja, das ist mir zu Heikel',
+		cancelButtonText: 'Nein, hab mich nur verklickt',
+		reverseButtons: false,
+		allowOutsideClick: false
+	})
+	.then((result) => {
+		if (result.value) {
+			timerStop = true;
+			missionscore = 0;
+			level = (level - (level % 10) + 1);
+			resetGame('karte');				// Löst keine Spielstartmeldung aus
+			window.location.href = "#page1";
+		}
+	});
+}
+
+
+function regelnmsg(id) {
 	// console.log(meldungen); // Testzwecke
 	swal.fire({
 		customClass: {
-			container: 'tutorialpopup',
-			confirmButton: 'confirm-button-tutorial',
+			container: 'regelnpopup',
+			confirmButton: 'confirm-button-regeln',
 		},
-		title: meldungen.tutorial.title[id],
-		html: meldungen.tutorial.text[id],
-			// imageUrl: './images/tutorial.png',
+		title: meldungen.regeln.title[id],
+		html: meldungen.regeln.text[id],
+			// imageUrl: './images/regeln.png',
 		icon: 'info',
 		showCancelButton: false,
-		confirmButtonText: 'Alles klar!',
+		confirmButtonText: meldungen.regeln.confirm[0],
 	})
 }
 
@@ -184,10 +218,9 @@ function stagemsg(MissionZahl) {
 		},
 		title: '', // Titel wird in der HTML mitgeliefert
 		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl % 10],
-			// imageUrl: './images/tutorial.png',
 		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
 		showCancelButton: false,
-		confirmButtonText: 'EZ PZ Lemon Squeezy!',
+		confirmButtonText: meldungen.stages.confirm[0],
 	});
 }
 
@@ -234,6 +267,71 @@ function MissionWahl(MissionZahl) {
 		if (result.value) {
 			init(MissionZahl);
 		}
+	});
+}
+
+function tutorialmsg() {
+	// console.log(meldungen); // Testzwecke
+	Swal.fire({
+		customClass: {
+			container: 'firstmsgpopup',
+			confirmButton: 'confirm-button-firstmsg',
+		},
+		title: meldungen.tutorial.title[0],
+		html: meldungen.tutorial.text[0],
+			// imageUrl: './images/firstmsg.png',
+		icon: 'info',
+		showCancelButton: false,
+		confirmButtonText: meldungen.tutorial.confirm[0],
+	});
+}
+
+function diffimsg() {
+	// console.log(meldungen); // Testzwecke
+	Swal.fire({
+		customClass: {
+			container: 'diffipopup',
+			confirmButton: 'confirm-button-diffimsg',
+		},
+		input: 'select',
+		inputValue: '2',
+		inputOptions: {
+			'1': meldungen.schwierigkeit.grad[1],
+			'2': meldungen.schwierigkeit.grad[2],
+			// '3': meldungen.schwierigkeit.grad[3],
+		},
+		// inputPlaceholder: meldungen.schwierigkeit.placeholder[0],
+		title: meldungen.schwierigkeit.title[0],
+		html: meldungen.schwierigkeit.text[0],
+			// imageUrl: './images/firstmsg.png',
+		// icon: 'info',
+		showCancelButton: false,
+		confirmButtonText: 'Bin Bereit!',
+	})
+	.then((result) => {
+			easymode = result.value;			// Result gibt aus: " Value {'1'} " oder " Value {'2'} " oder " Value {'3'} "
+			
+			/*
+				Hier die Schwierigkeitsgrad-Optionen einstellen
+			*/
+
+			if (easymode == 1) {
+				stagereset = true;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('EasyMode Aktiviert');		// Für Testzwecke
+			}
+			else if (easymode == 2) {
+				stagereset = false;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('Normal Aktiviert');		// Für Testzwecke
+			}
+			else {
+				stagereset = false;		
+				timerZeitInSec = 120;	// Estmal auf 120 gelassen
+				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
+			}
 	});
 }
 
@@ -292,7 +390,7 @@ function gameOver(timerloss) {
 			if (result.value) {
 				if (stagereset == true) {		
 					punktereset = false;
-					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1     // ist aber noch problematisch wegen den Punkten
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
 				}
 				else {
 					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
@@ -301,13 +399,13 @@ function gameOver(timerloss) {
 				}
 			}
 			else {
-				window.location.href = '#page3';	// Für Testzwecke Page3 sonst auf Map Page2 
+				window.location.href = '#page1';	
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
 											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
 											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+		;  									
 	}
 	else {
 		Swal.fire({
@@ -325,7 +423,7 @@ function gameOver(timerloss) {
 			if (result.value) {
 				if (stagereset == true) {		
 					punktereset = false;
-					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1     // ist aber noch problematisch wegen den Punkten
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
 				}
 				else {
 					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
@@ -334,13 +432,13 @@ function gameOver(timerloss) {
 				}
 			}
 			else {
-				window.location.href = '#page3';	// Für Testzwecke Page3 sonst auf Map Page2 
+				window.location.href = '#page1';
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
 											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
 											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-		;  									// Für Testzwecke Page3 sonst auf Map Page2    Was tun wenn maxStage erreicht?
+		;  									
 	}
 }
 
@@ -354,117 +452,4 @@ function scoreAnzeige() {		// get by Name statt Class, da der Header immer fest 
 
 function missionScoreAnzeige() {
 	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
-}
-
-/*
-Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
-Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
-*/
-function setPolizeiPosition(versuche) {
-	var iframe = document.getElementById("iframegame");
-	var schritt = iframe.contentWindow.document.getElementById("move" + versuche);
-
-	/* Vorherigen Move verstecken, sofern nicht der Erste */
-	if (versuche > 1) {
-		var last = versuche - 1;
-		var schrittverbergen = iframe.contentWindow.document.getElementById("move" + last + "hide");
-		schrittverbergen.style.display = "none";
-	}
-
-	/* Diesen Move anzeigbar machen */
-	var schrittzeigen = iframe.contentWindow.document.getElementById("move" + versuche + "hide");
-	schrittzeigen.style.display = "flex";
-
-	/* Diesen Move starten */
-	schritt.beginElement();
-}
-
-function firstmsg() {
-	// console.log(meldungen); // Testzwecke
-	Swal.fire({
-		customClass: {
-			container: 'tutorialpopup',
-			confirmButton: 'confirm-button-tutorial',
-		},
-		input: 'select',
-		inputOptions: {
-			'1': 'EasyMode',
-			'2': 'Normal',
-			// '3': 'Schwer'
-		},
-		inputPlaceholder: 'Wähle eine Schwierigkeit',
-		title: meldungen.tutorial.title[0],
-		html: meldungen.tutorial.text[0],
-			// imageUrl: './images/firstmsg.png',
-		icon: 'info',
-		showCancelButton: false,
-		confirmButtonText: 'Bin Bereit!',
-	})
-	.then((result) => {
-			easymode = result.value;			// Result gibt aus: " Value {'1'} " oder 2 oder 3
-			
-			/*
-				Hier die Schwierigkeitsgrad-Optionen einstellen
-			*/
-
-			if (easymode == 1) {
-				stagereset = true;
-				timerZeitInSec = 120;
-				maxFails = 10;
-				console.log('EasyMode Aktiviert');		// Für Testzwecke
-			}
-			else if (easymode == 2) {
-				stagereset = false;
-				timerZeitInSec = 120;
-				maxFails = 10;
-				console.log('Normal Aktiviert');		// Für Testzwecke
-			}
-			else {
-				stagereset = false;		
-				timerZeitInSec = 120;	// Estmal auf 120 gelassen
-				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
-			}
-			// window.location.href = "#page3";		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
-	});
-}
-
-function setIp() {
-	document.getElementById('ip').innerHTML =
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	':' +
-	getRandomNumber(0, 65535);
-}
-
-
-function backtomap() {
-	swal.fire({
-		customClass: {
-			container: 'backtomappopup',
-			confirmButton: 'confirm-button-backtomap',
-			cancelButton: 'cancel-button-backtomap'
-		},
-		title: '',
-		html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonText: 'Ja, das ist mir zu Heikel',
-		cancelButtonText: 'Nein, hab mich nur verklickt',
-		reverseButtons: false,
-		allowOutsideClick: false
-	})
-	.then((result) => {
-		if (result.value) {
-			timerStop = true;
-			missionscore = 0;
-			level = (level - (level % 10) + 1);
-			resetGame('karte');				// Löst keine Spielstartmeldung aus
-			window.location.href = "#page3";		// Für Testzwecke hier page3, eigentlich auf Karte page2 !
-		}
-	});
 }
