@@ -23,7 +23,7 @@
         <!-- Erste page -->
         <div data-role="page" id="page1" data-theme="b" data-title="Hangman">
 
-                <header data-role="header" style="text-align: center">Hangman</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">Hangman</header>
                 <main data-role="content">
                         <div class="row">
                                 <div id="spielstand" class="miscdiv col-sm-6"><span id="level"></span> <br> <span
@@ -200,20 +200,31 @@
                                         <option value="spiele">Computerspiele</option>
                                         <option value="alk">Alk/Zigaretten</option>
                                 </select>
-                                -->
+                                
                                 <button class="ui-btn ui-btn-inline otherbtn"
                                         onclick="tutorialmsg(Math.floor(level / 10))">Regeln</button>
                                 <button class="ui-btn ui-btn-inline otherbtn"
                                         onclick="stagemsg(Math.floor(level % 10))">Mission</button>
+                                -->
+
                         </div>
                 </main>
                 <footer data-role="footer" data-position="fixed">
                         <div data-role="navbar">
                                 <ul>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="tutorialmsg(Math.floor(level / 10))">Regeln</button></li>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="stagemsg(Math.floor(level % 10))">Mission</button></li>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="backtomap()">Karte</button></li>
+                                
+                                                <!-- 
                                         <li><a href="#page1" class="ui-disabled" data-role="button"
                                                         data-transition="slidedown">Game</a></li>
                                         <li><a href="#page2" data-role="button" data-transition="slideup">Karte</a></li>
                                         <li><a href="#page3" data-role="button" data-transition="slideup">Info</a></li>
+                                        -->
                                 </ul>
                         </div><!-- /navbar -->
                 </footer>
@@ -221,7 +232,7 @@
         <!-- Zweite page -->
         <div data-role="page" id="page2" data-theme="b" data-title="Zweite page">
 
-                <header data-role="header" style="text-align: center">Karte</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">Karte</header>
 
                 <main data-role="content">
 
@@ -252,8 +263,8 @@
                 <footer data-role="footer" data-position="fixed">
                         <div data-role="navbar">
                                 <ul>
-                                        <li><a href="#page1" data-role="button" data-transition="slidedown">Game</a>
-                                        </li>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="firstmsg()">Tutorial & EasyMode</button></li>
                                         <li><a href="#page2" class="ui-disabled" data-role="button"
                                                         data-transition="slideup">Karte</a></li>
                                         <li><a href="#page3" data-role="button" data-transition="slideup">Info</a></li>
@@ -264,7 +275,7 @@
         <!-- Dritte page -->
         <div data-role="page" id="page3" data-theme="b" data-title="Zweite page">
 
-                <header data-role="header" style="text-align: center">Info</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">Info</header>
                 <main data-role="content">
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(11)">Level 1.1</button>
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(12)">Level 1.2</button>
@@ -275,8 +286,7 @@
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(31)">Level 3.1</button>
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(32)">Level 3.2</button>
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(33)">Level 3.3</button>
-                        <button id="firstmsgbtn"class="ui-btn ui-btn-inline otherbtn" onclick="firstmsg()">First Tutorial & EasyMode?</button>
-                        <p id="scoreanzeige" class="ui-btn ui-btn-inline otherbtn">Score: 0</p>
+                        <!-- <p class="scoreanzeige ui-btn ui-btn-inline otherbtn">Score: 0</p> -->
                         <button id="missionbtn1" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(11)"><img id="mission1img" class="missionimg" src="./images/mission1.png"></button>
                         <button id="missionbtn2" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(21)"><img id="mission2img" class="missionimg" src="./images/mission2.png"></button>  
                         <button id="missionbtn3" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(31)"><img id="mission3img" class="missionimg" src="./images/mission3.png"></button>         
@@ -284,12 +294,21 @@
                 <footer data-role="footer" data-position="fixed">
                         <div data-role="navbar">
                                 <ul>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="firstmsg()">Tutorial & EasyMode</button></li>
+                                        <li><a href="#page2" data-role="button" data-transition="slidedown">Karte</a>
+                                                </li>
+                                        <li><a href="#page3" class="ui-disabled" data-role="button"
+                                                data-transition="slideup">Info</a></li>
+
+                                        <!--
                                         <li><a href="#page1" data-role="button" data-transition="slidedown">Game</a>
                                         </li>
                                         <li><a href="#page2" data-role="button" data-transition="slidedown">Karte</a>
                                         </li>
                                         <li><a href="#page3" class="ui-disabled" data-role="button"
                                                         data-transition="slideup">Info</a></li>
+                                        -->
                                 </ul>
                         </div><!-- /navbar -->
                 </footer>
