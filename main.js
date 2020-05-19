@@ -247,7 +247,8 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				Swal.fire({
 					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
 					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
-					icon: 'success',
+					// icon: 'success',
+					imageUrl: './images/giphy.gif',			// Für Testzwecke
 					confirmButtonText: 'Weiter',
 					allowOutsideClick: false
 				})
