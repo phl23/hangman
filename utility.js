@@ -314,7 +314,7 @@ function gameOver(timerloss) {
 			title: 'Zeit abgelaufen!',
 			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
 			// icon: 'error',
-			imageUrl: './images/failtime.gif',			// Für Testzwecke
+			imageUrl: './images/fail.webp',				// Für Testzwecke
 			showCancelButton: true,
 			reverseButtons: true,
 			allowOutsideClick: false,
