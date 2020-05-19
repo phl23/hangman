@@ -245,7 +245,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 		})
 		.then((result) => {
 			if (result.value) {
-				if (stagereset = true) {
+				if (stagereset == true) {
 					init(level);		// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
 				}
 				else {
