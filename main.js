@@ -240,12 +240,13 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			icon: 'error',
 			showCancelButton: true,
 			reverseButtons: true,
+			allowOutsideClick: false,
 			confirmButtonText: 'Noch einmal Versuchen',
 			cancelButtonText: 'Zurück zur Karte'
 		})
 		.then((result) => {
 			if (result.value) {
-				if (stagereset = true) {
+				if (stagereset == true) {
 					init(level);		// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
 				}
 				else {
