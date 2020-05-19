@@ -240,6 +240,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			icon: 'error',
 			showCancelButton: true,
 			reverseButtons: true,
+			allowOutsideClick: false,
 			confirmButtonText: 'Noch einmal Versuchen',
 			cancelButtonText: 'Zurück zur Karte'
 		})
