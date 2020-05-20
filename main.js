@@ -13,7 +13,10 @@ var stagereset = false;																	// Soll bei Verloren die Stage neugestar
 var score = 0;																			// Startscore = 0
 var missionscore = 0;																	// Missionsscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
-var winCounter, failCounter, failCounterMission = 0;									// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
+var winCounter = 0;																		// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0 und Gesamtfail für Highscore?
+var failCounter = 0;
+var failCounterMission = 0;
+var failCounterGesamt = 0;
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
@@ -125,7 +128,7 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht fü
 	setIp();
 }
 
-function startGame(windowtarget) {
+function startGame() {
 /*
 Startet eine neue Spielrunde - behält Timer, Score, Level bei
 */
@@ -159,11 +162,7 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 	}
 	missionScoreAnzeige();
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
-	if (windowtarget != 'karte') {
-		stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2
-	}
-
-	
+	stagemsg(level);
 }
 
 function eliminate(buchstabe) {
@@ -213,14 +212,16 @@ Jeweilige Popup-Meldungen werden angezeigt.
 */
 	var punkte = 0;
 	if (winCounter == input.length) {
-		punkte = ((maxFails) - failCounterMission) * (timerZeitInSec-versuchsZeit);  // Maximale Fails pro Mission sind fails pro stage mal die anzahl an stages
+		punkte = ((maxFails) - failCounter) * (timerZeitInSec-versuchsZeit); 
 		missionscore = missionscore + punkte;
 		missionScoreAnzeige();
 		if (level == maxLevel) {				// Spiel komplett gewonnen!
 			score = missionscore + score;
+			failCounterGesamt = failCounterMission + failCounterGesamt;
 			timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 			scoreAnzeige();
 			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
+			return;
 		}
 		else {					// Stage gewonnen!
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
@@ -228,7 +229,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				timerStop = true;
 				Swal.fire({
 					title: 'Richtig!',
-					html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + ((maxFails) - failCounterMission) + ' = ' + punkte + ' Punkte erreicht!<br>(verbleibende Sekunden x verbleibende Fehler)',
+					html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + ((maxFails) - failCounter) + ' = ' + punkte + ' Punkte erreicht!<br>(verbleibende Sekunden x verbleibende Fehler)',
 					icon: 'success',
 					confirmButtonText: 'Weiter',
 					allowOutsideClick: false
@@ -245,9 +246,9 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				});
 			}
 			else {				// Hier passiert das was bei Missionsabschluss passiert
-				score = missionscore + score;
-				scoreAnzeige();
 				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
+				score = missionscore + score;
+				failCounterGesamt = failCounterMission + failCounterGesamt;
 				Swal.fire({
 					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
 					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
@@ -260,11 +261,14 @@ Jeweilige Popup-Meldungen werden angezeigt.
 					if (result.value) {
 						window.location.href = '#page1';  
 					}
-				  });			
-			}			
+				  });
+				failCounterMission = 0;
+				scoreAnzeige();
+			}
 		}		
 	}
 	if (failCounter == maxFails) {
+		failCounterGesamt = failCounterMission + failCounterGesamt;
 		gameOver();
 	}
 }

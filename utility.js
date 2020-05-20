@@ -185,8 +185,10 @@ function backtomap() {
 		if (result.value) {
 			timerStop = true;
 			missionscore = 0;
-			level = (level - (level % 10) + 1);
-			resetGame('karte');				// Löst keine Spielstartmeldung aus
+			failCounterGesamt = failCounterMission + failCounterGesamt;			// Übernimmt die Fehler in die Gesamtwertung auch bei Abbruch! Soll das? Wegen Highscore?
+			failCounterMission = 0;
+			scoreAnzeige();
+			resetGame();
 			window.location.href = "#page1";
 		}
 	});
@@ -249,7 +251,7 @@ function siegmsg(id) {
 			confirmButton: 'confirm-button-siegmsg',
 		},
 		title: 'Du hast es geschafft!',
-		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
+		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br>Gesamte Fehler: ' + failCounterGesamt + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
 			// imageUrl: './images/siegmsg.png',
 		icon: 'success',
 		showCancelButton: false,
@@ -390,41 +392,8 @@ function startTimer(zeitInSec) {
 }
 
 function gameOver(timerloss) {
-	if (timerloss != true) {
-		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
-		Swal.fire({
-			title: 'Verloren!',
-			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
-			// icon: 'error',
-			imageUrl: './images/fail.webp',			// Für Testzwecke
-			showCancelButton: true,
-			reverseButtons: true,
-			allowOutsideClick: false,
-			confirmButtonText: 'Noch einmal Versuchen',
-			cancelButtonText: 'Zurück zur Karte'
-		})
-		.then((result) => {
-			if (result.value) {
-				if (stagereset == true) {		
-					punktereset = false;
-					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
-				}
-				else {
-					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
-					punktereset = true;
-					startGame()
-				}
-			}
-			else {
-				window.location.href = '#page1';	
-			}
-		  });
-											   // Bei max Fails Zurück auf Missionsstart
-											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
-											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-		;  									
-	}
-	else {
+	if (timerloss == true) {
+		
 		Swal.fire({
 			title: 'Zeit abgelaufen!',
 			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
@@ -449,7 +418,45 @@ function gameOver(timerloss) {
 				}
 			}
 			else {
+				scoreAnzeige();
+				failCounterMission = 0;
 				window.location.href = '#page1';
+			}
+		  });
+											   // Bei max Fails Zurück auf Missionsstart
+											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
+											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
+		;		  									
+	}
+	else {
+		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
+		Swal.fire({
+			title: 'Busted!',
+			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
+			// icon: 'error',
+			imageUrl: './images/fail.webp',			// Für Testzwecke
+			showCancelButton: true,
+			reverseButtons: true,
+			allowOutsideClick: false,
+			confirmButtonText: 'Noch einmal Versuchen',
+			cancelButtonText: 'Zurück zur Karte'
+		})
+		.then((result) => {
+			if (result.value) {
+				if (stagereset == true) {		
+					punktereset = false;
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+				}
+				else {
+					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					punktereset = true;
+					startGame()
+				}
+			}
+			else {
+				scoreAnzeige();
+				failCounterMission = 0;
+				window.location.href = '#page1';	
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
@@ -459,11 +466,11 @@ function gameOver(timerloss) {
 	}
 }
 
-function scoreAnzeige() {		// get by Name statt Class, da der Header immer fest class von Bootstrap bekommt
+function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste class von Bootstrap bekommt
 	var myClasses = document.getElementsByName("scoreanzeige");
 
 	for (var i = 0; i < myClasses.length; i++) {
-  	myClasses[i].innerHTML = score + ' Gesamtpunkte';
+  	myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
   	}
 }
 
