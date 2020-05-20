@@ -23,7 +23,7 @@
         <!-- Karte page -->
         <div name="Karte" data-role="page" id="page1" data-theme="b" data-title="Karte">
 
-                <header name="scoreanzeige" data-role="header" style="text-align: center">Karte</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
 
                 <main data-role="content">
                         <button class="ui-btn ui-btn-inline otherbtn" onclick="init(11)">Level 1.1</button>
@@ -63,12 +63,17 @@
         <!-- Hangman page -->
         <div name="Hangman" data-role="page" id="page2" data-theme="b" data-title="Hangman">
 
-                <header name="scoreanzeige" data-role="header" style="text-align: center">Hangman</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
 
                 <main data-role="content">
                         <div class="row">
-                                <div id="spielstand" class="miscdiv col-sm-6"><span id="level"></span> <br> <span
-                                                id="score"></span></div>
+                                <div id="spielstand" class="miscdiv col-sm-6">
+                                        <span id="level"></span>
+                                        <br> 
+                                        <span id="score"></span>
+                                        <br> 
+                                        <span id="fails">0 Fehler</span>
+                                </div>
                                 <div id="timer" class="miscdiv col-sm-6"></div>
                         </div>
 
@@ -265,7 +270,7 @@
         <!-- Info page -->
         <div name="Info" data-role="page" id="page3" data-theme="b" data-title="Info">
 
-                <header name="scoreanzeige" data-role="header" style="text-align: center">Info</header>
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
 
                 <main data-role="content">
 

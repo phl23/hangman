@@ -165,176 +165,6 @@ function setIp() {
 	getRandomNumber(0, 65535);
 }
 
-function backtomap() {
-	swal.fire({
-		customClass: {
-			container: 'backtomappopup',
-			confirmButton: 'confirm-button-backtomap',
-			cancelButton: 'cancel-button-backtomap'
-		},
-		title: '',
-		html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonText: 'Ja, das ist mir zu Heikel',
-		cancelButtonText: 'Nein, hab mich nur verklickt',
-		reverseButtons: false,
-		allowOutsideClick: false
-	})
-	.then((result) => {
-		if (result.value) {
-			timerStop = true;
-			missionscore = 0;
-			level = (level - (level % 10) + 1);
-			resetGame('karte');				// Löst keine Spielstartmeldung aus
-			window.location.href = "#page1";
-		}
-	});
-}
-
-
-function regelnmsg(id) {
-	// console.log(meldungen); // Testzwecke
-	swal.fire({
-		customClass: {
-			container: 'regelnpopup',
-			confirmButton: 'confirm-button-regeln',
-		},
-		title: meldungen.regeln.title[id],
-		html: meldungen.regeln.text[id],
-			// imageUrl: './images/regeln.png',
-		icon: 'info',
-		showCancelButton: false,
-		confirmButtonText: meldungen.regeln.confirm[0],
-	})
-}
-
-function stagemsg(MissionZahl) {
-	// console.log(meldungen); // Testzwecke
-	swal.fire({
-		customClass: {
-			container: 'stagemsgpopup',
-			confirmButton: 'confirm-button-stagemsg',
-		},
-		title: '', // Titel wird in der HTML mitgeliefert
-		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl % 10],
-		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
-		showCancelButton: false,
-		confirmButtonText: meldungen.stages.confirm[0],
-	});
-}
-
-function siegmsg(id) {
-	// console.log(meldungen); // Testzwecke
-	swal.fire({
-		customClass: {
-			container: 'siegmsgpopup',
-			confirmButton: 'confirm-button-siegmsg',
-		},
-		title: 'Du hast es geschafft!',
-		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
-			// imageUrl: './images/siegmsg.png',
-		icon: 'success',
-		showCancelButton: false,
-		allowOutsideClick: false,
-		allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
-		confirmButtonText: 'Katsching! Gimme ma moneh!',
-	})
-	.then((result) => {
-		if (result.value) {
-		  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-		}
-	  });
-}
-
-function MissionWahl(MissionZahl) {
-	// console.log(meldungen); // Testzwecke
-	swal.fire({
-		customClass: {
-			container: 'missionwahlpopup',
-			confirmButton: 'confirm-button-map',
-			cancelButton: 'cancel-button-map'
-		},
-		title: meldungen.location.title[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		html: meldungen.location.text[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		imageUrl: './images/mission' + (MissionZahl / 10 - 0.1) + '.png',  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		showCancelButton: true,
-		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
-		cancelButtonText: 'Zurück zur Karte',
-		reverseButtons: true
-	})
-	.then((result) => {
-		if (result.value) {
-			init(MissionZahl);
-		}
-	});
-}
-
-function tutorialmsg() {
-	// console.log(meldungen); // Testzwecke
-	Swal.fire({
-		customClass: {
-			container: 'firstmsgpopup',
-			confirmButton: 'confirm-button-firstmsg',
-		},
-		title: meldungen.tutorial.title[0],
-		html: meldungen.tutorial.text[0],
-			// imageUrl: './images/firstmsg.png',
-		icon: 'info',
-		showCancelButton: false,
-		confirmButtonText: meldungen.tutorial.confirm[0],
-	});
-}
-
-function diffimsg() {
-	// console.log(meldungen); // Testzwecke
-	Swal.fire({
-		customClass: {
-			container: 'diffipopup',
-			confirmButton: 'confirm-button-diffimsg',
-		},
-		input: 'select',
-		inputValue: '2',
-		inputOptions: {
-			'1': meldungen.schwierigkeit.grad[1],
-			'2': meldungen.schwierigkeit.grad[2],
-			// '3': meldungen.schwierigkeit.grad[3],
-		},
-		// inputPlaceholder: meldungen.schwierigkeit.placeholder[0],
-		title: meldungen.schwierigkeit.title[0],
-		html: meldungen.schwierigkeit.text[0],
-			// imageUrl: './images/firstmsg.png',
-		// icon: 'info',
-		showCancelButton: false,
-		confirmButtonText: 'Bin Bereit!',
-	})
-	.then((result) => {
-			easymode = result.value;			// Result gibt aus: " Value {'1'} " oder " Value {'2'} " oder " Value {'3'} "
-			
-			/*
-				Hier die Schwierigkeitsgrad-Optionen einstellen
-			*/
-
-			if (easymode == 1) {
-				stagereset = true;
-				timerZeitInSec = 120;
-				maxFails = 10;
-				console.log('EasyMode Aktiviert');		// Für Testzwecke
-			}
-			else if (easymode == 2) {
-				stagereset = false;
-				timerZeitInSec = 120;
-				maxFails = 10;
-				console.log('Normal Aktiviert');		// Für Testzwecke
-			}
-			else {
-				stagereset = false;		
-				timerZeitInSec = 120;	// Estmal auf 120 gelassen
-				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
-			}
-	});
-}
-
 function startTimer(zeitInSec) {
 	// console.log('timer started'); // Testzwecke
 	if (level % 10 == 1) {						// Checkt ob erste Stage oder spätere, bei späteren stages läuft der timer weiter
@@ -372,11 +202,250 @@ function startTimer(zeitInSec) {
 	}, 1000);		// ms pro Tick des Intervalls
 }
 
+function backtomap() {
+	swal.fire({
+		customClass: {
+			container: 'backtomappopup',
+			confirmButton: 'confirm-button-backtomap',
+			cancelButton: 'cancel-button-backtomap'
+		},
+		title: '',
+		html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ja, das ist mir zu Heikel',
+		cancelButtonText: 'Nein, hab mich nur verklickt',
+		reverseButtons: false,
+		animation: false,
+		grow: false,
+		allowOutsideClick: false
+	})
+	.then((result) => {
+		if (result.value) {
+			timerStop = true;
+			missionscore = 0;
+			failCounterGesamt = failCounterMission + failCounterGesamt;			// Übernimmt die Fehler in die Gesamtwertung auch bei Abbruch! Soll das? Wegen Highscore?
+			failCounterMission = 0;
+			versuchsZeit = 0;
+			missionsZeit = 0;
+			scoreAnzeige();
+			resetGame();
+			window.location.href = "#page1";
+			// $.mobile.changePage("#page1",{transition:"slide"});  // Slide Effekt? 
+		}
+	});
+}
+
+function regelnmsg(id) {
+	// console.log(meldungen); // Testzwecke
+	swal.fire({
+		customClass: {
+			container: 'regelnpopup',
+			confirmButton: 'confirm-button-regeln',
+		},
+		title: meldungen.regeln.title[id],
+		html: meldungen.regeln.text[id],
+			// imageUrl: './images/regeln.png',
+		icon: 'info',
+		showCancelButton: false,
+		animation: false,
+		grow: false,
+		confirmButtonText: meldungen.regeln.confirm[0],
+	})
+}
+
+function stagemsg(MissionZahl) {
+	var zeroM, zeroS;
+	var mins = Math.floor(timerLeft / 60);
+	var secs = Math.floor(timerLeft % 60);
+	if (secs >= 10) {
+		zeroS = '';
+	} else {
+		zeroS = '0';
+	}
+	if (mins >= 10) {
+		zeroM = '';
+	} else {
+		zeroM = '0';
+	}
+	document.getElementById('timer').innerHTML = zeroM + mins + ':' + zeroS + secs;
+	failAnzeige();		// Fix damit die Fehler schon bei der Stagemsg auf 0 angezeigt werden
+	// Stagemsg
+	swal.fire({
+		customClass: {
+			container: 'stagemsgpopup',
+			confirmButton: 'confirm-button-stagemsg',
+		},
+		title: '', // Titel wird in der HTML mitgeliefert
+		html: meldungen.stages["mission" + Math.floor(level / 10)][MissionZahl % 10],
+		imageUrl: './images/mission' + Math.floor(level / 10) + '.png',
+		showCancelButton: false,
+		animation: false,
+		grow: false,
+		confirmButtonText: meldungen.stages.confirm[0],
+	});
+}
+
+function siegmsg(id) {
+	// console.log(meldungen); // Testzwecke
+	swal.fire({
+		customClass: {
+			container: 'siegmsgpopup',
+			confirmButton: 'confirm-button-siegmsg',
+		},
+		title: 'Du hast es geschafft!',
+		html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br>Gesamte Fehler: ' + failCounterGesamt + '<br><br>' + meldungen.sieg[id],    // ID: 0 ist der komplette Sieg
+			// imageUrl: './images/siegmsg.png',
+		icon: 'success',
+		showCancelButton: false,
+		allowOutsideClick: false,
+		animation: true,
+		grow: false,
+		allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
+		confirmButtonText: 'Katsching! Gimme ma moneh!',
+	})
+	.then((result) => {
+		if (result.value) {
+		  window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+		}
+	  });
+}
+
+function MissionWahl(MissionZahl) {
+	// console.log(meldungen); // Testzwecke
+	swal.fire({
+		customClass: {
+			container: 'missionwahlpopup',
+			confirmButton: 'confirm-button-map',
+			cancelButton: 'cancel-button-map'
+		},
+		title: meldungen.location.title[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		html: meldungen.location.text[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		imageUrl: './images/mission' + (MissionZahl / 10 - 0.1) + '.png',  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		showCancelButton: true,
+		confirmButtonText: 'Starte Mission ' + (MissionZahl / 10 - 0.1),  // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
+		cancelButtonText: 'Zurück zur Karte',
+		grow: false,
+		animation: true,
+		reverseButtons: true
+	})
+	.then((result) => {
+		if (result.value) {
+			init(MissionZahl);
+		}
+	});
+}
+
+function tutorialmsg() {
+	// console.log(meldungen); // Testzwecke
+	Swal.fire({
+		customClass: {
+			container: 'firstmsgpopup',
+			confirmButton: 'confirm-button-firstmsg',
+		},
+		title: meldungen.tutorial.title[0],
+		html: meldungen.tutorial.text[0],
+			// imageUrl: './images/firstmsg.png',
+		icon: 'info',
+		showCancelButton: false,
+		animation: false,
+		grow: false,
+		confirmButtonText: meldungen.tutorial.confirm[0],
+	});
+}
+
+function diffimsg() {
+	// console.log(meldungen); // Testzwecke
+	Swal.fire({
+		customClass: {
+			container: 'diffipopup',
+			confirmButton: 'confirm-button-diffimsg',
+		},
+		input: 'select',
+		inputValue: '2',
+		inputOptions: {
+			'1': meldungen.schwierigkeit.grad[1],
+			'2': meldungen.schwierigkeit.grad[2],
+			// '3': meldungen.schwierigkeit.grad[3],
+		},
+		// inputPlaceholder: meldungen.schwierigkeit.placeholder[0],
+		title: meldungen.schwierigkeit.title[0],
+		html: meldungen.schwierigkeit.text[0],
+			// imageUrl: './images/firstmsg.png',
+		// icon: 'info',
+		showCancelButton: false,
+		animation: false,
+		grow: false,
+		confirmButtonText: 'Bin Bereit!',
+	})
+	.then((result) => {
+			easymode = result.value;			// Result gibt aus: " Value {'1'} " oder " Value {'2'} " oder " Value {'3'} "
+			
+			/*
+				Hier die Schwierigkeitsgrad-Optionen einstellen
+			*/
+
+			if (easymode == 1) {
+				stagereset = true;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('EasyMode Aktiviert');		// Für Testzwecke
+			}
+			else if (easymode == 2) {
+				stagereset = false;
+				timerZeitInSec = 120;
+				maxFails = 10;
+				console.log('Normal Aktiviert');		// Für Testzwecke
+			}
+			else {
+				stagereset = false;		
+				timerZeitInSec = 120;	// Estmal auf 120 gelassen
+				maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
+			}
+	});
+}
+
 function gameOver(timerloss) {
-	if (timerloss != true) {
+	if (timerloss == true) {
+		
+		Swal.fire({
+			title: 'Zeit abgelaufen!',
+			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
+			// icon: 'error',
+			imageUrl: './images/fail.webp',				// Für Testzwecke
+			showCancelButton: true,
+			reverseButtons: true,
+			allowOutsideClick: false,
+			confirmButtonText: 'Noch einmal Versuchen',
+			cancelButtonText: 'Zurück zur Karte'
+		})
+		.then((result) => {
+			if (result.value) {
+				if (stagereset == true) {		 // stagereset wird durch den Schwierigkeitsgrad bestimmt
+					punktereset = false;
+					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+				}
+				else {
+					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+					punktereset = true;
+					startGame()
+				}
+			}
+			else {
+				scoreAnzeige();
+				failCounterMission = 0;
+				window.location.href = '#page1';
+			}
+		  });
+											   // Bei max Fails Zurück auf Missionsstart
+											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
+											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
+		;		  									
+	}
+	else {
 		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 		Swal.fire({
-			title: 'Verloren!',
+			title: 'Busted!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
 			// icon: 'error',
 			imageUrl: './images/fail.webp',			// Für Testzwecke
@@ -399,40 +468,9 @@ function gameOver(timerloss) {
 				}
 			}
 			else {
+				scoreAnzeige();
+				failCounterMission = 0;
 				window.location.href = '#page1';	
-			}
-		  });
-											   // Bei max Fails Zurück auf Missionsstart
-											// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
-											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-		;  									
-	}
-	else {
-		Swal.fire({
-			title: 'Zeit abgelaufen!',
-			text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
-			// icon: 'error',
-			imageUrl: './images/fail.webp',				// Für Testzwecke
-			showCancelButton: true,
-			reverseButtons: true,
-			allowOutsideClick: false,
-			confirmButtonText: 'Noch einmal Versuchen',
-			cancelButtonText: 'Zurück zur Karte'
-		})
-		.then((result) => {
-			if (result.value) {
-				if (stagereset == true) {		
-					punktereset = false;
-					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
-				}
-				else {
-					level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
-					punktereset = true;
-					startGame()
-				}
-			}
-			else {
-				window.location.href = '#page1';
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
@@ -442,12 +480,16 @@ function gameOver(timerloss) {
 	}
 }
 
-function scoreAnzeige() {		// get by Name statt Class, da der Header immer fest class von Bootstrap bekommt
+function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste class von Bootstrap bekommt
 	var myClasses = document.getElementsByName("scoreanzeige");
 
 	for (var i = 0; i < myClasses.length; i++) {
-  	myClasses[i].innerHTML = score + ' Gesamtpunkte';
+  	myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
   	}
+}
+
+function failAnzeige() {
+	document.getElementById('fails').innerHTML = failCounter + ' Fehler';
 }
 
 function missionScoreAnzeige() {

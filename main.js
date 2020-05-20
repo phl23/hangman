@@ -13,7 +13,10 @@ var stagereset = false;																	// Soll bei Verloren die Stage neugestar
 var score = 0;																			// Startscore = 0
 var missionscore = 0;																	// Missionsscore = 0
 //var score = parseInt(localStorage.getItem('savedScore'));								// Evtl. Spielstand aus dem localStorage, siehe Z. 8
-var winCounter, failCounter, failCounterMission = 0;									// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0
+var winCounter = 0;																		// Gewinn- und Verlustzähler für die Gewinnabfrage [function checkWin()] = 0 und Gesamtfail für Highscore?
+var failCounter = 0;
+var failCounterMission = 0;
+var failCounterGesamt = 0;
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
@@ -22,6 +25,7 @@ var scorereset = false;																	// Hilfsvariable um die Score bei Fehlve
 var timerLeft = timerZeitInSec;															// Hilfsvariable für Pause zwischen Stages
 var verbleibendeZeit = 0;																// Hilfvariable für timer
 var versuchsZeit = 0;																	// Zähler für verbrauchte Zeit im jeweiligen Versuch
+var missionsZeit = 0;																	// Zähler für verbrauchte Zeit in der jeweiligen Mission
 var usedWords = [];																		// Array für bereits genutzte Wörter, um Doppel-Verwendungen zu umgehen
 var keys = [																			// Array mit validen Tastatureingaben
 	'Q',
@@ -96,6 +100,8 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
 	window.location.href = '#page2';  // Gehe auf Seite 2 (Spiel)
 	missionscore = 0;
+	missionsZeit = 0;
+	versuchsZeit = 0;
 	startGame();
 	 
 }
@@ -110,8 +116,8 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht fü
 	}
 	winCounter = 0;
 	failCounter = 0;
+	versuchsZeit = 0;
 	if (level % 10 == 1) {			// wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
-		versuchsZeit = 0;
 		failCounterMission = 0;
 	}
 	firstButtonPressed = false;
@@ -125,7 +131,7 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht fü
 	setIp();
 }
 
-function startGame(windowtarget) {
+function startGame() {
 /*
 Startet eine neue Spielrunde - behält Timer, Score, Level bei
 */
@@ -155,15 +161,17 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 	inputToHangman(input);
 	if (punktereset == true) {
 		missionscore = 0;
+		missionsZeit = 0;
 		punktereset = false;
 	}
+
 	missionScoreAnzeige();
 	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
-	if (windowtarget != 'karte') {
-		stagemsg(level);	// Modulus 10 weitergeben, damit es unabhängig von der Mission ist. z.b. level 32 ist Misison 3 Stage 2
+	// Kleiner Fix, damit die verbleibende Zeit angezeigt wird bevor man die Stagemsg bestätigt
+	if (level % 10 == 1) {
+		timerLeft = timerZeitInSec;		// Setzt den Timer in der ersten Stage immer auf timerZeitInSec (z.b. 120)
 	}
-
-	
+	stagemsg(level);
 }
 
 function eliminate(buchstabe) {
@@ -183,6 +191,7 @@ Kernfunktion des Spiels
 			failCounter++;
 			failCounterMission++;
 			setPolizeiPosition(failCounter);	// ruft Function auf um das PolizeiFahrzeug zu bewegen
+			failAnzeige();		// Für Testzwecke
 		} else {	// Wenn ein index gefunden wird:
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
@@ -213,24 +222,31 @@ Jeweilige Popup-Meldungen werden angezeigt.
 */
 	var punkte = 0;
 	if (winCounter == input.length) {
-		punkte = ((maxFails) - failCounterMission) * (timerZeitInSec-versuchsZeit);  // Maximale Fails pro Mission sind fails pro stage mal die anzahl an stages
+		punkte = ((maxFails) - failCounter) * (timerZeitInSec-versuchsZeit); // MaxZeit - gebrauchte Zeit in der Stage x Fehler übrig    Punkte erreicht
 		missionscore = missionscore + punkte;
+		missionsZeit = versuchsZeit + missionsZeit;
 		missionScoreAnzeige();
 		if (level == maxLevel) {				// Spiel komplett gewonnen!
 			score = missionscore + score;
+			failCounterGesamt = failCounterMission + failCounterGesamt;
 			timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 			scoreAnzeige();
 			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
+			return;
 		}
 		else {					// Stage gewonnen!
+			// Hier nächste Stage
 			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
 				timerLeft = verbleibendeZeit;
+
 				timerStop = true;
 				Swal.fire({
 					title: 'Richtig!',
-					html: input + ' war richtig.<br>Du hast '+(timerZeitInSec-versuchsZeit)+' x ' + ((maxFails) - failCounterMission) + ' = ' + punkte + ' Punkte erreicht!<br>(verbleibende Sekunden x verbleibende Fehler)',
+					html: input + ' war richtig.<br>Du hast ' + punkte + ' Punkte erreicht!<br>(' + timerZeitInSec + ' - gebrauchte Sekunden [' + versuchsZeit + '] ) x ( ' + maxFails + ' - Fehleranzahl [' + failCounter + '] )',
 					icon: 'success',
 					confirmButtonText: 'Weiter',
+					animation: true,
+					grow: false,
 					allowOutsideClick: false
 				})
 				.then((result) => {
@@ -244,27 +260,33 @@ Jeweilige Popup-Meldungen werden angezeigt.
 					}
 				});
 			}
-			else {				// Hier passiert das was bei Missionsabschluss passiert
-				score = missionscore + score;
-				scoreAnzeige();
+			else {		// Hier passiert das was bei Missionsabschluss passiert
 				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
+				score = missionscore + score;
+				failCounterGesamt = failCounterMission + failCounterGesamt;
 				Swal.fire({
 					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
-					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
+					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Stagepunkte: ' + punkte + '<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
 					// icon: 'success',
 					imageUrl: './images/giphy.gif',			// Für Testzwecke
 					confirmButtonText: 'Weiter',
+					animation: true,
+					grow: false,
 					allowOutsideClick: false
 				})
 				.then((result) => {
 					if (result.value) {
 						window.location.href = '#page1';  
 					}
-				  });			
-			}			
+				  });
+				failCounterMission = 0;
+				missionsZeit = 0;
+				scoreAnzeige();
+			}
 		}		
 	}
 	if (failCounter == maxFails) {
+		failCounterGesamt = failCounterMission + failCounterGesamt;
 		gameOver();
 	}
 }
