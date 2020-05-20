@@ -192,7 +192,6 @@ function backtomap() {
 	});
 }
 
-
 function regelnmsg(id) {
 	// console.log(meldungen); // Testzwecke
 	swal.fire({
@@ -210,7 +209,25 @@ function regelnmsg(id) {
 }
 
 function stagemsg(MissionZahl) {
-	// console.log(meldungen); // Testzwecke
+	// Kleiner Fix, damit die verbleibende Zeit angezeigt wird bevor man die Stagemsg bestätigt
+	if (stagereset == false) {
+		timerLeft = timerZeitInSec;		// Falls Easy Mode nicht gewählt wurde startet man eh immer bei der Startstage mit voller Zeit
+	}
+	var zeroM, zeroS;
+	var mins = Math.floor(timerLeft / 60);
+	var secs = Math.floor(timerLeft % 60);
+	if (secs >= 10) {
+		zeroS = '';
+	} else {
+		zeroS = '0';
+	}
+	if (mins >= 10) {
+		zeroM = '';
+	} else {
+		zeroM = '0';
+	}
+	document.getElementById('timer').innerHTML = zeroM + mins + ':' + zeroS + secs;
+	// Stagemsg
 	swal.fire({
 		customClass: {
 			container: 'stagemsgpopup',
@@ -421,7 +438,7 @@ function gameOver(timerloss) {
 		})
 		.then((result) => {
 			if (result.value) {
-				if (stagereset == true) {		
+				if (stagereset == true) {		 // stagereset wird durch den Schwierigkeitsgrad bestimmt
 					punktereset = false;
 					startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
 				}
