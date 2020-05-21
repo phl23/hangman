@@ -133,6 +133,11 @@ function setMap(missionnr) {
 	document.getElementById('iframegame').src = './map-game' + missionnr + '.html';
 }
 
+function flashTerminal() {
+	$("#greyflash").fadeIn(100,'swing').fadeOut(150,'swing');
+	$("#greenflash").fadeIn(150,'swing').fadeOut(100,'swing');
+}
+
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
 Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
