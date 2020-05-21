@@ -66,13 +66,16 @@
                 <!--
                 <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
                 -->
-                <header id="gameheader" data-role="header" style="text-align: center">
+                <header id="gameheader" data-role="header" style="z-index:99; text-align: center">
                         <span id="level"></span><span id="timer"></span><span id="fails"></span>
                 </header>
 
 
                 <main data-role="content">
+                        <div id="redloose"></div>
                         
+                        <div class="spacer1 spacermobilehide"></div>
+
                         <div class="row">
                                  
                                 <div style="display:none;" id="spielstand" class="miscdiv col-sm-6">
@@ -105,6 +108,8 @@
 
 
                                                 <iframe src="./map-game1.html" id="iframegame"  class="iframeMission" seamless></iframe>
+                                                <div id="redflash"></div>
+                                                <div id="blueflash"></div>
                                         </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -127,6 +132,8 @@
                                                                         </div>
                                                                 </div>
                                                         </div>
+                                                        <div id="green2flash"></div>
+                                                        <div id="greenflash"></div>
                                                 </div>
                                         </div>
                                 </div>

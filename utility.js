@@ -133,6 +133,11 @@ function setMap(missionnr) {
 	document.getElementById('iframegame').src = './map-game' + missionnr + '.html';
 }
 
+function flashTerminal() {
+	$("#greyflash").fadeIn(100,'swing').fadeOut(150,'swing');
+	$("#greenflash").fadeIn(150,'swing').fadeOut(100,'swing');
+}
+
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
 Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
@@ -154,6 +159,22 @@ function setPolizeiPosition(versuche) {
 
 	/* Diesen Move starten */
 	schritt.beginElement();
+
+	/* Flash Effekt */
+
+	$("#redflash").fadeIn(150,'swing').fadeOut(250,'swing').fadeIn(150,'swing').fadeOut(250,'swing');
+	$("#blueflash").fadeIn(250,'swing').fadeOut(150,'swing').fadeIn(250,'swing').fadeOut(150,'swing');
+	
+	/*	Nacheinander? 
+	$("#redflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+		$("#blueflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+			$("#redflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+				$("#blueflash").fadeIn(850,'swing').fadeOut(850,'swing');
+			})
+		})
+	})
+	*/
+	
 }
 
 function startTimer(zeitInSec) {

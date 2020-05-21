@@ -172,7 +172,10 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 	if (level % 10 == 1) {
 		timerLeft = timerZeitInSec;		// Setzt den Timer in der ersten Stage immer auf timerZeitInSec (z.b. 120)
 	}
-	stagemsg(level);
+	$("#redloose").fadeOut(100,'swing', function() {		// Roten Verloren Bildschrim entfernen
+		stagemsg(level);
+	});
+	
 }
 
 function eliminate(buchstabe) {
@@ -203,6 +206,7 @@ Kernfunktion des Spiels
 					}
 					index++;	// index wird um 1 erhöht, dass Wort wird nach weiterem Vorkommen des Buchstabens durchsucht
 					document.getElementById(buchstabe + 'key').disabled = true;			// Blendet richtige Buchstaben aus
+					flashTerminal();
 				}
 			}
 		}
@@ -288,7 +292,9 @@ Jeweilige Popup-Meldungen werden angezeigt.
 	}
 	if (failCounter == maxFails) {
 		failCounterGesamt = failCounterMission + failCounterGesamt;
-		gameOver();
+		$("#redloose").fadeIn(850,'swing', function() {
+			gameOver();
+		})
 	}
 }
 
