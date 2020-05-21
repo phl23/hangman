@@ -285,3 +285,22 @@ g {
   stroke-width:4;
   stroke-miterlimit:10;
 }
+
+#redflash, #blueflash {
+  display: none;
+  width: 170%;
+  height: 170%;
+  position: absolute;
+  top: -90px;
+  left: -120px;
+  
+}
+#redflash {
+  background: radial-gradient(ellipse farthest-side, rgba(255, 35, 35), rgba(0, 0, 0, 0) 80%);
+  /*background-color: rgba(255, 35, 35, 0.507);*/
+  z-index: 10;
+}
+#blueflash {
+  background: radial-gradient(circle farthest-side, rgba(21, 115, 255, 0.514), rgba(0, 0, 0, 0) 80%);
+  z-index: 20;
+}

@@ -154,6 +154,22 @@ function setPolizeiPosition(versuche) {
 
 	/* Diesen Move starten */
 	schritt.beginElement();
+
+	/* Flash Effekt */
+
+	$("#redflash").fadeIn(150,'swing').fadeOut(250,'swing').fadeIn(150,'swing').fadeOut(250,'swing');
+	$("#blueflash").fadeIn(250,'swing').fadeOut(150,'swing').fadeIn(250,'swing').fadeOut(150,'swing');
+	
+	/*	Nacheinander? 
+	$("#redflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+		$("#blueflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+			$("#redflash").fadeIn(850,'swing').fadeOut(850,'swing', function() {
+				$("#blueflash").fadeIn(850,'swing').fadeOut(850,'swing');
+			})
+		})
+	})
+	*/
+	
 }
 
 function startTimer(zeitInSec) {
