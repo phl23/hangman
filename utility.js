@@ -196,7 +196,7 @@ function startTimer(zeitInSec) {
 		} else {
 			zeroM = '0';
 		}
-		document.getElementById('timer').innerHTML = zeroM + mins + ':' + zeroS + secs;
+		document.getElementById('timer').innerHTML = 'Zeit: ' + zeroM + mins + ':' + zeroS + secs;
 		if (verbleibendeZeit < 0) {
 			clearInterval(x);
 			document.getElementById('timer').innerHTML = 'GAME OVER';
@@ -257,7 +257,7 @@ function regelnmsg(id) {
 }
 
 function stagemsg(MissionZahl) {
-	var zeroM, zeroS;
+	var zeroM, zeroS;		// Fix damit die Zeit schon bei der Stagemsg angezeigt wird
 	var mins = Math.floor(timerLeft / 60);
 	var secs = Math.floor(timerLeft % 60);
 	if (secs >= 10) {
@@ -270,7 +270,7 @@ function stagemsg(MissionZahl) {
 	} else {
 		zeroM = '0';
 	}
-	document.getElementById('timer').innerHTML = zeroM + mins + ':' + zeroS + secs;
+	document.getElementById('timer').innerHTML = 'Zeit: ' + zeroM + mins + ':' + zeroS + secs;
 	failAnzeige();		// Fix damit die Fehler schon bei der Stagemsg auf 0 angezeigt werden
 	// Stagemsg
 	swal.fire({
@@ -447,7 +447,7 @@ function gameOver(timerloss) {
 	else {
 		timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 		Swal.fire({
-			title: 'Busted!',
+			title: 'Zu viele Fehler!',
 			text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
 			// icon: 'error',
 			imageUrl: './images/fail.webp',			// Für Testzwecke
@@ -491,9 +491,13 @@ function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste
 }
 
 function failAnzeige() {
-	document.getElementById('fails').innerHTML = failCounter + ' Fehler';
+	document.getElementById('fails').innerHTML = 'Fehler: ' + failCounter;
 }
 
 function missionScoreAnzeige() {
 	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
+}
+
+function levelAnzeige() {
+	document.getElementById('level').innerHTML = 'Level: ' + level / 10;
 }

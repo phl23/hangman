@@ -70,7 +70,13 @@ input:focus {
   width: 15em;
 }
 
-
+#gameheader {
+  height: 27px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-evenly;
+}
 
 #tastaturcontainer {
   text-align: center;

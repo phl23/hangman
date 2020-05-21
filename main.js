@@ -166,7 +166,7 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 	}
 
 	missionScoreAnzeige();
-	document.getElementById('level').innerHTML = 'Level ' + level / 10;	
+	levelAnzeige();
 	// Kleiner Fix, damit die verbleibende Zeit angezeigt wird bevor man die Stagemsg bestätigt
 	if (level % 10 == 1) {
 		timerLeft = timerZeitInSec;		// Setzt den Timer in der ersten Stage immer auf timerZeitInSec (z.b. 120)
@@ -253,7 +253,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 					if (result.value) {
 						level = level + 1;
 						stagemsg(level % 10);			// Ohne Dezimal Zahl weitergeben
-						document.getElementById('level').innerHTML = 'Level ' + level / 10;
+						levelAnzeige();
 						startGame();
 						// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
 						// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
