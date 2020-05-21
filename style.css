@@ -106,17 +106,18 @@ input:focus {
   text-align: center;
 }
 
-.bg {
+.iframeMission {
   position: relative;
   top: 0;
   left: 0;
-  margin: 10px;
+  margin: 5px;
   height: 231px;
   width: 100%;
 }
 
 #rightwrapper.game{
   height: 100%;
+  margin: 5px;
 }
 
 #console {
