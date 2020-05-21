@@ -181,7 +181,7 @@ input:focus {
 
 .spacer1 {
   display: block;
-  height: 3vh;
+  height: 2vh;
 }
 
 button.otherbtn.ui-btn.ui-btn-inline {
@@ -216,7 +216,7 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
 }
 
 #missionbtn2 {
-  left: 260px;
+  left: 60px;
   top: 430px;
 }
 
