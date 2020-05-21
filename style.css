@@ -48,15 +48,6 @@ input:focus {
   transform: translate(-50%, -50%);
 }
 
-.bg {
-  position: relative;
-  top: 0;
-  left: 0;
-  margin: 10px;
-  height: 15em;
-  width: 100%;
-}
-
 .outer {
   position: relative;
   left: 0;
@@ -79,15 +70,7 @@ input:focus {
   width: 15em;
 }
 
-#inputcontainer {
-  background-color: #1d1d1d;
-}
 
-#flavortext {
-  font: 1em consolas, monospace;
-  border: none;
-  color: rgb(0, 255, 0);
-}
 
 #tastaturcontainer {
   text-align: center;
@@ -117,11 +100,44 @@ input:focus {
   text-align: center;
 }
 
+.bg {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  height: 231px;
+  width: 100%;
+}
+
+#rightwrapper.game{
+  height: 100%;
+}
+
+#console {
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+  height: 100%;
+}
+
+#inputcontainer {
+  background-color: #1d1d1d;
+  height: 100%;
+}
+
 #consoleheader {
   padding-left: 5px;
-  font-size: 1.3em;
+  font-size: 1em;
   height: 1.8em;
   background-color: #333;
+}
+
+#consoleheader img {
+  height: 25px;
+}
+
+#consoleheader p {
+  display: contents;
 }
 
 #consoleheader span {
@@ -129,10 +145,22 @@ input:focus {
   vertical-align: middle;
 }
 
-#console {
-  margin: 0 auto;
-  position: relative;
-  width: 90%;
+#consolemain {
+  height: 80%;
+  min-height: 150px;
+  margin-left: 4px;
+}
+
+#flavortext {
+  font: 1em consolas, monospace;
+  border: none;
+  color: rgb(0, 255, 0);
+}
+
+
+#flavortext p:last-child {
+  position: absolute;
+  bottom: 0;
 }
 
 #pcbild {

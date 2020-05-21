@@ -80,7 +80,7 @@
                         <div class="row">
 
                                 <div class="miscdiv col-sm-6">
-                                        <div id="leftwrapper" class="outer">
+                                        <div id="leftwrapper" class="outer game">
                                                 
                                                 <!-- Testzwecke
                                                 <div>
@@ -102,25 +102,24 @@
                                         </div>
                                 </div>
                                 <div class="col-sm-6">
-                                        <div id="rightwrapper">
+                                        <div id="rightwrapper" class="game">
                                                 <div id="console">
                                                         <div id="inputcontainer">
-                                                                <div id="consoleheader"><img src="images/cmd2.png"
-                                                                                height="60%"></div>
-
-                                                                <div id="flavortext">
-                                                                        <p>root>init network<br>Initializing network...
-                                                                                [COMPLETE]</p>
-                                                                        <p>root>connect <span
-                                                                                        id="ip">XX.XXX.XX.XX</span><br>Connecting...
-                                                                        </p>Server is secured. Login required:<br>login:
-                                                                        root<br><span
-                                                                                style="float: left">password:&#160;</span>
+                                                                <div id="consoleheader"><img src="images/bash.svg">
+                                                                        <p>root@kali: ~</p>
                                                                 </div>
-                                                                <span id="inputwrapper">
-
-                                                                </span>
-                                                                <p><br></p>
+                                                                <div id="consolemain">
+                                                                        <div id="flavortext">
+                                                                                <!--
+                                                                                <p>root>init network<br>Initializing network...
+                                                                                        [COMPLETE]</p>
+                                                                                -->
+                                                                                <p>root@kali:~# ssh <span id="ip1st">XX.XXX.XX.XX</span><br>
+                                                                                Establishing SSH connection ...<br><br></p>
+                                                                                <p>root@<span id="ip2nd">XX.XXX.XX.XX</span>'s password:<br><br>
+                                                                                <span id="inputwrapper"></span></p>
+                                                                        </div>
+                                                                </div>
                                                         </div>
                                                 </div>
                                         </div>

@@ -98,7 +98,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 		liste = "katzennamen";
 	}
 	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
-	window.location.href = '#page2';  // Gehe auf Seite 2 (Spiel)
+	$.mobile.changePage("#page2",{transition:"slideup"});  // Gehe auf Seite 2 (Spiel)
 	missionscore = 0;
 	missionsZeit = 0;
 	versuchsZeit = 0;
@@ -276,7 +276,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				})
 				.then((result) => {
 					if (result.value) {
-						window.location.href = '#page1';  
+						$.mobile.changePage("#page1",{transition:"slidedown"}); 
 					}
 				  });
 				failCounterMission = 0;
