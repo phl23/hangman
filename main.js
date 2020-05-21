@@ -167,6 +167,7 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 
 	missionScoreAnzeige();
 	levelAnzeige();
+	setMap(Math.floor(level / 10));
 	// Kleiner Fix, damit die verbleibende Zeit angezeigt wird bevor man die Stagemsg bestätigt
 	if (level % 10 == 1) {
 		timerLeft = timerZeitInSec;		// Setzt den Timer in der ersten Stage immer auf timerZeitInSec (z.b. 120)

@@ -129,6 +129,10 @@ function inputToHangman(myInput) {
 	}
 }
 
+function setMap(missionnr) {
+	document.getElementById('iframegame').src = './map-game' + missionnr + '.html';
+}
+
 /*
 Greift auf das Iframe zu und ändert im "animateMotion" Element den Begin Status. (dort steht erst "begin:"indefinite")
 Bei jedem Fehlversuch wird ein anderer Pfad gecallt.  
@@ -150,22 +154,6 @@ function setPolizeiPosition(versuche) {
 
 	/* Diesen Move starten */
 	schritt.beginElement();
-}
-
-function setIp() {
-	var ip = 
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255) +
-		'.' +
-		getRandomNumber(0, 255);
-	var ipport = ip  + ':' +
-	// getRandomNumber(0, 65535);
-	22;
-	document.getElementById("ip1st").innerHTML = ipport;
-	document.getElementById("ip2nd").innerHTML = ip;
 }
 
 function startTimer(zeitInSec) {
@@ -203,6 +191,42 @@ function startTimer(zeitInSec) {
 			gameOver(true);
 		}
 	}, 1000);		// ms pro Tick des Intervalls
+}
+
+function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste class von Bootstrap bekommt
+	var myClasses = document.getElementsByName("scoreanzeige");
+
+	for (var i = 0; i < myClasses.length; i++) {
+  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
+  	}
+}
+
+function failAnzeige() {
+	document.getElementById('fails').innerHTML = 'Fehler: ' + failCounter;
+}
+
+function missionScoreAnzeige() {
+	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
+}
+
+function levelAnzeige() {
+	document.getElementById('level').innerHTML = 'Level: ' + level / 10;
+}
+
+function setIp() {
+	var ip = 
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255);
+	var ipport = ip  + ':' +
+	// getRandomNumber(0, 65535);
+	22;
+	document.getElementById("ip1st").innerHTML = ipport;
+	document.getElementById("ip2nd").innerHTML = ip;
 }
 
 function backtomap() {
@@ -480,24 +504,4 @@ function gameOver(timerloss) {
 											// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
 		;  									
 	}
-}
-
-function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste class von Bootstrap bekommt
-	var myClasses = document.getElementsByName("scoreanzeige");
-
-	for (var i = 0; i < myClasses.length; i++) {
-  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
-  	}
-}
-
-function failAnzeige() {
-	document.getElementById('fails').innerHTML = 'Fehler: ' + failCounter;
-}
-
-function missionScoreAnzeige() {
-	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
-}
-
-function levelAnzeige() {
-	document.getElementById('level').innerHTML = 'Level: ' + level / 10;
 }
