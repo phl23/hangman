@@ -153,16 +153,19 @@ function setPolizeiPosition(versuche) {
 }
 
 function setIp() {
-	document.getElementById('ip').innerHTML =
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	'.' +
-	getRandomNumber(0, 255) +
-	':' +
-	getRandomNumber(0, 65535);
+	var ip = 
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255) +
+		'.' +
+		getRandomNumber(0, 255);
+	var ipport = ip  + ':' +
+	// getRandomNumber(0, 65535);
+	22;
+	document.getElementById("ip1st").innerHTML = ipport;
+	document.getElementById("ip2nd").innerHTML = ip;
 }
 
 function startTimer(zeitInSec) {
@@ -230,8 +233,7 @@ function backtomap() {
 			missionsZeit = 0;
 			scoreAnzeige();
 			resetGame();
-			window.location.href = "#page1";
-			// $.mobile.changePage("#page1",{transition:"slide"});  // Slide Effekt? 
+			$.mobile.changePage("#page1",{transition:"slidedown"});
 		}
 	});
 }
@@ -434,7 +436,7 @@ function gameOver(timerloss) {
 			else {
 				scoreAnzeige();
 				failCounterMission = 0;
-				window.location.href = '#page1';
+				$.mobile.changePage("#page1",{transition:"slidedown"});
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
@@ -470,7 +472,7 @@ function gameOver(timerloss) {
 			else {
 				scoreAnzeige();
 				failCounterMission = 0;
-				window.location.href = '#page1';	
+				$.mobile.changePage("#page1",{transition:"slidedown"});	
 			}
 		  });
 											   // Bei max Fails Zurück auf Missionsstart
@@ -484,7 +486,7 @@ function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste
 	var myClasses = document.getElementsByName("scoreanzeige");
 
 	for (var i = 0; i < myClasses.length; i++) {
-  	myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
+  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
   	}
 }
 
