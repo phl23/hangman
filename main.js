@@ -102,6 +102,8 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	missionscore = 0;
 	missionsZeit = 0;
 	versuchsZeit = 0;
+	greenFlashInit();
+	redFlashInit();
 	startGame();
 	 
 }
@@ -117,6 +119,7 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht fü
 	winCounter = 0;
 	failCounter = 0;
 	versuchsZeit = 0;
+	$("#greenwin").fadeOut(0,'swing');
 	if (level % 10 == 1) {			// wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
 		failCounterMission = 0;
 	}
@@ -192,11 +195,13 @@ Kernfunktion des Spiels
 			firstButtonPressed = true;
 		}
 		if (index == -1) {	// wenn für den eingegebenen Buchstaben im gesuchten Wort kein index gefunden wird, zählt es als Fail
+			flashKeyRed(buchstabe);
 			failCounter++;
 			failCounterMission++;
 			setPolizeiPosition(failCounter);	// ruft Function auf um das PolizeiFahrzeug zu bewegen
 			failAnzeige();		// Für Testzwecke
 		} else {	// Wenn ein index gefunden wird:
+			flashKeyGreen(buchstabe);
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
 				if (index != -1 && document.getElementById('input' + (index + 1) + 'inner') != null) {
@@ -206,7 +211,6 @@ Kernfunktion des Spiels
 					}
 					index++;	// index wird um 1 erhöht, dass Wort wird nach weiterem Vorkommen des Buchstabens durchsucht
 					document.getElementById(buchstabe + 'key').disabled = true;			// Blendet richtige Buchstaben aus
-					flashTerminal();
 				}
 			}
 		}
@@ -236,7 +240,9 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			failCounterGesamt = failCounterMission + failCounterGesamt;
 			timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 			scoreAnzeige();
-			siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
+			$("#greenwin").fadeIn(850,'swing', function() {
+				siegmsg(0);							// Sieg-Nachricht für Testzwecke! roll roll
+			})
 			return;
 		}
 		else {					// Stage gewonnen!
@@ -269,21 +275,23 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 				score = missionscore + score;
 				failCounterGesamt = failCounterMission + failCounterGesamt;
-				Swal.fire({
-					title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
-					html: 'Sehr gut!<br>' + input + ' war richtig!<br>Stagepunkte: ' + punkte + '<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
-					// icon: 'success',
-					imageUrl: './images/giphy.gif',			// Für Testzwecke
-					confirmButtonText: 'Weiter',
-					animation: true,
-					grow: false,
-					allowOutsideClick: false
+				$("#greenwin").fadeIn(850,'swing', function() {
+					Swal.fire({
+						title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
+						html: 'Sehr gut!<br>' + input + ' war richtig!<br>Stagepunkte: ' + punkte + '<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
+						// icon: 'success',
+						imageUrl: './images/giphy.gif',			// Für Testzwecke
+						confirmButtonText: 'Weiter',
+						animation: true,
+						grow: false,
+						allowOutsideClick: false
+					})
+					.then((result) => {
+						if (result.value) {
+							$.mobile.changePage("#page1",{transition:"slidedown"}); 
+						}
+					});
 				})
-				.then((result) => {
-					if (result.value) {
-						$.mobile.changePage("#page1",{transition:"slidedown"}); 
-					}
-				  });
 				failCounterMission = 0;
 				missionsZeit = 0;
 				scoreAnzeige();

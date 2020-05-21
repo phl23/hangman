@@ -300,6 +300,8 @@ g {
   stroke-miterlimit:10;
 }
 
+/* Map Polizei Flash */
+
 #redflash, #blueflash {
   display: none;
   width: 170%;
@@ -309,30 +311,14 @@ g {
   left: -120px;
   
 }
+
 #redflash {
   background: radial-gradient(ellipse farthest-side, rgba(255, 35, 35), rgba(0, 0, 0, 0) 80%);
   z-index: 10;
 }
+
 #blueflash {
   background: radial-gradient(circle farthest-side, rgba(21, 115, 255, 0.514), rgba(0, 0, 0, 0) 80%);
-  z-index: 20;
-}
-
-#greyflash, #greenflash {
-  display: none;
-  width: 170%;
-  height: 266%;
-  position: absolute;
-  top: -115px;
-  right: -120px;
-  
-}
-#green2flash {
-  background: radial-gradient(ellipse farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
-  z-index: 10;
-}
-#greenflash {
-  background: radial-gradient(circle farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
   z-index: 20;
 }
 
@@ -343,9 +329,47 @@ g {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: rgb(255, 41, 41);
+  background-color: rgb(255, 70, 70);
   z-index: 50;
 }
+
+#greenwin {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: rgb(96, 255, 96);
+  z-index: 50;
+}
+
+
+/* Tastatur Flash */
+
+#tastaturwrapper > table > tbody > tr > td {
+  position: relative;
+}
+
+#greenflasha, #greenflashb {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  
+}
+
+#green2flash {
+  background: radial-gradient(ellipse farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
+  z-index: 10;
+}
+#greenflash {
+  background: radial-gradient(circle farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
+  z-index: 20;
+}
+
 
 
 
