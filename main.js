@@ -209,10 +209,12 @@ Kernfunktion des Spiels
 				index = input.indexOf(buchstabe, index);
 				flashTerminalGreen(index);
 				if (index != -1 && document.getElementById('input' + (index + 1) + 'inner') != null) {
-					document.getElementById('input' + (index + 1) + 'inner').style.visibility = 'visible'; //decke Buchstabe im Passwortfeld auf (<span>-Name korrespondiert mit index, z.B. 'input3inner')
-					if (keysPressed[keys.indexOf(buchstabe)] == 1) {	// Wenn ein Buchstabe genau einmal probiert wurde, zählt es als Win
-						winCounter++;	
-					}
+					if (document.getElementById('input' + (index + 1) + 'inner').style.visibility != 'visible') {		//Falls schon zuvor von Item aufgedeckt
+							document.getElementById('input' + (index + 1) + 'inner').style.visibility = 'visible'; //decke Buchstabe im Passwortfeld auf (<span>-Name korrespondiert mit index, z.B. 'input3inner')
+						if (keysPressed[keys.indexOf(buchstabe)] == 1) {	// Wenn ein Buchstabe genau einmal probiert wurde, zählt es als Win
+							winCounter++;	
+						}
+					}					
 					index++;	// index wird um 1 erhöht, dass Wort wird nach weiterem Vorkommen des Buchstabens durchsucht
 					document.getElementById(buchstabe + 'key').disabled = true;			// Blendet richtige Buchstaben aus
 				}
