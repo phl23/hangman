@@ -265,7 +265,7 @@ function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste
 	var myClasses = document.getElementsByName("scoreanzeige");
 
 	for (var i = 0; i < myClasses.length; i++) {
-  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler --- Items: ' + items;
+  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler // Items: ' + items;
   	}
 }
 
