@@ -265,7 +265,7 @@ function scoreAnzeige() {		// get by Name statt Class, da der Header immer feste
 	var myClasses = document.getElementsByName("scoreanzeige");
 
 	for (var i = 0; i < myClasses.length; i++) {
-  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler';
+  		myClasses[i].innerHTML = score + ' Gesamtpunkte  //  ' + failCounterGesamt + ' Fehler --- Items: ' + items;
   	}
 }
 
@@ -275,6 +275,10 @@ function failAnzeige() {
 
 function missionScoreAnzeige() {
 	document.getElementById('score').innerHTML = missionscore + ' Missionspunkte';
+}
+
+function itemsAnzeige() {
+	document.getElementById('items').innerHTML = 'Items: ' + items;
 }
 
 function levelAnzeige() {
@@ -601,9 +605,6 @@ function levelFreischaltung(levelId) {
 
 
 /* Item Management Start */
-function itemsAnzeige() {
-	document.getElementById('items').innerHTML = 'Items: ' + items;
-}
 
 function helpBuchstaben(anzahl) {
 	var i = 0;
@@ -618,12 +619,10 @@ function helpBuchstaben(anzahl) {
 	}
 		
 	while (i < anzahl && h < input.length+1-spaces) {			// Nur so oft wie die Wortlänge ohne Leerzeichen + off by one
-		console.log('i:'+i);
 		var rand = getRandomNumber(1,input.length+1);	// Irgendeine nummer zwischen oder genau 0 und maximale länge des wortes + 1 (da immer +1 gemacht wurde)
 		var targetSpan = document.getElementById('input' + (rand) + 'inner');
 		if ((targetSpan.style.visibility != 'visible') && (targetSpan.innerHTML != 'x')) {			// Keine schon aufgedeckten Buchstaben und auch keine Leerzeichen (Wert x)
 			targetSpan.style.visibility = 'visible';
-			console.log(rand);
 			i++;
 			winCounter++;
 			flashTerminalGreen(rand-1);
