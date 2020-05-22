@@ -138,7 +138,11 @@ function greenFlashInit() {
 	var i = 0;
 	while (i != keysarray) {
 		var key = keys[i];
-		var divflash = document.getElementById('greenflash' + key)
+
+		// Div erstellen um danach den Style einzubinden
+		document.getElementById(key + 'key').parentElement.innerHTML += '<div id="greenflash' + key + '"></div>';
+
+		var divflash = document.getElementById('greenflash' + key);
 		divflash.style.cssText = 
 		'background: radial-gradient(ellipse farthest-side, rgba(33, 255, 25, 0.514) 50%, rgba(0, 0, 0, 0) 170%);display: none;width: 100%;height: 100%;position: absolute;top: 0px;right: 0px;z-index: 10;';
 		i++;
