@@ -1,0 +1,376 @@
+main {
+  padding: 0vw !important;
+}
+
+input:focus {
+  outline: none;
+  color: dodgerblue;
+}
+
+.input {
+  text-align: center;
+  font: 1em consolas, monospace;
+  border-bottom: 0.1em solid rgb(255, 255, 255);
+  margin-left: 0.3em;
+}
+
+#timer {
+  height: 24px;
+}
+
+.swal2-popup {
+  background: #333;
+}
+
+.swal2-title {
+  color: #fff;
+}
+
+.swal2-content {
+  color: #fff;
+}
+
+.swal2-confirm {
+  width: auto;
+}
+
+.swal2-image {
+  width: 220px;
+}
+
+.swal2-select option {
+  color: black;
+}
+
+.fg {
+  position: absolute;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+}
+
+.outer {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: inline-block;
+}
+
+#map {
+  width: 100%;
+}
+
+#location1 {
+  top: 30%;
+  left: 30%;
+}
+
+#inputwrapper {
+  display: inline-block;
+  margin: -3px;
+  width: 15em;
+}
+
+#gameheader {
+  height: 27px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  text-align: center;
+}
+
+#tastaturcontainer {
+  text-align: center;
+}
+
+#tastaturwrapper {
+  display: inline-block;
+}
+
+#imagecontainer {
+  text-align: center;
+}
+
+#meldungswrapper {
+  float: left;
+}
+
+#scoreboardwrapper {
+  float: right;
+}
+
+#meldungen {
+  text-align: center;
+}
+
+#scoreboard {
+  text-align: center;
+}
+
+.iframeMission {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 5px;
+  height: 231px;
+  width: 100%;
+}
+
+#rightwrapper.game{
+  height: 100%;
+  margin: 5px;
+}
+
+#console {
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+  height: 100%;
+}
+
+#inputcontainer {
+  background-color: #1d1d1d;
+  height: 100%;
+}
+
+#consoleheader {
+  padding-left: 5px;
+  font-size: 1em;
+  height: 1.8em;
+  background-color: #333;
+}
+
+#consoleheader img {
+  height: 25px;
+}
+
+#consoleheader p {
+  display: contents;
+}
+
+#consoleheader span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#consolemain {
+  height: 80%;
+  min-height: 150px;
+  margin-left: 4px;
+}
+
+#flavortext {
+  font: 1em consolas, monospace;
+  border: none;
+  color: rgb(0, 255, 0);
+}
+
+
+#flavortext p:last-child {
+  position: absolute;
+  bottom: 0;
+}
+
+#pcbild {
+  margin: 0;
+}
+
+.miscdiv {
+  text-align: center;
+  font-size: 1em;
+}
+
+.spacer1 {
+  display: block;
+  height: 2vh;
+}
+
+.spacermobilehide {
+  display: none;
+}
+
+@media only screen and (min-width: 576px) {
+  .spacer1 {
+    display: block;
+    height: 6vh;
+  }
+  .spacermobilehide {
+    display: block;
+  }
+}
+
+button.otherbtn.ui-btn.ui-btn-inline {
+  width: 10em;
+}
+button.btmbtn.ui-btn.ui-btn-inline:focus, button.btmbtn.ui-btn.ui-btn-inline:hover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+#listenauswahl option{
+  width: 10em !important;
+}
+
+td {
+  margin: 0px;
+  padding: 0px;
+}
+
+button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
+  display: flex;
+  background-color: #3330;
+  border: none;
+  padding: 15px;
+  position: absolute;
+  width: 170px;
+}
+
+#missionbtn1 {
+  left: 160px;
+  top: 230px;
+}
+
+#missionbtn2 {
+  left: 60px;
+  top: 430px;
+}
+
+#missionbtn3 {
+  left: 60px;
+  top: 600px;
+}
+
+button.missionbtn.otherbtn.ui-btn.ui-btn-inline:focus {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  /* Spielerei Testzwecke
+  background-image:
+    radial-gradient(
+      circle at top right, 
+       #f06d06 15%, #252525 33%
+    ); */
+}
+
+.missionimg {
+  width: 100%;
+}
+.missionimg:hover {
+  filter: drop-shadow(0px 0px 6px #2ad);
+}
+
+button.tastatur.ui-btn.ui-btn-inline {
+  /* padding: 2em !important; */
+  width: 7.5vw !important;
+  height: 7vh;
+  margin: 0px !important;
+  padding: 0px !important;
+  border-width: 0px !important;
+  font-size: 1.5em !important;
+}
+button.tastatur.ui-btn.ui-btn-inline:focus {
+  box-shadow: none;
+}
+button.otherbutton {
+  /* padding: 2em !important;*/
+  width: 7.5vw !important;
+  height: 7vh;
+  margin: 0px !important;
+  padding: 0px !important;
+  border-width: 0px !important;
+  font-size: 1.5em !important;
+}
+
+table {
+  padding: 0px !important;
+  margin: -0.1em !important;
+}
+
+iframe[seamless] {
+  border: none;
+}
+
+iframe#main {
+  height: 300px;
+  width: 100%;
+}
+
+g {
+  fill:#ff0000;
+  stroke:#ff0000;
+  stroke-width:4;
+  stroke-miterlimit:10;
+}
+
+/* Map Polizei Flash */
+
+#redflash, #blueflash {
+  display: none;
+  width: 170%;
+  height: 170%;
+  position: absolute;
+  top: -90px;
+  left: -120px;
+  
+}
+
+#redflash {
+  background: radial-gradient(ellipse farthest-side, rgba(255, 35, 35), rgba(0, 0, 0, 0) 80%);
+  z-index: 10;
+}
+
+#blueflash {
+  background: radial-gradient(circle farthest-side, rgba(21, 115, 255, 0.514), rgba(0, 0, 0, 0) 80%);
+  z-index: 20;
+}
+
+#redloose {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: rgb(255, 70, 70);
+  z-index: 50;
+}
+
+#greenwin {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: rgb(96, 255, 96);
+  z-index: 50;
+}
+
+
+/* Tastatur Flash */
+
+#tastaturwrapper > table > tbody > tr > td {
+  position: relative;
+}
+
+#greenflasha, #greenflashb {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  
+}
+
+#green2flash {
+  background: radial-gradient(ellipse farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
+  z-index: 10;
+}
+#greenflash {
+  background: radial-gradient(circle farthest-side, rgba(33, 255, 25, 0.514) -10%, rgba(0, 0, 0, 0) 60%);
+  z-index: 20;
+}
+
+
+
+
+

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <title>Hangman</title>
+        <meta name="viewport"
+                content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+        <meta charset="utf-8">
+        <script crossorigin src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="utility.js"></script>
+        <script src="main.js"></script>
+        <script crossorigin src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script crossorigin src="https://cdn.jsdelivr.net/npm/sweetalert2@9.12.0/dist/sweetalert2.all.min.js"></script>
+                <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+        <!-- Karte page -->
+        <div name="Karte" data-role="page" id="page1" data-theme="b" data-title="Karte">
+
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
+
+                <main data-role="content">
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(11)">Level 1.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(12)">Level 1.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(13)">Level 1.3</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(21)">Level 2.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(22)">Level 2.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(23)">Level 2.3</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(31)">Level 3.1</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(32)">Level 3.2</button>
+                        <button class="ui-btn ui-btn-inline otherbtn" onclick="init(33)">Level 3.3</button>
+                        <!-- <p class="scoreanzeige ui-btn ui-btn-inline otherbtn">Score: 0</p> -->
+                        <button id="missionbtn1" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(11)"><img id="mission1img" class="missionimg" src="./images/mission1.png"></button>
+                        <button id="missionbtn2" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(21)"><img id="mission2img" class="missionimg" src="./images/mission2.png"></button>  
+                        <button id="missionbtn3" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(31)"><img id="mission3img" class="missionimg" src="./images/mission3.png"></button>         
+                </main>
+
+                <footer data-role="footer" data-position="fixed">
+                        <!-- navbar -->
+                        <div data-role="navbar">
+                                <ul>
+                                        <li>
+                                                <button class="ui-btn ui-btn-inline btmbtn" onclick="diffimsg()">Schwierigkeit</button>
+                                        </li>
+                                        <li>
+                                                <button class="ui-btn ui-btn-inline btmbtn" onclick="tutorialmsg()">Tutorial</button>
+                                        </li>
+                                        <li>
+                                                <a href="#page3" data-role="button" data-transition="slideup">Info</a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <!-- /navbar -->
+                </footer>
+
+        </div><!-- Ende Karte page -->
+        <!-- Hangman page -->
+        <div name="Hangman" data-role="page" id="page2" data-theme="b" data-title="Hangman">
+
+                <!--
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
+                -->
+                <header id="gameheader" data-role="header" style="z-index:99; text-align: center">
+                        <span id="level"></span><span id="timer"></span><span id="fails"></span>
+                </header>
+
+
+                <main data-role="content">
+                        <div id="redloose"></div>
+                        <div id="greenwin"></div>
+                        
+                        <div class="spacer1 spacermobilehide"></div>
+
+                        <div class="row">
+                                 
+                                <div style="display:none;" id="spielstand" class="miscdiv col-sm-6">
+                                        <span id="score"></span>
+                                </div>
+                                
+                                
+                        </div>
+
+                        <div class="row">
+                        
+
+                                <div class="miscdiv col-sm-6">
+                                        <div id="leftwrapper" class="outer game">
+                                                
+                                                <!-- Testzwecke
+                                                <div>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(1)">M1</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(2)">M2</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(3)">M3</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(4)">M4</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(5)">M5</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(6)">M6</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(7)">M7</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(8)">M8</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(9)">M9</button></p>
+                                                        <p><button style="width:60px;float:left" onclick="setPolizeiPosition(10)">M0</button></p>
+                                                </div>
+                                                -->
+
+
+                                                <iframe src="./map-game1.html" id="iframegame"  class="iframeMission" seamless></iframe>
+                                                <div id="redflash"></div>
+                                                <div id="blueflash"></div>
+                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                        <div id="rightwrapper" class="game">
+                                                <div id="console">
+                                                        <div id="inputcontainer">
+                                                                <div id="consoleheader"><img src="images/bash.svg">
+                                                                        <p>root@kali: ~</p>
+                                                                </div>
+                                                                <div id="consolemain">
+                                                                        <div id="flavortext">
+                                                                                <!--
+                                                                                <p>root>init network<br>Initializing network...
+                                                                                        [COMPLETE]</p>
+                                                                                -->
+                                                                                <p>root@kali:~# ssh <span id="ip1st">XX.XXX.XX.XX</span><br>
+                                                                                Establishing SSH connection ...<br><br></p>
+                                                                                <p>root@<span id="ip2nd">XX.XXX.XX.XX</span>'s password:<br><br>
+                                                                                <span id="inputwrapper"></span></p>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        
+                                                </div>
+                                        </div>
+                                </div>
+
+                        </div>
+                        <div class="spacer1"></div>
+                        <div id="tastaturcontainer">
+                                <div id="tastaturwrapper">
+                                        <table>
+                                                <tr>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Qkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Q')">Q</button>
+                                                                <div id="greenflashQ"></div>
+                                                        </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Wkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('W')">W</button>
+                                                                <div id="greenflashW"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ekey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('E')">E</button>
+                                                                <div id="greenflashE"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Rkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('R')">R</button>
+                                                                <div id="greenflashR"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Tkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('T')">T</button>
+                                                                <div id="greenflashT"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Zkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Z')">Z</button>
+                                                                <div id="greenflashZ"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ukey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('U')">U</button>
+                                                                <div id="greenflashU"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ikey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('I')">I</button>
+                                                                <div id="greenflashI"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Okey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('O')">O</button>
+                                                                <div id="greenflashO"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Pkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('P')">P</button>
+                                                                <div id="greenflashP"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ükey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ü')">Ü</button>
+                                                                <div id="greenflashÜ"></div>
+                                                                </td>
+                                                </tr>
+                                        </table>
+                                        <table>
+                                                <tr>
+
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Akey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('A')">A</button>
+                                                                <div id="greenflashA"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Skey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('S')">S</button>
+                                                                <div id="greenflashS"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Dkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('D')">D</button>
+                                                                <div id="greenflashD"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Fkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('F')">F</button>
+                                                                <div id="greenflashF"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Gkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('G')">G</button>
+                                                                <div id="greenflashG"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Hkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('H')">H</button>
+                                                                <div id="greenflashH"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Jkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('J')">J</button>
+                                                                <div id="greenflashJ"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Kkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('K')">K</button>
+                                                                <div id="greenflashK"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Lkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('L')">L</button>
+                                                                <div id="greenflashL"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ökey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ö')">Ö</button>
+                                                                <div id="greenflashÖ"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Äkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Ä')">Ä</button>
+                                                                <div id="greenflashÄ"></div>
+                                                                </td>
+                                                </tr>
+                                        </table>
+                                        <table>
+                                                <tr>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur"
+                                                                        style="visibility:hidden"></button>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur"
+                                                                        style="visibility:hidden"></button>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ykey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('Y')">Y</button>
+                                                                <div id="greenflashY"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Xkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('X')">X</button>
+                                                                <div id="greenflashX"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Ckey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('C')">C</button>
+                                                                <div id="greenflashC"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Vkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('V')">V</button>
+                                                                <div id="greenflashV"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Bkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('B')">B</button>
+                                                                <div id="greenflashB"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Nkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('N')">N</button>
+                                                                <div id="greenflashN"></div>
+                                                                </td>
+                                                        <td>
+                                                                <button class="ui-btn ui-btn-inline tastatur" id="Mkey"
+                                                                        disabled="true"
+                                                                        onclick="eliminate('M')">M</button>
+                                                                <div id="greenflashM"></div>
+                                                                </td>
+                                                </tr>
+                                        </table>
+                                </div>
+                        </div>
+                        <div class="spacer1"></div>
+                        <!-- Testzwecke
+                                <button class="ui-btn ui-btn-inline otherbtn" onclick="init()">Nochmal!</button>
+                                <select id="listenauswahl" onchange="init()">
+                                        <option value="deutsch">Deutsche Wörter</option>
+                                        <option value="katzennamen">Katzennamen</option>
+                                        <option value="spiele">Computerspiele</option>
+                                        <option value="alk">Alk/Zigaretten</option>
+                                </select>
+                        -->
+                </main>
+                <footer data-role="footer" data-position="fixed">
+                        <!-- navbar -->
+                        <div data-role="navbar">
+                                <ul>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="regelnmsg(Math.floor(level / 10))">Regeln</button></li>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="stagemsg(Math.floor(level % 10))">Mission</button></li>
+                                        <li><button class="ui-btn ui-btn-inline btmbtn"
+                                                onclick="backtomap()">Karte</button></li>
+                                </ul>
+                        </div>
+                        <!-- /navbar -->
+                </footer>
+
+        </div> <!-- Ende Hangman page -->
+        <!-- Info page -->
+        <div name="Info" data-role="page" id="page3" data-theme="b" data-title="Info">
+
+                <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler</header>
+
+                <main data-role="content">
+
+
+
+                        <!-- Content Start -->
+
+                        <div class="miscdiv col-sm-12">
+				<iframe id="main" src="./mainmap.html" seamless style="height: 200em;"></iframe>
+                                <!-- <div id="mapwrapper" class="outer">
+                                        <img id="map" class="bg"
+                                                src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"></img>
+                                        <img id="location1" class="fg"
+                                                src="https://img.icons8.com/pastel-glyph/2x/shop.png" height="80em"
+                                                onclick="locationAlert(1)"></img>
+                                </div> -->
+
+                        <!-- Content Ende -->
+
+
+                        
+
+                        </div>
+                </main>
+
+                <footer data-role="footer" data-position="fixed">
+                        <!-- navbar -->
+                        <div data-role="navbar">
+                                <ul>
+                                        <li>
+                                                <a href="#page1" data-role="button" data-transition="slidedown">Zurück</a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <!-- /navbar -->
+                </footer>
+
+        </div> <!-- Ende Info page -->
+</body>
+
+</html>

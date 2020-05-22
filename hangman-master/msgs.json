@@ -1,0 +1,96 @@
+{	
+	"tutorial": {
+		"title": [
+			"<h1>Story</h1>"
+		],
+		"text": [
+			"<p>Willkommen auf deiner Mission!<br><br>Du wurdest beauftragt, eine Reihe von Einbrüchen zu verüben. Deine Aufgabe liegt darin, so viel Geld wie möglich zu sammeln.<br><br>Aber lass dich bloß nicht von der Polizei schnappen!<br>Und keine Angst, es wird niemand zu Schaden kommen, jedenfalls nicht wenn du dich an die Spielregeln hältst.</p>"
+		],
+		"confirm": [
+			"Los Geht's"
+		]
+	},
+	"schwierigkeit": {
+		"confirm": [
+			"OK"
+		],
+		"title": [
+			"<h1>Schwierigkeitsgrad</h1>"
+		],
+		"text": [
+			""
+		],
+		"placeholder": [
+			"Wähle einen Schwierigkeitsgrad"
+		],
+		"grad": [
+			null,
+			"Easy Mode",
+			"Normal",
+			"Schwer"
+		]
+	},
+	"regeln": {
+		"confirm": [
+			"Alles klar!"
+		],
+		"title": [
+			"<h1>Willkommen</h1>",
+			"<h1>Regeln Mission 1</h1>",
+			"<h1>Regeln Mission 2</h1>",
+			"<h1>Regeln Mission 3</h1>"
+		],
+		"text": [
+			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
+			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
+			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
+			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
+		]
+	},
+	"sieg": [
+		"<p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
+		"<p>Sehr gut!<br><br>Du hast es unbemerkt aus der Tankstelle heraus geschafft. Aber das war erst der Anfang.</p>",
+		"<p>Sehr gut!<br><br>Du bist ein richtiges Genie!<br><br>Bereit für deine letzte große Aufgabe?</p>",
+		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>"
+	],
+	"stages": {
+		"confirm": [
+			"EZ PZ Lemon Squeezy!"
+		],
+		"cancel": [
+			"EZ PZ Lemon Squeezy!"
+		],
+		"mission1": [
+			null,
+			"<h1>Tankstelle</h1><br><br><p>Zu Beginn eine kleine Herausforderung:<br>Knacke das Türschloss der Tankstelle!<br><br>Tipp: Hier soll man wohl besonders gute Tropfen bekommen.</p>",
+			"<h1>Tankstelle</h1><br><br><p>Sehr gut, weiter geht's.<br>Das Passwort für den Tresor ist auf dem Kassenrechner gespeichert.<br><br>Entschlüssle das Admin-Passwort!</p>",
+			"<h1>Tankstelle</h1><br><br><p>Fast geschafft.<br><br>Knacke den Tresor der Tankstelle!</p>"
+		],
+		"mission2": [
+			null,
+			"<h1>Bank</h1><br><br><p>Brich in die lokale Bank ein.<br><br>Schalte die Alarm-Anlage aus!</p>",
+			"<h1>Bank</h1><br><br><p>Jetzt muss die Tür zum hinteren Teil der Bank geöffnet werden. Finde das Passwort heraus!</p>",
+			"<h1>Bank</h1><br><br><p>Du hast den Tresorraum im hinteren Teil der Bank gefunden. Ermittle so schnell wie möglich den Code!</p>"
+		],
+		"mission3": [
+			null,
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+		]
+	},
+	"location": {
+		"title": [
+			null,
+			"Tankstelle",
+			"Bank",
+			"Tante Emma Laden"
+		],
+		"text": [
+			null,
+			"Knacke den Tresor der Tankstelle!",
+			"Raube die Bank aus!",
+			"Brich bei Tante Emma ein!"
+		]
+	}
+}
