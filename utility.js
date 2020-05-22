@@ -69,8 +69,9 @@ function getWord(wortliste) {
 	return randomWort;
 }
 
-function getRandomNumber(min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
+function getRandomNumber(min, max, ex1) {
+	var num = Math.floor(Math.random() * (max - min) + min);
+	return (num === ex1) ? generateRandom(min, max) : num;
 }
 
 function generateInputSpans() {
@@ -590,3 +591,80 @@ function gameOver(timerloss) {
 		;  									
 	}
 }
+
+
+/* Noch unbenutzt */
+
+function levelFreischaltung(levelId) {
+	document.getElementById('missionbtn' + levelId).style.display = 'block';
+}
+
+
+/* Item Management Start */
+function itemsAnzeige() {
+	document.getElementById('items').innerHTML = 'Items: ' + items;
+}
+
+function helpBuchstaben(anzahl) {
+	var i = 0;
+	var h = 0;
+	var spaces = 0;
+
+	for (var z = 1; z < input.length+1;z++) {											// Zählt die Leerzeichen (value x)
+		var span = document.getElementById('input' + (z) + 'inner');
+		if (span.innerHTML == 'x') {
+			spaces++;
+		}
+	}
+		
+	while (i < anzahl && h < input.length+1-spaces) {			// Nur so oft wie die Wortlänge ohne Leerzeichen + off by one
+		console.log('i:'+i);
+		var rand = getRandomNumber(1,input.length+1);	// Irgendeine nummer zwischen oder genau 0 und maximale länge des wortes + 1 (da immer +1 gemacht wurde)
+		var targetSpan = document.getElementById('input' + (rand) + 'inner');
+		if ((targetSpan.style.visibility != 'visible') && (targetSpan.innerHTML != 'x')) {			// Keine schon aufgedeckten Buchstaben und auch keine Leerzeichen (Wert x)
+			targetSpan.style.visibility = 'visible';
+			console.log(rand);
+			i++;
+			winCounter++;
+			flashTerminalGreen(rand-1);
+			/*	Fehlt noch, dass das nur passiert, wenn dieser Buchstabe nicht noch einmal vorkommt!  Testzwecke
+			var buchstabe = targetSpan.innerHTML;
+			document.getElementById(buchstabe + 'key').disabled = true;
+			*/
+		}
+		else {
+			h++;
+		}
+	}
+	checkWin();
+}
+
+function checkForItem(itemId) {
+	var index = items.indexOf(itemId);
+	var exists = 0;
+	if (index > -1) {
+		exists = 1;
+	}
+	return exists;		// In der Meldung dann mit If checkForItem() == 0 dann zeige Item bekommen oder wähle ein anderes
+}
+
+function getItem(itemId) {
+	if (checkForItem(itemId) == 0) {		// checkForItem returns 0 wenn es nicht existiert  ---  kann weggelassen werden, falls diese function nur feuert wenn das schon geprüft wurde
+		items.push(itemId);
+		itemsAnzeige();
+	}
+}
+
+function useItem(itemId) {
+	var index = items.indexOf(itemId); // Wenn es nicht existiert wird -1 ausgegeben ansonsten die Position im array
+	var stärke = 0;		// Bestimmt die Anzahl der gezeigten Buchstaben (wird durch Gegenstand bestimmt)
+
+	if (index > -1) {
+			var stärke = meldungen.items[itemId].stärke[0];			// Holt sich den StärkeWert aus der json je nach ItemName
+			helpBuchstaben(stärke);	
+			items.splice(index, 1);
+			itemsAnzeige();
+	}
+}
+
+/* Item Management Ende */

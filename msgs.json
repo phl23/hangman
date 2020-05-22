@@ -103,5 +103,29 @@
 			"Text Location 2",
 			"Text Location 3"
 		]
+	},
+	"items": {
+		"baum": {
+			"stärke": [
+				1
+			],
+			"title": [
+				"Baum"
+			],
+			"text": [
+				"Ist halt nen Baum"
+			]
+		},
+		"eiche": {
+			"stärke": [
+				2
+			],
+			"title": [
+				"Eiche"
+			],
+			"text": [
+				"Deutsche Eiche"
+			]
+		}		
 	}
 }

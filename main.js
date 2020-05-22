@@ -5,6 +5,7 @@ const maxStage = 3;																		// Maximale Stage pro Mission, danach ist d
 var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
+var items = ['baum','eiche'];															// Hier kommen die Items rein ( im Klartext z.b. 'baum') zu Testzecke sonst []
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
@@ -233,7 +234,7 @@ Gewinnabfrage
 Jeweilige Popup-Meldungen werden angezeigt.
 */
 	var punkte = 0;
-	if (winCounter == input.length) {
+	if (winCounter >= input.length) {
 		punkte = ((maxFails) - failCounter) * (timerZeitInSec-versuchsZeit); // MaxZeit - gebrauchte Zeit in der Stage x Fehler übrig    Punkte erreicht
 		missionscore = missionscore + punkte;
 		missionsZeit = versuchsZeit + missionsZeit;
