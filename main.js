@@ -6,7 +6,7 @@ var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsa
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
 var input;																				// Initialisierung der Variable für User-Eingabe
-var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel auf der Karte beginnt!
+var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
 var stagereset = false;																	// Soll bei Verloren die Stage neugestartet werden? oder die Mission
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
@@ -70,7 +70,9 @@ schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert),
 zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 */																
 	
-
+	if (level < 10) {
+		willkommenmsg();
+	}
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
 	/* Hier später allgemeines Tutorial einbauen und in msg.json bei Tutorial auf Platz 0 eintragen
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
@@ -204,6 +206,7 @@ Kernfunktion des Spiels
 			flashKeyGreen(buchstabe);
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
+				flashTerminalGreen(index);
 				if (index != -1 && document.getElementById('input' + (index + 1) + 'inner') != null) {
 					document.getElementById('input' + (index + 1) + 'inner').style.visibility = 'visible'; //decke Buchstabe im Passwortfeld auf (<span>-Name korrespondiert mit index, z.B. 'input3inner')
 					if (keysPressed[keys.indexOf(buchstabe)] == 1) {	// Wenn ein Buchstabe genau einmal probiert wurde, zählt es als Win

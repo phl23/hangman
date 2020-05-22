@@ -87,7 +87,7 @@ function generateInputSpans() {
 		outerSpan.setAttribute("id", "input"+(i+1));
 		outerSpan.setAttribute("class", "input");
 		outerSpan.setAttribute("display", "none");
-
+		
 		innerSpan = document.createElement("span");
 		innerSpan.setAttribute("id", "input"+(i+1)+"inner");
 		innerSpan.setAttribute("style", "visibility:hidden");
@@ -95,9 +95,20 @@ function generateInputSpans() {
 		generatedOuterSpan = document.getElementById('inputwrapper').appendChild(outerSpan);
 		generatedInnerSpan = document.getElementById('input'+(i+1)).appendChild(innerSpan);
 
+		// Hier wird das DIV für den grünen Flasheffekt erstellt, dieses wird in der Function flashTerminalGreen() ausgelöst
+		outerSpan.style.cssText = 'position: relative;'; // Nötig, damit das Child-Element nur so groß wie dieses wird
+		document.getElementById('input' + (i+1)).innerHTML += '<div id="greenflashterminal' + (i+1) + '"></div>';
+		var divflash = document.getElementById('greenflashterminal' + (i+1));
+		divflash.style.cssText = 
+		'background: radial-gradient(ellipse farthest-side, rgba(33, 255, 25, 0.514) 50%, rgba(0, 0, 0, 0) 110%);display: none;width: 150%;height: 150%;position: absolute;top: -2px;right: -2px;z-index: 10;';
+
 		spanArray[(i+1)] = generatedOuterSpan;
 	}
 	// console.log(spanArray);		// Testzwecke
+}
+
+function flashTerminalGreen(id) {
+	$('#greenflashterminal' + (id+1)).fadeIn(0,'linear').fadeOut(400,'swing');
 }
 
 function inputToHangman(myInput) {
@@ -422,17 +433,35 @@ function tutorialmsg() {
 	// console.log(meldungen); // Testzwecke
 	Swal.fire({
 		customClass: {
-			container: 'firstmsgpopup',
-			confirmButton: 'confirm-button-firstmsg',
+			container: 'tutorilmsgpopup',
+			confirmButton: 'confirm-button-tutorialmsg',
 		},
 		title: meldungen.tutorial.title[0],
 		html: meldungen.tutorial.text[0],
-			// imageUrl: './images/firstmsg.png',
+			// imageUrl: './images/tutorialmsg.png',
 		icon: 'info',
 		showCancelButton: false,
 		animation: false,
 		grow: false,
 		confirmButtonText: meldungen.tutorial.confirm[0],
+	});
+}
+
+function willkommenmsg() {
+	Swal.fire({
+		customClass: {
+			container: 'willkommenmsgpopup',
+			confirmButton: 'confirm-button-willkommenmsg',
+		},
+		title: meldungen.willkommen.title[0],
+		html: meldungen.willkommen.text[0],
+			// imageUrl: './images/willkommenmsg.png',
+		icon: 'info',
+		showCancelButton: false,
+		animation: false,
+		grow: 'fullscreen',
+		allowOutsideClick: false,
+		confirmButtonText: meldungen.willkommen.confirm[0],
 	});
 }
 

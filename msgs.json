@@ -1,14 +1,25 @@
 {	
+	"willkommen": {
+		"confirm": [
+			"Alles klar!"
+		],
+		"title": [
+			"<h1>Hallo</h1>"
+		],
+		"text": [
+			"<p>Herzlich Willkommen bei unserem Galgenm&auml;nchen Spiel f&uuml;r das Webprojekt an der Uni Siegen.<br />Zur Zeit l&auml;sst sich jede Stage ausw&auml;hlen oder du kannst die Level nach der Reihe spielen, beginnend bei dem \"Tante Emma Laden\".<br />Die aktuellen Regeln findest du im Hauptmen&uuml; und \"Tutorial\" oder im Spiel unter \"Regeln\".<br />Zudem kannst du unter \"Schwierigkeit\" das Spiel leichter einstellen. <br />Im Easy Mode muss man anstatt der ganzen Mission nur die Stage nocheinmal machen.<br />Probier einfach etwas herum und versuche zu Gewinnen. Es lohnt sich!</p>\r\n<p style=\"text-align: center;\">Aktuelle Version:<br /><strong>- Pre-Alpha -</strong></p>"
+		]		
+	},
 	"tutorial": {
+		"confirm": [
+			"Danke!"
+		],
 		"title": [
 			"<h1>Tutorial</h1>"
 		],
 		"text": [
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
-		],
-		"confirm": [
-			"Danke!"
-		]
+			"<p>Regeln:</p>\r\n<ul style=\"list-style: none;\">\r\n<li>10 Versuche pro Stage</li>\r\n<li>3 Stages pro Mission</li>\r\n<li>2 Minuten Zeit pro !Mission!</li>\r\n<li style=\"0margin: 10px;\">Punkte pro Stage:<br />Verbleibende Versuche * verbleibende Zeit</li>\r\n<li>Mit steigender Mission werden falsche Buchstaben<br />erst sp&auml;ter ausgegraut</li>\r\n</ul>"
+		]		
 	},
 	"schwierigkeit": {
 		"confirm": [
@@ -18,7 +29,7 @@
 			"<h1>Schwierigkeitsgrad</h1>"
 		],
 		"text": [
-			""
+			"<p>Easy Mode:<br>Bei Fehler nicht komplette Mission neustarten</p>"
 		],
 		"placeholder": [
 			"Wähle einen Schwierigkeitsgrad"
@@ -35,16 +46,16 @@
 			"Alles klar!"
 		],
 		"title": [
-			"<h1>Willkommen</h1>",
+			null,
 			"<h1>Regeln Mission 1</h1>",
 			"<h1>Regeln Mission 2</h1>",
 			"<h1>Regeln Mission 3</h1>"
 		],
 		"text": [
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
+			null,
+			"<p>Custom Regeln f\u00FCr Mission 1<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>",
+			"<p>Custom Regeln f\u00FCr Mission 2<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>",
+			"<p>Custom Regeln f\u00FCr Mission 3<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>"
 		]
 	},
 	"sieg": [
@@ -68,29 +79,29 @@
 		],
 		"mission2": [
 			null,
-			"<h1>Location2</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-			"<h1>Location2</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-			"<h1>Location2</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+			"<h1>Location 2</h1><br><br><p>-Level 2 Stage 1 Text -</p>",
+			"<h1>Location 2</h1><br><br><p>-Level 2 Stage 2 Text -</p>",
+			"<h1>Location 2</h1><br><br><p>-Level 2 Stage 3 Text -</p>"
 		],
 		"mission3": [
 			null,
-			"<h1>Location3</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-			"<h1>Location3</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-			"<h1>Location3</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+			"<h1>Location 3</h1><br><br><p>-Level 3 Stage 1 Text -</p>",
+			"<h1>Location 3</h1><br><br><p>-Level 3 Stage 2 Text -</p>",
+			"<h1>Location 3</h1><br><br><p>-Level 3 Stage 3 Text -</p>"
 		]
 	},
 	"location": {
 		"title": [
 			null,
 			"Tante Emma Laden",
-			"Titel2",
-			"Titel3"
+			"Titel Location 2",
+			"Titel Location 3"
 		],
 		"text": [
 			null,
 			"Brich bei Tante Emma ein!",
-			"Text2",
-			"Text3"
+			"Text Location 2",
+			"Text Location 3"
 		]
 	}
 }
