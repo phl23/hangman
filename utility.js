@@ -318,7 +318,9 @@
 
 			spanArray[(i+1)] = generatedOuterSpan;
 		}
-		// console.log(spanArray);		// Testzwecke
+		if (consoleOutput == true) {
+			console.log(spanArray);		// Testzwecke
+		}
 	}
 
 	function setIp() {
@@ -338,7 +340,9 @@
 	}
 
 	function startTimer(zeitInSec) {
-		// console.log('timer started'); // Testzwecke
+		if (consoleOutput == true) {
+			console.log('timer started'); // Testzwecke
+		} 
 		if (level % 10 == 1) {						// Checkt ob erste Stage oder spätere, bei späteren stages läuft der timer weiter
 			timerLeft = zeitInSec;
 		}
@@ -411,6 +415,28 @@
 		})
 		*/
 		
+	}
+
+	function deactivateLevel(which) {
+		if (which == 'all') {		// Alle Level per function-loop
+			$(function(){
+				$("button.missionbtn").attr("disabled", true);
+			  });
+		}
+		else if (which <= maxLevel && which > 0) {		// Das übergebene Level
+			$("button#missionbtn" + which).attr("disabled", true);
+		}
+	}
+
+	function activateLevel(which) {
+		if (which == 'all') {		// Alle Level per function-loop
+			$(function(){
+				$("button.missionbtn").attr("disabled", false);
+			  });
+		}
+		else if (which <= maxLevel && which > 0) {		// Das übergebene Level
+			$("button#missionbtn" + which).attr("disabled", false);
+		}
 	}
 
 /* Ende: Eingabe, Worterstellung und Gamemechanik */
@@ -519,7 +545,9 @@
 	}
 
 	function MissionWahl(MissionZahl) {
-		// console.log(meldungen); // Testzwecke
+		if (consoleOutput == true) {
+			console.log(meldungen); // Testzwecke
+		} 
 		swal.fire({
 			customClass: {
 				container: 'missionwahlpopup',
@@ -594,7 +622,9 @@
 	}
 
 	function tutorialmsg() {
-		// console.log(meldungen); // Testzwecke
+		if (consoleOutput == true) {
+			console.log(meldungen); // Testzwecke
+		}
 		Swal.fire({
 			customClass: {
 				container: 'tutorilmsgpopup',
@@ -708,7 +738,9 @@
 	}
 
 	function siegmsg(id) {
-		// console.log(meldungen); // Testzwecke
+		if (consoleOutput == true) {
+			console.log(meldungen); // Testzwecke
+		}
 		swal.fire({
 			customClass: {
 				container: 'siegmsgpopup',
@@ -812,10 +844,74 @@
 /* Ende: Messages */
 
 
+/* Start: DevTools */
+
+function toggleStageWahl() {
+	if ($("button.devlevelbtn").css("display") == "none") {
+		$(function(){
+			$("button.devlevelbtn").show();
+		});
+	}
+	else {
+		$(function(){
+			$("button.devlevelbtn").hide();
+		  });
+	}	
+}
+
+function toggleConsoleOutputs() {
+	if (consoleOutput == false)  {
+		consoleOutput = true;
+	}
+	else {
+		consoleOutput = false;
+	}
+}
+
+function devTools() {
+	Swal.fire({
+		customClass: {
+			container: 'devtoolspopup',
+			confirmButton: 'confirm-button-devtools',
+		},
+		input: 'select',
+		inputValue: '1',
+		inputOptions: {
+			'1': 'Toggle Stage Wahl',
+			'2': 'Console Outputs',
+			// '3': meldungen.schwierigkeit.grad[3],
+		},
+		// inputPlaceholder: meldungen.schwierigkeit.placeholder[0],
+		title: 'Dev Tools',
+		html: '',
+			// imageUrl: './images/firstmsg.png',
+		icon: 'info',
+		showCancelButton: true,
+		animation: false,
+		grow: false,
+		confirmButtonText: 'Do!',
+		cancelButtonText: 'Cancel',
+		reverseButtons: true,
+	})
+	.then((result) => {
+		if (result.value == 1) {
+			toggleStageWahl();
+		}
+		if (result.value == 2) {
+			toggleConsoleOutputs();
+		}
+	});
+}
+
+/* Ende: DevTools */
+
+
 /* Noch unbenutzt */
 
 	function regelnmsg(id) {
-	// console.log(meldungen); // Testzwecke
+	if (consoleOutput == true) {
+		console.log(meldungen); // Testzwecke
+	}
 	swal.fire({
 		customClass: {
 			container: 'itemspopup',
@@ -830,8 +926,4 @@
 		grow: false,
 		confirmButtonText: meldungen.regeln.confirm[0],
 	})
-	}
-
-	function levelFreischaltung(levelId) {
-		document.getElementById('missionbtn' + levelId).style.display = 'block';
 	}

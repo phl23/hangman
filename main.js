@@ -7,6 +7,7 @@ var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission
 var liste = "spiele";																	// Voreingestellte Wortliste
 var items = ['Baum','Eiche','Löffel'];													// Hier kommen die Items rein ( im Klartext z.b. 'baum')
 var minPunkteItemReward = 10;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
+var consoleOutput = false;																// Schatet die Ausgabe in der Console um
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
@@ -72,8 +73,10 @@ schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert),
 zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 */																
 	
-	if (level < 10) {
+	if (level < 10) {			// Nur beim ersten Start, dann ist var level = 0
 		willkommenmsg();
+		deactivateLevel('all');
+		activateLevel('1');
 	}
 	scoreAnzeige();
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
@@ -151,16 +154,22 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 		input = getWord(liste).replace('\r', '');
 	}
 	usedWords.push(input);
-	console.log(usedWords);  // Testzwecke
-
+	if (consoleOutput == true) {
+		console.log(usedWords);  // Testzwecke
+	}
+	
 	//ANPASSUNG WORTLÄNGE ABHÄNGIG VON LEVEL - unausgereift
 	/*
 	newMaxLength = Math.floor((newMaxLength-(newMaxLength/4))) - ((level / 10) * 2 - 2);
-	console.log("newMaxLength: "+newMaxLength)
+	if (consoleOutput == true) {
+		console.log("newMaxLength: "+newMaxLength);  // Testzwecke
+	}
 	while (input.length > newMaxLength || input.length <= newMaxLength - 2) {
 		input = getWord().replace('\r', '');
 		if (input.length > maxLength) {
-			console.log("INPUT.LENGTH: "+input.length)
+			if (consoleOutput == true) {
+				console.log("INPUT.LENGTH: "+input.length);  // Testzwecke
+			}
 			break;
 		}
 	}
@@ -268,6 +277,8 @@ Jeweilige Popup-Meldungen werden angezeigt.
 				}
 				score = missionscore + score;
 				failCounterGesamt = failCounterMission + failCounterGesamt;
+				deactivateLevel(Math.floor(level / 10));
+				activateLevel(Math.floor(level / 10) + 1);
 				missionsiegmsg(punkte);
 				failCounterMission = 0;
 				missionsZeit = 0;
