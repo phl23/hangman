@@ -2,7 +2,7 @@
 
 /* Start: Wortsammlungen */
 
-	var Wortsammlung = {deutsch: [],katzennamen: [], spiele: [], alk: []};
+	var Wortsammlung = {deutsch: [],katzennamen: [], spiele: [], alk: [], newlist: []};
 	var meldungen;
 
 	$.get(
@@ -38,6 +38,17 @@
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.deutsch = data.split('\n');
+
+			success: init();
+		},
+		'text'
+	);
+
+	$.get(
+		'newlist.txt',
+		function(data) {
+			//Wortliste abrufen und auf Array aufteilen
+			Wortsammlung.newlist = data.split('\n');
 
 			success: init();
 		},

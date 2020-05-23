@@ -94,10 +94,10 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	}
 	//newMaxLength = maxLength;		// siehe Z. 12 (Am Anfang der main.js)
 	if (11 <= level && level <= 19) {		// Prüft das gewählte Level und wählt die entsprechende Wortliste
-		liste = "spiele";
+		liste = "alk";
 	}
 	if (21 <= level && level <= 29) {
-		liste = "alk";
+		liste = "newlist";
 	}
 	if (31 <= level && level <= 39) {
 		liste = "katzennamen";
