@@ -471,13 +471,13 @@
 				input: 'inventar-input',
 			},
 			input: 'select',
-			inputValue: '1',
+			// inputValue: '1',
 			inputOptions: {
 				'Baum': 'Baum',
 				'Eiche': 'Eiche',
 				'Löffel': 'Löffel',
 			},
-			inputPlaceholder: 'Gegenstand',
+			inputPlaceholder: 'Wähle einen Gegenstand',
 			// title: 'Inventar',
 			html: htmlitem1 + htmlitem2 + htmlitem3,
 				// imageUrl: './images/firstmsg.png',
@@ -901,9 +901,21 @@ function devTools() {
 			toggleConsoleOutputs();
 		}
 		if (result.value == 3) {		// Hier noch nen loop bis max length von meldung.items oder so
-			getItem(meldungen.items['item1'].name[0]);
-			getItem(meldungen.items['item2'].name[0]);
-			getItem(meldungen.items['item3'].name[0]);
+			var getLength = function(obj) {
+				var i = 0, key;
+				for (key in obj) {
+					if (obj.hasOwnProperty(key)){
+						i++;
+					}
+				}
+				return i;
+			};
+			var maxItems = getLength(meldungen.items) - 1;  //off by one
+			for (var i = 1;i <= maxItems;i++) {
+					getItem(meldungen.items['item' + i].name[0]);
+				i++;
+			}
+			scoreAnzeige();
 		}
 	});
 }
