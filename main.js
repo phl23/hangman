@@ -5,8 +5,8 @@ const maxStage = 3;																		// Maximale Stage pro Mission, danach ist d
 var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
-var items = ['Baum','Eiche','Löffel'];													// Hier kommen die Items rein ( im Klartext z.b. 'baum')
-var minPunkteItemReward = 10;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
+var items = ['Baum',];																	// Hier kommen die Items rein ( im Klartext z.b. 'baum') bestimmt auch StartItems
+var minPunkteItemReward = 0;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
 var consoleOutput = false;																// Schatet die Ausgabe in der Console um
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
@@ -273,7 +273,7 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			else {		// Hier passiert das was bei Missionsabschluss passiert
 				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
 				if (punkte > minPunkteItemReward) {
-					rewardItem(Math.floor(level / 10));		// Vergibt ein Item wenn bestimmte Punkte erreicht wurden.
+					rewardItem(Math.floor(level / 10) + 1);		// Vergibt ein Item wenn bestimmte Punkte erreicht wurden.
 				}
 				score = missionscore + score;
 				failCounterGesamt = failCounterMission + failCounterGesamt;

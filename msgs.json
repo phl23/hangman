@@ -18,7 +18,7 @@
 			"<h1>Regeln</h1>"
 		],
 		"text": [
-			"\r\n<ul style=\"list-style: none;\">\r\n<li>10 Versuche pro Stage</li>\r\n<li>3 Stages pro Mission</li>\r\n<li>2 Minuten Zeit pro !Mission!</li>\r\n<li style=\"0margin: 10px;\">Punkte pro Stage:<br />Verbleibende Versuche * verbleibende Zeit</li>\r\n<li>Mit steigender Mission werden falsche Buchstaben<br />erst sp&auml;ter ausgegraut</li>\r\n</ul>"
+			"<ul style=\"list-style: none;text-align: left;\">\r\n<li>10 Versuche pro Stage</li>\r\n<li>3 Stages pro Mission</li>\r\n<li>2 Minuten Zeit pro Mission</li>\r\n<li></li>\r\n<li style=\"margin-top: 10px\">Punkte pro Stage:</li>\r\n<li>restliche Versuche * restliche Zeit</li>\r\n<li></li>\r\n<li style=\"margin-top: 10px\">falsche Buchstaben werden mit steigendem <br />Level erst sp&auml;ter ausgegraut</li>\r\n<li></li>\r\n<li style=\"margin-top: 10px\">nutze das Inventar!<br />die St&auml;rke bestimmt die Anzahl der</li>\r\n<li>gezeigten Buchstaben</li>\r\n</ul>"
 		]		
 	},
 	"schwierigkeit": {
@@ -59,9 +59,9 @@
 		]
 	},
 	"sieg": [
-		"<p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
-		"<p>Sehr gut!<br><br>Du hast es unbemerkt aus der Tankstelle heraus geschafft. Aber das war erst der Anfang.</p>",
-		"<p>Sehr gut!<br><br>Du bist ein richtiges Genie!<br><br>Bereit für deine letzte große Aufgabe?</p>",
+		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.<br>Aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
+		"<p>Sehr gut!<br><br>Du hast es unbemerkt aus der Tankstelle heraus geschafft. Aber das war erst der Anfang.</p><br><p>Neuer Gegenstand im Inventar!</p>",
+		"<p>Sehr gut!<br><br>Du bist ein richtiges Genie!<br><br>Bereit für deine letzte große Aufgabe?</p><br><p>Neuer Gegenstand im Inventar!</p>",
 		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>"
 	],
 	"stages": {
