@@ -216,11 +216,14 @@
 				// Iwie sowas..... var missionId = meldung.items.search(itemId).parentNode;
 				// var stärke = meldungen.items[missionId].stärke[0];			// Holt sich den StärkeWert aus der json je nach ItemName
 
-				if (itemId == 'Baum') {
-					stärke = 1;
+				if (itemId == meldungen.items.item1.name[0]) {
+					stärke = meldungen.items.item1.stärke[0];
 				}
-				if (itemId == 'Eiche') {
-					stärke = 2;
+				if (itemId == meldungen.items.item2.name[0]) {
+					stärke = meldungen.items.item2.stärke[0];
+				}
+				if (itemId == meldungen.items.item3.name[0]) {
+					stärke = meldungen.items.item3.stärke[0];
 				}
 				helpBuchstaben(stärke);	
 				items.splice(index, 1);   // Muss noch erst das Item suchen und dann splicen!
@@ -229,7 +232,7 @@
 	}
 
 	function rewardItem(missionnr) {
-		getItem(meldungen.items['Mission' + missionnr].name[0]);
+		getItem(meldungen.items['item' + missionnr].name[0]);
 	}
 
 /* Ende: Item Management */
@@ -406,31 +409,69 @@
 	/* Start: Button Messages */
 
 	function inventar() {
-		Swal.fire({
+		var htmlitem1 = [];
+		var htmlitem2 = [];
+		var htmlitem3 = [];
+
+		var fstItem = items.includes(meldungen.items.item1.name[0]);	// Checken ob Item vorhanden
+		var sndItem = items.includes(meldungen.items.item2.name[0]);
+		var trdItem = items.includes(meldungen.items.item3.name[0]);
+
+		if (fstItem == true) {		// Texte fürs Inventar, wenn gegenstand vorhanden
+			htmlitem1 = '<h2>' + meldungen.items.item1.title[0] + ': </h2><p>' + meldungen.items.item1.text[0] + '<br>Stärke: ' +  meldungen.items.item1.stärke[0] + '</p>';
+		}
+		if (sndItem == true) {
+			htmlitem2 = '<h2>' + meldungen.items.item2.title[0] + ': </h2><p>' + meldungen.items.item2.text[0] + '<br>Stärke: ' +  meldungen.items.item2.stärke[0] + '</p>';
+		}
+		if (trdItem == true) {
+			htmlitem3 = '<h2>' + meldungen.items.item3.title[0] + ': </h2><p>' + meldungen.items.item3.text[0] + '<br>Stärke: ' +  meldungen.items.item3.stärke[0] + '</p>';
+		}
+
+		Swal.fire({		// Inventar Popup
 			customClass: {
 				container: 'inventarpopup',
 				confirmButton: 'confirm-button-inventar',
+				input: 'inventar-input',
 			},
 			input: 'select',
 			inputValue: '1',
 			inputOptions: {
-				'Baum': items[0],
-				'Eiche': items[1],
-				// '3': items[2],
+				'Baum': 'Baum',
+				'Eiche': 'Eiche',
+				'Löffel': 'Löffel',
 			},
-			// inputPlaceholder: 'Gegenstand',
-			title: 'Inventar',
-			html: '<h2>' + meldungen.items.Mission1.title[0] + ': </h2><p>' + meldungen.items.Mission1.text[0] + '<br>Stärke: ' +  meldungen.items.Mission1.stärke[0] + '</p><br><br><h2>' + meldungen.items.Mission2.title[0] + ': </h2><p>' + meldungen.items.Mission2.text[0] + '<br>Stärke: ' +  meldungen.items.Mission2.stärke[0] + '</p>',
+			inputPlaceholder: 'Gegenstand',
+			// title: 'Inventar',
+			html: htmlitem1 + htmlitem2 + htmlitem3,
 				// imageUrl: './images/firstmsg.png',
 			// icon: 'info',
-			showCancelButton: false,
+			showCancelButton: true,
 			animation: false,
 			grow: false,
-			confirmButtonText: 'Hilf mir!',
+			confirmButtonText: 'Benutzen',
+			cancelButtonText: 'Zurück',
+			reverseButtons: true,
 		})
 		.then((result) => {
 			useItem(result.value);
 		});
+
+		/* Ab hier Verstecken nicht vorhandener Items */
+		
+		var selectcontainer = document.querySelector(".inventar-input");
+		if (fstItem == false) {
+			var match = selectcontainer.querySelectorAll("option[value='Baum']");
+			match[0].style.display = 'none';
+			
+		}
+		if (sndItem == false) {
+			var match = selectcontainer.querySelectorAll("option[value='Eiche']");
+			match[0].style.display = 'none';
+		}
+		if (trdItem == false) {
+			var match = selectcontainer.querySelectorAll("option[value='Löffel']");
+			match[0].style.display = 'none';
+		}
 	}
 
 	function backtomap() {

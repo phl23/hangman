@@ -108,7 +108,7 @@
 		"null": [
 			null
 		], 
-		"Mission1": {
+		"item1": {
 			"name": [
 				"Baum"
 			],
@@ -116,13 +116,13 @@
 				1
 			],
 			"title": [
-				"<h1>Baum</h1>"
+				"Baum"
 			],
 			"text": [
-				"<p>Ist halt nen Baum</p>"
+				"Ist halt nen Baum"
 			]
 		},
-		"Mission2": {
+		"item2": {
 			"name": [
 				"Eiche"
 			],
@@ -130,10 +130,24 @@
 				2
 			],
 			"title": [
-				"<h1>Eiche</h1>"
+				"Eiche"
 			],
 			"text": [
-				"<p>Deutsche Eiche</p>"
+				"Deutsche Eiche"
+			]
+		},
+		"item3": {
+			"name": [
+				"Löffel"
+			],
+			"stärke": [
+				3
+			],
+			"title": [
+				"Löffel"
+			],
+			"text": [
+				"Aus Holz! Sehr präzise."
 			]
 		}		
 	}

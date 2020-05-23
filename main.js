@@ -5,7 +5,7 @@ const maxStage = 3;																		// Maximale Stage pro Mission, danach ist d
 var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
-var items = [];																			// Hier kommen die Items rein ( im Klartext z.b. 'baum')
+var items = ['Baum','Eiche','Löffel'];													// Hier kommen die Items rein ( im Klartext z.b. 'baum')
 var minPunkteItemReward = 10;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
 var input;																				// Initialisierung der Variable für User-Eingabe
 var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
@@ -75,6 +75,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	if (level < 10) {
 		willkommenmsg();
 	}
+	scoreAnzeige();
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
 	/* Hier später allgemeines Tutorial einbauen und in msg.json bei Tutorial auf Platz 0 eintragen
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
@@ -108,6 +109,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	versuchsZeit = 0;
 	greenFlashInit();
 	redFlashInit();
+	itemsAnzeige();
 	startGame();
 	 
 }
