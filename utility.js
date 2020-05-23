@@ -881,7 +881,7 @@ function devTools() {
 			'2': 'Console Outputs',
 			// '3': meldungen.schwierigkeit.grad[3],
 		},
-		// inputPlaceholder: meldungen.schwierigkeit.placeholder[0],
+		inputPlaceholder: 'Game Version: Alpha',
 		title: 'Dev Tools',
 		html: '',
 			// imageUrl: './images/firstmsg.png',
