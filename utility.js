@@ -868,6 +868,23 @@ function toggleConsoleOutputs() {
 	}
 }
 
+function gimmeItems() {
+	var getLength = function(obj) {		// Schaut nach wieviel Items es gibt und gibt diese plus eins wegen NULL aus
+		var i = 0, key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)){
+				i++;
+			}
+		}
+		return i;
+	};
+	var maxItems = getLength(meldungen.items) - 1;  //off by one
+	for (var i = 1;i <= maxItems;i++) {
+			getItem(meldungen.items['item' + i].name[0]);
+	}
+	scoreAnzeige();
+}
+
 function devTools() {
 	Swal.fire({
 		customClass: {
@@ -900,21 +917,8 @@ function devTools() {
 		if (result.value == 2) {
 			toggleConsoleOutputs();
 		}
-		if (result.value == 3) {		// Hier noch nen loop bis max length von meldung.items oder so
-			var getLength = function(obj) {
-				var i = 0, key;
-				for (key in obj) {
-					if (obj.hasOwnProperty(key)){
-						i++;
-					}
-				}
-				return i;
-			};
-			var maxItems = getLength(meldungen.items) - 1;  //off by one
-			for (var i = 1;i <= maxItems;i++) {
-					getItem(meldungen.items['item' + i].name[0]);
-			}
-			scoreAnzeige();
+		if (result.value == 3) {
+			gimmeItems();
 		}
 	});
 }
