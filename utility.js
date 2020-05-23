@@ -913,7 +913,6 @@ function devTools() {
 			var maxItems = getLength(meldungen.items) - 1;  //off by one
 			for (var i = 1;i <= maxItems;i++) {
 					getItem(meldungen.items['item' + i].name[0]);
-				i++;
 			}
 			scoreAnzeige();
 		}
