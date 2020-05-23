@@ -66,8 +66,8 @@ input:focus {
 
 #inputwrapper {
   display: inline-block;
-  margin: -3px;
-  width: 15em;
+  margin: -3px 2px;
+  width: 17.3em;
 }
 
 #gameheader {

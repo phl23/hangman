@@ -1,14 +1,25 @@
 {	
-	"tutorial": {
+	"willkommen": {
+		"confirm": [
+			"Los Geht's"
+		],
 		"title": [
-			"<h1>Tutorial</h1>"
+			"<h1>Story</h1>"
 		],
 		"text": [
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
-		],
+			"<p>Willkommen auf deiner Mission!<br><br>Du wurdest beauftragt, eine Reihe von Einbrüchen zu verüben. Deine Aufgabe liegt darin, so viel Geld wie möglich zu sammeln.<br><br>Aber lass dich bloß nicht von der Polizei schnappen!<br>Und keine Angst, es wird niemand zu Schaden kommen, jedenfalls nicht wenn du dich an die Spielregeln hältst.</p>"
+		]		
+	},
+	"tutorial": {
 		"confirm": [
-			"Danke!"
-		]
+			"Alles klar!"
+		],
+		"title": [
+			"<h1>Regeln</h1>"
+		],
+		"text": [
+			"\r\n<ul style=\"list-style: none;\">\r\n<li>10 Versuche pro Stage</li>\r\n<li>3 Stages pro Mission</li>\r\n<li>2 Minuten Zeit pro !Mission!</li>\r\n<li style=\"0margin: 10px;\">Punkte pro Stage:<br />Verbleibende Versuche * verbleibende Zeit</li>\r\n<li>Mit steigender Mission werden falsche Buchstaben<br />erst sp&auml;ter ausgegraut</li>\r\n</ul>"
+		]		
 	},
 	"schwierigkeit": {
 		"confirm": [
@@ -35,23 +46,23 @@
 			"Alles klar!"
 		],
 		"title": [
-			"<h1>Willkommen</h1>",
+			null,
 			"<h1>Regeln Mission 1</h1>",
 			"<h1>Regeln Mission 2</h1>",
 			"<h1>Regeln Mission 3</h1>"
 		],
 		"text": [
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>",
-			"<p><ul style='list-style: none'><li>10 Versuche</li><li>3 Level</li><li>2 Minuten Zeit</li><li style=\"margin:10px 0\">Punkte:<br>Verbleibende Versuche * verbleibende Zeit</li><li>Mit steigendem Level werden Buchstaben<br>erst später ausgegraut</li></ul></p>"
+			null,
+			"<p>Custom Regeln f\u00FCr Mission 1<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>",
+			"<p>Custom Regeln f\u00FCr Mission 2<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>",
+			"<p>Custom Regeln f\u00FCr Mission 3<br>Aktuell immer gleiche Regeln<br>- Siehe Hauptmen\u00FC -</p>"
 		]
 	},
 	"sieg": [
 		"<p>Sehr gut, du bist ein wahrer Held.<br><br>Nicht schlecht, aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
-		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>",
-		"<p>Sehr gut!<br><br>Text Mission 2 geschafft.</p>",
-		"<p>Sehr gut!<br><br>Text Mission 3 geschafft.</p>"
+		"<p>Sehr gut!<br><br>Du hast es unbemerkt aus der Tankstelle heraus geschafft. Aber das war erst der Anfang.</p>",
+		"<p>Sehr gut!<br><br>Du bist ein richtiges Genie!<br><br>Bereit für deine letzte große Aufgabe?</p>",
+		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>"
 	],
 	"stages": {
 		"confirm": [
@@ -62,35 +73,82 @@
 		],
 		"mission1": [
 			null,
-			"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-			"<h1>Tante-Emma-Laden</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-			"<h1>Tante-Emma-Laden</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+			"<h1>Tankstelle</h1><br><br><p>Zu Beginn eine kleine Herausforderung:<br>Knacke das Türschloss der Tankstelle!<br><br>Tipp: Hier soll man wohl besonders gute Tropfen bekommen.</p>",
+			"<h1>Tankstelle</h1><br><br><p>Sehr gut, weiter geht's.<br>Das Passwort für den Tresor ist auf dem Kassenrechner gespeichert.<br><br>Entschlüssle das Admin-Passwort!</p>",
+			"<h1>Tankstelle</h1><br><br><p>Fast geschafft.<br><br>Knacke den Tresor der Tankstelle!</p>"
 		],
 		"mission2": [
 			null,
-			"<h1>Location2</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-			"<h1>Location2</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-			"<h1>Location2</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+			"<h1>Bank</h1><br><br><p>Brich in die lokale Bank ein.<br><br>Schalte die Alarm-Anlage aus!</p>",
+			"<h1>Bank</h1><br><br><p>Jetzt muss die Tür zum hinteren Teil der Bank geöffnet werden. Finde das Passwort heraus!</p>",
+			"<h1>Bank</h1><br><br><p>Du hast den Tresorraum im hinteren Teil der Bank gefunden. Ermittle so schnell wie möglich den Code!</p>"
 		],
 		"mission3": [
 			null,
-			"<h1>Location3</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
-			"<h1>Location3</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
-			"<h1>Location3</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Du möchtest etwas von Tante Emma's hart erarbeitetem Gewinn entwenden. Tante Emma is allerdings technisch versiert und benutzt einen Passwortmanager.<br><br>Knacke das Masterpasswort!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>Tante Emma hat offenbar mitgedacht! Das wichtigste Ihrer Passwörter hat sie anscheinend nur im Kopf. <br><br>Finde es heraus!</p>",
+			"<h1>Tante-Emma-Laden</h1><br><br><p>...und 2-Faktor-Authentizifierung nutzt sie scheinbar auch noch!</p>"
 		]
 	},
 	"location": {
 		"title": [
 			null,
-			"Tante Emma Laden",
-			"Titel2",
-			"Titel3"
+			"Tankstelle",
+			"Bank",
+			"Tante Emma Laden"
 		],
 		"text": [
 			null,
-			"Brich bei Tante Emma ein!",
-			"Text2",
-			"Text3"
+			"Knacke den Tresor der Tankstelle!",
+			"Raube die Bank aus!",
+			"Brich bei Tante Emma ein!"
 		]
+	},
+	"items": {
+		"null": [
+			null
+		], 
+		"item1": {
+			"name": [
+				"Baum"
+			],
+			"stärke": [
+				1
+			],
+			"title": [
+				"Baum"
+			],
+			"text": [
+				"Ist halt nen Baum"
+			]
+		},
+		"item2": {
+			"name": [
+				"Eiche"
+			],
+			"stärke": [
+				2
+			],
+			"title": [
+				"Eiche"
+			],
+			"text": [
+				"Deutsche Eiche"
+			]
+		},
+		"item3": {
+			"name": [
+				"Löffel"
+			],
+			"stärke": [
+				3
+			],
+			"title": [
+				"Löffel"
+			],
+			"text": [
+				"Aus Holz! Sehr präzise."
+			]
+		}		
 	}
 }

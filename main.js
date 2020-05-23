@@ -5,8 +5,10 @@ const maxStage = 3;																		// Maximale Stage pro Mission, danach ist d
 var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 var liste = "spiele";																	// Voreingestellte Wortliste
+var items = ['Baum','Eiche','Löffel'];													// Hier kommen die Items rein ( im Klartext z.b. 'baum')
+var minPunkteItemReward = 10;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
 var input;																				// Initialisierung der Variable für User-Eingabe
-var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel auf der Karte beginnt!
+var level = 0;																			// Startlevel = 0 bedeuted, dass das Spiel mit dem Tutorial beginnt!
 var easymode = 1;																		// Schwierigkeitsgrad: 1 leicht, 2 normal, 3 schwer
 var stagereset = false;																	// Soll bei Verloren die Stage neugestartet werden? oder die Mission
 //var level = parseInt(localStorage.getItem('savedLevel'));								// Eventuell zwischengespeichertes Level aus dem LocalStorage des Browsers holen, siehe https://developer.mozilla.org/de/docs/Web/API/Window/localStorage
@@ -70,7 +72,10 @@ schon einmal gestartet wurde. Wenn nicht (oder wenn Variable nicht existiert),
 zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 */																
 	
-
+	if (level < 10) {
+		willkommenmsg();
+	}
+	scoreAnzeige();
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');
 	/* Hier später allgemeines Tutorial einbauen und in msg.json bei Tutorial auf Platz 0 eintragen
 	if (!hasBeenLaunched || hasBeenLaunched === false) {
@@ -89,10 +94,10 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	}
 	//newMaxLength = maxLength;		// siehe Z. 12 (Am Anfang der main.js)
 	if (11 <= level && level <= 19) {		// Prüft das gewählte Level und wählt die entsprechende Wortliste
-		liste = "spiele";
+		liste = "alk";
 	}
 	if (21 <= level && level <= 29) {
-		liste = "alk";
+		liste = "newlist";
 	}
 	if (31 <= level && level <= 39) {
 		liste = "katzennamen";
@@ -104,6 +109,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	versuchsZeit = 0;
 	greenFlashInit();
 	redFlashInit();
+	itemsAnzeige();
 	startGame();
 	 
 }
@@ -204,11 +210,14 @@ Kernfunktion des Spiels
 			flashKeyGreen(buchstabe);
 			while (index != -1) {
 				index = input.indexOf(buchstabe, index);
+				flashTerminalGreen(index);
 				if (index != -1 && document.getElementById('input' + (index + 1) + 'inner') != null) {
-					document.getElementById('input' + (index + 1) + 'inner').style.visibility = 'visible'; //decke Buchstabe im Passwortfeld auf (<span>-Name korrespondiert mit index, z.B. 'input3inner')
-					if (keysPressed[keys.indexOf(buchstabe)] == 1) {	// Wenn ein Buchstabe genau einmal probiert wurde, zählt es als Win
-						winCounter++;	
-					}
+					if (document.getElementById('input' + (index + 1) + 'inner').style.visibility != 'visible') {		//Falls schon zuvor von Item aufgedeckt
+							document.getElementById('input' + (index + 1) + 'inner').style.visibility = 'visible'; //decke Buchstabe im Passwortfeld auf (<span>-Name korrespondiert mit index, z.B. 'input3inner')
+						if (keysPressed[keys.indexOf(buchstabe)] == 1) {	// Wenn ein Buchstabe genau einmal probiert wurde, zählt es als Win
+							winCounter++;	
+						}
+					}					
 					index++;	// index wird um 1 erhöht, dass Wort wird nach weiterem Vorkommen des Buchstabens durchsucht
 					document.getElementById(buchstabe + 'key').disabled = true;			// Blendet richtige Buchstaben aus
 				}
@@ -230,7 +239,7 @@ Gewinnabfrage
 Jeweilige Popup-Meldungen werden angezeigt.
 */
 	var punkte = 0;
-	if (winCounter == input.length) {
+	if (winCounter >= input.length) {
 		punkte = ((maxFails) - failCounter) * (timerZeitInSec-versuchsZeit); // MaxZeit - gebrauchte Zeit in der Stage x Fehler übrig    Punkte erreicht
 		missionscore = missionscore + punkte;
 		missionsZeit = versuchsZeit + missionsZeit;
@@ -245,53 +254,21 @@ Jeweilige Popup-Meldungen werden angezeigt.
 			})
 			return;
 		}
-		else {					// Stage gewonnen!
+		else {		// Stage gewonnen!
 			// Hier nächste Stage
-			if (level % 10 !== maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
+			if (level % 10 != maxStage) {			// % ist der modulus Operator -> z.b. 53 geteilt durch 10 = 5 mit Rest 3 , also alles was mit "maxStage" endet löst nicht aus!
 				timerLeft = verbleibendeZeit;
-
 				timerStop = true;
-				Swal.fire({
-					title: 'Richtig!',
-					html: input + ' war richtig.<br>Du hast ' + punkte + ' Punkte erreicht!<br>(' + timerZeitInSec + ' - gebrauchte Sekunden [' + versuchsZeit + '] ) x ( ' + maxFails + ' - Fehleranzahl [' + failCounter + '] )',
-					icon: 'success',
-					confirmButtonText: 'Weiter',
-					animation: true,
-					grow: false,
-					allowOutsideClick: false
-				})
-				.then((result) => {
-					if (result.value) {
-						level = level + 1;
-						stagemsg(level % 10);			// Ohne Dezimal Zahl weitergeben
-						levelAnzeige();
-						startGame();
-						// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
-						// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
-					}
-				});
+				stagesiegmsg(punkte);
 			}
 			else {		// Hier passiert das was bei Missionsabschluss passiert
 				timerStop = true;		// Sonst feuert der Timer bei der Siegbenachrichtigung
+				if (punkte > minPunkteItemReward) {
+					rewardItem(Math.floor(level / 10));		// Vergibt ein Item wenn bestimmte Punkte erreicht wurden.
+				}
 				score = missionscore + score;
 				failCounterGesamt = failCounterMission + failCounterGesamt;
-				$("#greenwin").fadeIn(850,'swing', function() {
-					Swal.fire({
-						title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
-						html: 'Sehr gut!<br>' + input + ' war richtig!<br>Stagepunkte: ' + punkte + '<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
-						// icon: 'success',
-						imageUrl: './images/giphy.gif',			// Für Testzwecke
-						confirmButtonText: 'Weiter',
-						animation: true,
-						grow: false,
-						allowOutsideClick: false
-					})
-					.then((result) => {
-						if (result.value) {
-							$.mobile.changePage("#page1",{transition:"slidedown"}); 
-						}
-					});
-				})
+				missionsiegmsg(punkte);
 				failCounterMission = 0;
 				missionsZeit = 0;
 				scoreAnzeige();
