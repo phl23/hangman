@@ -879,9 +879,9 @@ function devTools() {
 		inputOptions: {
 			'1': 'Toggle Stage Wahl',
 			'2': 'Console Outputs',
-			// '3': meldungen.schwierigkeit.grad[3],
+			'3': 'All Items',
 		},
-		inputPlaceholder: 'Game Version: Alpha',
+		// inputPlaceholder: 'Game Version: Alpha',
 		title: 'Dev Tools',
 		html: '',
 			// imageUrl: './images/firstmsg.png',
@@ -899,6 +899,11 @@ function devTools() {
 		}
 		if (result.value == 2) {
 			toggleConsoleOutputs();
+		}
+		if (result.value == 3) {		// Hier noch nen loop bis max length von meldung.items oder so
+			getItem(meldungen.items['item1'].name[0]);
+			getItem(meldungen.items['item2'].name[0]);
+			getItem(meldungen.items['item3'].name[0]);
 		}
 	});
 }
