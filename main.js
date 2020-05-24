@@ -167,7 +167,11 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 		input = getWord(liste).replace('\r', '');
 	}
 	usedWords.push(input);
-	if (consoleOutput == true) {
+	if (consoleOutput == true) {  // Testzwecke
+		$('#lösung').remove();  // Testzwecke
+		$('#lösungdiv').css({"display" : "flex", "height" : "3vh"});  // Testzwecke
+		$('#lösungdiv').prepend('<span id="lösung" style="margin:0 auto"></span>');	// Testzwecke
+		document.getElementById('lösung').innerHTML = (usedWords[usedWords.length - 1]);	// Testzwecke
 		console.log(usedWords);  // Testzwecke
 	}
 	
