@@ -451,11 +451,14 @@
 
 /* Start: Messages */
 
-	/* Button Animations */
+	/* Start: Button Animations */
 
 	function confBtnAnimation(btnClass) {
 		micron.getEle(btnClass).interaction(confBtnInteraction).duration(confBtnDelay / 1000).timing(confBtnTiming);
 	}
+
+	/* Ende: Button Animations */
+
 
 	/* Start: Button Messages */
 
