@@ -370,9 +370,13 @@
 				zeroM = '0';
 			}
 			document.getElementById('timer').innerHTML = 'Zeit: ' + zeroM + mins + ':' + zeroS + secs;
+			if (verbleibendeZeit == timerLastSecValue) {		// Letzte Sekunden Warnung
+				document.getElementById('timer').className = 'lastseconds';
+			}
 			if (verbleibendeZeit < 0) {
 				clearInterval(x);
 				document.getElementById('timer').innerHTML = 'GAME OVER';
+				document.getElementById('timer').className = 'gameover';	// Letzte Sekunden Warnung deaktiveren und Game Over Anzeige aktiveren
 				gameOver(true);
 			}
 		}, 1000);		// ms pro Tick des Intervalls
