@@ -20,6 +20,12 @@ var winCounter = 0;																		// Gewinn- und Verlustzähler für die Gewi
 var failCounter = 0;
 var failCounterMission = 0;
 var failCounterGesamt = 0;
+
+/* Confirm Button Style */
+	const confBtnDelay = 400;															// Dauer der Confirm Button Animation
+	const confBtnTiming = "ease-in";													// Timing der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#type-of-ease
+	const confBtnInteraction = "jelly";													// Art der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#interactions
+
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
