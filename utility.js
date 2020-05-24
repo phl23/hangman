@@ -971,8 +971,8 @@ function devTools() {
 		input: 'select',
 		inputValue: '1',
 		inputOptions: {
-			'1': 'Toggle Stage Wahl',
-			'2': 'Console Outputs',
+			'1': 'Lösungen & Console Outputs',
+			'2': 'Toggle Stage Wahl',
 			'3': 'All Items',
 		},
 		// inputPlaceholder: 'Game Version: Alpha',
@@ -989,10 +989,10 @@ function devTools() {
 	})
 	.then((result) => {
 		if (result.value == 1) {
-			toggleStageWahl();
+			toggleConsoleOutputs();
 		}
 		if (result.value == 2) {
-			toggleConsoleOutputs();
+			toggleStageWahl();
 		}
 		if (result.value == 3) {
 			gimmeItems();
