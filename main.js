@@ -4,6 +4,7 @@ const maxLength = 35;																	// Maximale Wortlänge, die in das Galgenm
 const maxStage = 3;																		// Maximale Stage pro Mission, danach ist die Mission geschafft
 var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsanfang (zu var ändern falls Missionen unterschiedliche Fails haben sollen)
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
+const timerLastSecValue = 20;															// Verbleibende Zeit in Sekunden ab wo der Timer die Farbe wechselt!
 var liste = "spiele";																	// Voreingestellte Wortliste
 var items = ['Baum',];																	// Hier kommen die Items rein ( im Klartext z.b. 'baum') bestimmt auch StartItems
 var minPunkteItemReward = 0;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
@@ -20,6 +21,16 @@ var winCounter = 0;																		// Gewinn- und Verlustzähler für die Gewi
 var failCounter = 0;
 var failCounterMission = 0;
 var failCounterGesamt = 0;
+const listelevel1 = "alk";
+const listelevel2 = "spiele";
+const listelevel3 = "katzennamen";
+
+
+/* Confirm Button Style */
+	const confBtnDelay = 360;															// Dauer der Confirm Button Animation
+	const confBtnTiming = "ease-in";													// Timing der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#type-of-ease
+	const confBtnInteraction = "jelly";													// Art der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#interactions
+
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
 var timerStop = false;																	// Hilfsvariable für Timer-Stop
@@ -97,13 +108,13 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 	}
 	//newMaxLength = maxLength;		// siehe Z. 12 (Am Anfang der main.js)
 	if (11 <= level && level <= 19) {		// Prüft das gewählte Level und wählt die entsprechende Wortliste
-		liste = "alk";
+		liste = listelevel1;
 	}
 	if (21 <= level && level <= 29) {
-		liste = "newlist";
+		liste = listelevel2;
 	}
 	if (31 <= level && level <= 39) {
-		liste = "katzennamen";
+		liste = listelevel3;
 	}
 	// liste = document.getElementById("listenauswahl").value;		// Lese Auswahl des Dropdown-Menüs
 	$.mobile.changePage("#page2",{transition:"slideup"});  // Gehe auf Seite 2 (Spiel)
@@ -127,7 +138,9 @@ Spielrunde zurücksetzen - löscht NICHT Spielstand, Timer, Level -- gedacht fü
 	}
 	winCounter = 0;
 	failCounter = 0;
+	document.getElementById('fails').className = '';
 	versuchsZeit = 0;
+	
 	$("#greenwin").fadeOut(0,'swing');
 	if (level % 10 == 1) {			// wird nur bei Missionsstart und nicht bei Stagestart zurückgesetzt
 		failCounterMission = 0;
@@ -190,6 +203,12 @@ Startet eine neue Spielrunde - behält Timer, Score, Level bei
 	if (level % 10 == 1) {
 		timerLeft = timerZeitInSec;		// Setzt den Timer in der ersten Stage immer auf timerZeitInSec (z.b. 120)
 	}
+	if (timerLeft < timerLastSecValue) {		// Letzte Sekunden Warnung
+		document.getElementById('timer').className = 'lastseconds';
+	}
+	else {
+		document.getElementById('timer').className = 'normal';	// Letzte Sekunden Warnung deaktiveren
+	}
 	$("#redloose").fadeOut(100,'swing', function() {		// Roten Verloren Bildschrim entfernen
 		stagemsg(level);
 	});
@@ -212,6 +231,9 @@ Kernfunktion des Spiels
 		if (index == -1) {	// wenn für den eingegebenen Buchstaben im gesuchten Wort kein index gefunden wird, zählt es als Fail
 			flashKeyRed(buchstabe);
 			failCounter++;
+			if (failCounter == 7){
+				document.getElementById('fails').className = 'almostmax';
+			}
 			failCounterMission++;
 			setPolizeiPosition(failCounter);	// ruft Function auf um das PolizeiFahrzeug zu bewegen
 			failAnzeige();		// Für Testzwecke

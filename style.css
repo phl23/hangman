@@ -385,9 +385,30 @@ g {
  * ---------------------------------------------- */
 
  @keyframes scale-up-center{
-   0%{transform:scale(.75)}100%{transform:scale(1)}
+   0%{transform:scale(.8)}100%{transform:scale(1)}
   }
 
 .scale-up-center{
   animation:scale-up-center 2s cubic-bezier(.25,.46,.45,.94) infinite alternate-reverse;
+}
+
+#timer.lastseconds {
+  animation:scale-up-center 0.5s cubic-bezier(.25,.46,.45,.94) 0.4s infinite alternate-reverse;
+  color: crimson;
+  filter: drop-shadow(-1px 0px 5px crimson);
+}
+
+#timer.gameover {
+  color: crimson;
+  filter: drop-shadow(-1px 0px 5px crimson);
+}
+
+#fails.almostmax {
+  color: crimson;
+  filter: drop-shadow(-1px 0px 5px crimson);
+}
+
+#timer.normal {
+  color: forestgreen;
+  filter: drop-shadow(-1px 0px 5px forestgreen);
 }

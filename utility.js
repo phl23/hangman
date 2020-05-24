@@ -370,9 +370,13 @@
 				zeroM = '0';
 			}
 			document.getElementById('timer').innerHTML = 'Zeit: ' + zeroM + mins + ':' + zeroS + secs;
+			if (verbleibendeZeit == timerLastSecValue) {		// Letzte Sekunden Warnung
+				document.getElementById('timer').className = 'lastseconds';
+			}
 			if (verbleibendeZeit < 0) {
 				clearInterval(x);
 				document.getElementById('timer').innerHTML = 'GAME OVER';
+				document.getElementById('timer').className = 'gameover';	// Letzte Sekunden Warnung deaktiveren und Game Over Anzeige aktiveren
 				gameOver(true);
 			}
 		}, 1000);		// ms pro Tick des Intervalls
@@ -447,6 +451,12 @@
 
 /* Start: Messages */
 
+	/* Button Animations */
+
+	function confBtnAnimation(btnClass) {
+		micron.getEle(btnClass).interaction(confBtnInteraction).duration(confBtnDelay / 1000).timing(confBtnTiming);
+	}
+
 	/* Start: Button Messages */
 
 	function inventar() {
@@ -492,11 +502,16 @@
 			confirmButtonText: 'Benutzen',
 			cancelButtonText: 'Zurück',
 			reverseButtons: true,
+			preConfirm: function(value) {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-inventar");
+				setTimeout(function() {
+					useItem(value);
+					$('.inventarpopup').remove();
+				}, confBtnDelay);
+				return false;
+			} 
 		})
-		.then((result) => {
-			useItem(result.value);
-		});
-
+		
 		/* Ab hier Verstecken nicht vorhandener Items */
 		
 		var selectcontainer = document.querySelector(".inventar-input");
@@ -531,21 +546,24 @@
 			reverseButtons: false,
 			animation: false,
 			grow: false,
-			allowOutsideClick: false
+			allowOutsideClick: false,
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-backtomap");
+				setTimeout(function() {
+					timerStop = true;
+					missionscore = 0;
+					failCounterGesamt = failCounterMission + failCounterGesamt;			// Übernimmt die Fehler in die Gesamtwertung auch bei Abbruch! Soll das? Wegen Highscore?
+					failCounterMission = 0;
+					versuchsZeit = 0;
+					missionsZeit = 0;
+					scoreAnzeige();
+					resetGame();
+					$('.backtomappopup').remove();
+					$.mobile.changePage("#page1",{transition:"slidedown"});
+				}, confBtnDelay);
+				return false;
+			} 
 		})
-		.then((result) => {
-			if (result.value) {
-				timerStop = true;
-				missionscore = 0;
-				failCounterGesamt = failCounterMission + failCounterGesamt;			// Übernimmt die Fehler in die Gesamtwertung auch bei Abbruch! Soll das? Wegen Highscore?
-				failCounterMission = 0;
-				versuchsZeit = 0;
-				missionsZeit = 0;
-				scoreAnzeige();
-				resetGame();
-				$.mobile.changePage("#page1",{transition:"slidedown"});
-			}
-		});
 	}
 
 	function MissionWahl(MissionZahl) {
@@ -568,10 +586,10 @@
 			animation: true,
 			reverseButtons: true,
 			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
-				micron.getEle(".confirm-button-missionwahl").interaction("pop").duration(".5").timing("ease-in");
+				confBtnAnimation(".confirm-button-missionwahl");
 				setTimeout(function() {
 					init(MissionZahl);
-				}, 480);
+				}, confBtnDelay);
 				return false;
 			} 
 		})	
@@ -599,31 +617,40 @@
 			animation: false,
 			grow: false,
 			confirmButtonText: 'Bin Bereit!',
+			preConfirm: function(value) {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-diffimsg");
+				setTimeout(function() {
+					if (value == 1) {
+						stagereset = true;
+						timerZeitInSec = 120;
+						maxFails = 10;
+						console.log('EasyMode Aktiviert');		// Für Testzwecke
+					}
+					else if (value == 2) {
+						stagereset = false;
+						timerZeitInSec = 120;
+						maxFails = 10;
+						console.log('Normal Aktiviert');		// Für Testzwecke
+					}
+					else {
+						stagereset = false;		
+						timerZeitInSec = 120;	// Estmal auf 120 gelassen
+						maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
+					}
+					$('.diffimsgpopup').remove();
+				}, confBtnDelay);
+				return false;
+			} 
 		})
 		.then((result) => {
 				easymode = result.value;			// Result gibt aus: " Value {'1'} " oder " Value {'2'} " oder " Value {'3'} "
-				
+						
 				/*
 					Hier die Schwierigkeitsgrad-Optionen einstellen
 				*/
 
-				if (easymode == 1) {
-					stagereset = true;
-					timerZeitInSec = 120;
-					maxFails = 10;
-					console.log('EasyMode Aktiviert');		// Für Testzwecke
-				}
-				else if (easymode == 2) {
-					stagereset = false;
-					timerZeitInSec = 120;
-					maxFails = 10;
-					console.log('Normal Aktiviert');		// Für Testzwecke
-				}
-				else {
-					stagereset = false;		
-					timerZeitInSec = 120;	// Estmal auf 120 gelassen
-					maxFails = 10;		// Erstmal auf 10 gelassen, da sonst das Polizeiauto nicht stimmt!
-				}
+				
+								
 		});
 	}
 
@@ -666,6 +693,13 @@
 			grow: 'fullscreen',
 			allowOutsideClick: false,
 			confirmButtonText: meldungen.willkommen.confirm[0],
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-willkommenmsg");
+				setTimeout(function() {
+					$('.willkommenmsgpopup').remove();
+				}, confBtnDelay);
+				return false;
+			} 
 		});
 	}
 
@@ -697,35 +731,53 @@
 			showCancelButton: false,
 			animation: false,
 			grow: false,
-			confirmButtonText: meldungen.stages.confirm[0]
+			confirmButtonText: meldungen.stages.confirm[0],
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-stagemsg");
+				setTimeout(function() {
+					$('.stagemsgpopup').remove();
+				}, confBtnDelay);
+				return false;
+			}
 		});
 	}
 
 	function stagesiegmsg(punkte) {
 		Swal.fire({
+			customClass: {
+				container: 'stagesiegmsgpopup',
+				confirmButton: 'confirm-button-stagesiegmsg',
+			},
 			title: 'Richtig!',
 			html: input + ' war richtig.<br>Du hast ' + punkte + ' Punkte erreicht!<br>(' + timerZeitInSec + ' - gebrauchte Sekunden [' + versuchsZeit + '] ) x ( ' + maxFails + ' - Fehleranzahl [' + failCounter + '] )',
 			icon: 'success',
 			confirmButtonText: 'Weiter',
 			animation: true,
 			grow: false,
-			allowOutsideClick: false
-		})
-		.then((result) => {
-			if (result.value) {
+			allowOutsideClick: false,
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-stagesiegmsg");
 				level = level + 1;
-				stagemsg(level % 10);			// Ohne Dezimal Zahl weitergeben
-				levelAnzeige();
-				startGame();
 				// localStorage.setItem('savedLevel', level);  // zu Testzwecke deaktiviert
 				// localStorage.setItem('savedScore', score);  // zu Testzwecke deaktiviert
+				setTimeout(function() {
+					stagemsg(level % 10);			// Ohne Dezimal Zahl weitergeben
+					levelAnzeige();
+					startGame();
+					
+				}, confBtnDelay);
+				return false;
 			}
-		});
+		})
 	}
 
 	function missionsiegmsg(punkte) {
 		$("#greenwin").fadeIn(850,'swing', function() {
 			Swal.fire({
+				customClass: {
+					container: 'missionsiegmsgpopup',
+					confirmButton: 'confirm-button-missionsiegmsg',
+				},
 				title: 'Mission ' + Math.floor(level/10) + ' gemeistert!',
 				html: 'Sehr gut!<br>' + input + ' war richtig!<br>Stagepunkte: ' + punkte + '<br>Missionspunkte: ' + missionscore + '<br>Gesamter Punktestand: ' + score + '<br><br>' + meldungen.sieg[Math.floor(level/10)],
 				// icon: 'success',
@@ -733,13 +785,16 @@
 				confirmButtonText: 'Weiter',
 				animation: true,
 				grow: false,
-				allowOutsideClick: false
-			})
-			.then((result) => {
-				if (result.value) {
-					$.mobile.changePage("#page1",{transition:"slidedown"}); 
+				allowOutsideClick: false,
+				preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+					confBtnAnimation(".confirm-button-missionsiegmsg");
+					setTimeout(function() {
+						$('.missionsiegmsgpopup').remove();
+						$.mobile.changePage("#page1",{transition:"slidedown"});
+					}, confBtnDelay);
+					return false;
 				}
-			});
+			})
 		})
 	}
 
@@ -762,18 +817,25 @@
 			grow: false,
 			allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
 			confirmButtonText: 'Katsching! Gimme ma moneh!',
-		})
-		.then((result) => {
-			if (result.value) {
-			window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				confBtnAnimation(".confirm-button-siegmsg");
+				setTimeout(function() {
+					$('.siegmsgpopup').remove();
+					window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+				}, confBtnDelay);
+				return false;
 			}
-		});
+		})
 	}
 
 	function gameOver(timerloss) {
 		if (timerloss == true) {
-			
 			Swal.fire({
+				customClass: {
+					container: 'gameoverpopup',
+					confirmButton: 'confirm-button-gameover',
+					cancelButtonText: 'cancel-button-gameover',
+				},
 				title: 'Zeit abgelaufen!',
 				text: 'Leider hast Du zu lange gebraucht, die Lösung wäre ' + input + ' gewesen!',
 				// icon: 'error',
@@ -782,34 +844,41 @@
 				reverseButtons: true,
 				allowOutsideClick: false,
 				confirmButtonText: 'Noch einmal Versuchen',
-				cancelButtonText: 'Zurück zur Karte'
+				cancelButtonText: 'Zurück zur Karte',
+				animation: true,
+				preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+					confBtnAnimation(".confirm-button-gameover");
+					setTimeout(function() {
+						$('.gameoverpopup').remove();
+						if (stagereset == true) {		// stagereset wird durch den Schwierigkeitsgrad bestimmt	
+							punktereset = false;
+							startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+						}
+						else {
+							level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+							punktereset = true;
+							startGame()
+						}
+					}, confBtnDelay);
+					return false;
+				}
 			})
 			.then((result) => {
-				if (result.value) {
-					if (stagereset == true) {		 // stagereset wird durch den Schwierigkeitsgrad bestimmt
-						punktereset = false;
-						startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
-					}
-					else {
-						level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
-						punktereset = true;
-						startGame()
-					}
-				}
-				else {
+				if (!result.value) {		// Bei cancel
 					scoreAnzeige();
 					failCounterMission = 0;
 					$.mobile.changePage("#page1",{transition:"slidedown"});
 				}
-			});
-												// Bei max Fails Zurück auf Missionsstart
-												// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
-												// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
-			;		  									
+			});		  									
 		}
 		else {
 			timerStop = true;	// Stoppe eventuell laufenden Timer-Loop
 			Swal.fire({
+				customClass: {
+					container: 'gameoverpopup',
+					confirmButton: 'confirm-button-gameover',
+					cancelButtonText: 'cancel-button-gameover',
+				},
 				title: 'Zu viele Fehler!',
 				text: 'Leider verloren, die Lösung wäre ' + input + ' gewesen!',
 				// icon: 'error',
@@ -818,29 +887,31 @@
 				reverseButtons: true,
 				allowOutsideClick: false,
 				confirmButtonText: 'Noch einmal Versuchen',
-				cancelButtonText: 'Zurück zur Karte'
+				cancelButtonText: 'Zurück zur Karte',
+				preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+					confBtnAnimation(".confirm-button-gameover");
+					setTimeout(function() {
+						$('.gameoverpopup').remove();
+						if (stagereset == true) {		// stagereset wird durch den Schwierigkeitsgrad bestimmt	
+							punktereset = false;
+							startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
+						}
+						else {
+							level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
+							punktereset = true;
+							startGame()
+						}
+					}, confBtnDelay);
+					return false;
+				}
 			})
 			.then((result) => {
-				if (result.value) {
-					if (stagereset == true) {		
-						punktereset = false;
-						startGame()			// Zurück zur selben Stage! Bei Schwierigkeitsgrad 1
-					}
-					else {
-						level = (level - (level % 10) + 1);		// Zurück zu Stage 1! Bei Schwierigkeitsgrad 2 und 3
-						punktereset = true;
-						startGame()
-					}
-				}
-				else {
+				if (!result.value) {		// Bei cancel
 					scoreAnzeige();
 					failCounterMission = 0;
 					$.mobile.changePage("#page1",{transition:"slidedown"});	
 				}
 			});
-												// Bei max Fails Zurück auf Missionsstart
-												// Hier muss level - [level Modulus(10)] + 1 hin  -> z.b. wenn in level 3.2 (32) ist und man failt dann muss zurück auf level 3.1 (31)
-												// d.h. level: 32 davon der modulus(10) ist 2  also Level - (level modulus(10)) = 32 - 2 = 30 dann noch + 1 auf 31
 			;  									
 		}
 	}
