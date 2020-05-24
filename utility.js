@@ -421,10 +421,12 @@
 		if (which == 'all') {		// Alle Level per function-loop
 			$(function(){
 				$("button.missionbtn").attr("disabled", true);
+				$("button#missionbtn" + which).removeClass("scale-up-center");		//Entfernt die Klasse welche eine Animation triggert
 			  });
 		}
 		else if (which <= maxLevel && which > 0) {		// Das übergebene Level
 			$("button#missionbtn" + which).attr("disabled", true);
+			$("button#missionbtn" + which).removeClass("scale-up-center");		//Entfernt die Klasse welche eine Animation triggert
 		}
 	}
 
@@ -432,10 +434,12 @@
 		if (which == 'all') {		// Alle Level per function-loop
 			$(function(){
 				$("button.missionbtn").attr("disabled", false);
+				$("button#missionbtn" + which).addClass("scale-up-center");		//Fügt die Klasse welche eine Animation triggert hinzu
 			  });
 		}
 		else if (which <= maxLevel && which > 0) {		// Das übergebene Level
 			$("button#missionbtn" + which).attr("disabled", false);
+			$("button#missionbtn" + which).addClass("scale-up-center");		//Fügt die Klasse welche eine Animation triggert hinzu
 		}
 	}
 
@@ -551,8 +555,8 @@
 		swal.fire({
 			customClass: {
 				container: 'missionwahlpopup',
-				confirmButton: 'confirm-button-map',
-				cancelButton: 'cancel-button-map'
+				confirmButton: 'confirm-button-missionwahl',
+				cancelButton: 'cancel-button-missionwahl'
 			},
 			title: meldungen.location.title[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
 			html: meldungen.location.text[MissionZahl / 10 - 0.1], // MissionZahl wird immer als 11, 21, 31 usw. übergeben, daher auf gerade Zahl kürzen.
@@ -562,13 +566,15 @@
 			cancelButtonText: 'Zurück zur Karte',
 			grow: false,
 			animation: true,
-			reverseButtons: true
-		})
-		.then((result) => {
-			if (result.value) {
-				init(MissionZahl);
-			}
-		});
+			reverseButtons: true,
+			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
+				micron.getEle(".confirm-button-missionwahl").interaction("pop").duration(".5").timing("ease-in");
+				setTimeout(function() {
+					init(MissionZahl);
+				}, 480);
+				return false;
+			} 
+		})	
 	}
 
 	function diffimsg() {
@@ -691,7 +697,7 @@
 			showCancelButton: false,
 			animation: false,
 			grow: false,
-			confirmButtonText: meldungen.stages.confirm[0],
+			confirmButtonText: meldungen.stages.confirm[0]
 		});
 	}
 
