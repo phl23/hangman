@@ -38,20 +38,23 @@
                 <header name="scoreanzeige" data-role="header" style="text-align: center">0 Gesamtpunkte // 0 Fehler // Items:</header>
 
                 <main data-role="content">
-                        <button class="devtoolsbtn ui-btn ui-btn-inline otherbtn" onclick="devTools()">DevTools</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(11)" style="display: none;">Level 1.1</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(12)" style="display: none;">Level 1.2</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(13)" style="display: none;">Level 1.3</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(21)" style="display: none;">Level 2.1</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(22)" style="display: none;">Level 2.2</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(23)" style="display: none;">Level 2.3</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(31)" style="display: none;">Level 3.1</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(32)" style="display: none;">Level 3.2</button>
-                        <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(33)" style="display: none;">Level 3.3</button>
-                        <!-- <p class="scoreanzeige ui-btn ui-btn-inline otherbtn">Score: 0</p> -->
-                        <button id="missionbtn1" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(11)"><img id="mission1img" class="missionimg" src="./images/mission1.png"></button>
-                        <button id="missionbtn2" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(21)"><img id="mission2img" class="missionimg" src="./images/mission2.png"></button>  
-                        <button id="missionbtn3" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(31)"><img id="mission3img" class="missionimg" src="./images/mission3.png"></button>         
+                        <div id="karte-wrapper" class="wrapper">
+                                <img id="main-karte" src="./images/karte-cut.png"></img>
+                                <button id="missionbtn1" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(11)"><img id="mission1img" class="missionimg" src="./images/mission1.png"></button>
+                                <button id="missionbtn2" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(21)"><img id="mission2img" class="missionimg" src="./images/mission2.png"></button>  
+                                <button id="missionbtn3" class="missionbtn ui-btn ui-btn-inline otherbtn" onclick="MissionWahl(31)"><img id="mission3img" class="missionimg" src="./images/mission3.png"></button>
+                                <button id="devtoolsbtn" class="devtoolsbtn ui-btn ui-btn-inline otherbtn" onclick="devTools()">DevTools</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(11)" style="display: none;">Level 1.1</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(12)" style="display: none;">Level 1.2</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(13)" style="display: none;">Level 1.3</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(21)" style="display: none;">Level 2.1</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(22)" style="display: none;">Level 2.2</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(23)" style="display: none;">Level 2.3</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(31)" style="display: none;">Level 3.1</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(32)" style="display: none;">Level 3.2</button>
+                                <button class="devlevelbtn ui-btn ui-btn-inline otherbtn" onclick="init(33)" style="display: none;">Level 3.3</button>
+                                <!-- <p class="scoreanzeige ui-btn ui-btn-inline otherbtn">Score: 0</p> -->
+                        </div>     
                 </main>
 
                 <footer data-role="footer" data-position="fixed">
@@ -362,7 +365,13 @@
                         <!-- Content Start -->
 
                         <div class="miscdiv col-sm-12">
-				<iframe id="main" src="./mainmap.html" seamless style="height: 200em;"></iframe>
+				<div class="miscdiv col-sm-12">
+                                        <div id="impressum" style="height: 40em;">
+                                                <span></span>
+                                        </div>
+                                
+                                </div>
+        
                                 <!-- <div id="mapwrapper" class="outer">
                                         <img id="map" class="bg"
                                                 src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"></img>
