@@ -255,7 +255,7 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
 #devtoolsbtn, .devlevelbtn{
   display: block;
   position: relative;
-  top: -105vh;
+  top: -830px;
 }
 
 @media only screen and (min-width: 700px) {
@@ -277,7 +277,7 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
     top: -710px;
   }
   #devtoolsbtn, .devlevelbtn{
-    top: -130vh;
+    top: -1100px;
   }
 }
 
