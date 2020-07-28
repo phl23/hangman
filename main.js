@@ -25,6 +25,8 @@ const listelevel1 = "alk";
 const listelevel2 = "spiele";
 const listelevel3 = "katzennamen";
 
+var playername = "anonymous"															// Standard Spieler Name für Highscore
+
 
 /* Confirm Button Style */
 	const confBtnDelay = 360;															// Dauer der Confirm Button Animation
@@ -74,6 +76,9 @@ var keys = [																			// Array mit validen Tastatureingaben
 ];
 var keysPressed = [];																	// Array für bereits genutzte Tastatureingaben
 
+
+
+
 function init(levelwahl) {		
 /*
 Generelle Initalisierung des "Spielfelds" und des UI - löscht Spielstand, Level etc.
@@ -88,6 +93,7 @@ zeige 1. Tutorial-Meldung und schreibe den 1. Spielstart in den localStorage.
 		willkommenmsg();
 		deactivateLevel('all');
 		activateLevel('1');
+		showHighscore();
 	}
 	scoreAnzeige();
 	var hasBeenLaunched = localStorage.getItem('hasBeenLaunched');

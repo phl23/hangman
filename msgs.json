@@ -59,17 +59,20 @@
 		]
 	},
 	"sieg": [
-		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.<br><br>Aber jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p>",
+		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>",
 		"<p>Sehr gut!<br><br>Du hast es unbemerkt aus der Tankstelle heraus geschafft. Aber das war erst der Anfang.</p><br><p>Neuer Gegenstand im Inventar!</p>",
 		"<p>Sehr gut!<br><br>Du bist ein richtiges Genie!<br><br>Bereit für deine letzte große Aufgabe?</p><br><p>Neuer Gegenstand im Inventar!</p>",
 		"<p>Sehr gut!<br><br>Tante Emma wird zwar etwas sauer sein, jedoch hast du bei deinem Hack bemerkt, dass sie Kinderpornografie auf einem Server verteilt.<br><br>Sie hatte es einfach verdient.</p>"
 	],
+	"endscreen": [
+		"<h1>Sehr gut!</h1><br><p>Jetzt heims dir schnell deine Belohnung ein<br>bevor sie dir noch jemand wegnimmt!</p><br><br>"
+	],
 	"stages": {
 		"confirm": [
-			"EZ PZ Lemon Squeezy!"
+			"Auf gehts!"
 		],
 		"cancel": [
-			"EZ PZ Lemon Squeezy!"
+			"Lieber doch nicht"
 		],
 		"mission1": [
 			null,

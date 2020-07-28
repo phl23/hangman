@@ -1,12 +1,13 @@
 'use strict'
 
-/* Start: Wortsammlungen */
+/* Start: JSONs Auslesen */
 
 	var Wortsammlung = {deutsch: [],katzennamen: [], spiele: [], alk: [], newlist: []};
 	var meldungen;
+	var Highscore;
 
 	$.get(
-		'spiele.txt',
+		'./spiele.txt',
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.spiele = data.split('\n');
@@ -15,7 +16,7 @@
 	);
 
 	$.get(
-		'katzennamen.txt',
+		'./katzennamen.txt',
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.katzennamen = data.split('\n');
@@ -25,7 +26,7 @@
 
 
 	$.get(
-		'alk.txt',
+		'./alk.txt',
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.alk = data.split('\n');
@@ -34,7 +35,7 @@
 	);
 
 	$.get(
-		'deutsch.txt',
+		'./deutsch.txt',
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.deutsch = data.split('\n');
@@ -45,7 +46,7 @@
 	);
 
 	$.get(
-		'newlist.txt',
+		'./newlist.txt',
 		function(data) {
 			//Wortliste abrufen und auf Array aufteilen
 			Wortsammlung.newlist = data.split('\n');
@@ -55,12 +56,17 @@
 		'text'
 	);
 
-	$.getJSON('msgs.json', function(messages) {
+	$.getJSON('./msgs.json', function(messages) {
 		meldungen = messages;
 		// success: stagemsg(level/10);;   /// ?????????????????????  Wofür benötigt?  - Noch von Gregor -
 	});
 
-/* Ende: Wortsammlungen */
+	// Highscore abrufen
+	$.getJSON('./highscore.json', function(highs) {
+		Highscore = highs;
+	});
+
+/* Ende: JSONs Auslesen */
 
 
 /* Start: Tools */
@@ -544,7 +550,7 @@
 			html: '<p>Willst du wirklich die Mission verlassen?<br><br>Dann verlierst du jeglichen Fortschritt und Punkte in dieser Mission!</p>',
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Ja, das ist mir zu Heikel',
+			confirmButtonText: 'Ja, das ist mir zu heikel',
 			cancelButtonText: 'Nein, hab mich nur verklickt',
 			reverseButtons: false,
 			animation: false,
@@ -819,16 +825,44 @@
 			animation: true,
 			grow: false,
 			allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
-			confirmButtonText: 'Katsching! Gimme ma moneh!',
+			confirmButtonText: 'Klasse! Trag mich in den Highscore ein!',
 			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
 				confBtnAnimation(".confirm-button-siegmsg");
 				setTimeout(function() {
 					$('.siegmsgpopup').remove();
-					window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+					// window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+					Swal.fire({
+						customClass: {
+							container: 'highscorenamepopup',
+							confirmButton: 'confirm-button-highscorename',
+						},
+						title: 'Gib deinen Namen für den Highscore ein',
+						input: 'text',
+						inputValue: "anonymous",
+						showCancelButton: false,
+						allowOutsideClick: false,
+						animation: true,
+						grow: false
+					})
+					.then((result) => {
+						playername = result.value;
+						if(playername == null || playername == '') {		// Wenn kein Name angegeben wurde "anonymous" eintragen
+							playername = "anonymous";
+						}
+						if (playername && playername.length > 12) {			// Wenn länger als 12 Zeichen, abschneiden
+							playername = playername.slice(0, 12);
+						}
+						writeHighscore(score);
+						$("#infoback").html("BELOHNUNG!");
+						$("#infoback").attr("href", "");
+						$("#infoback").attr("onclick", "window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'");
+						$.mobile.changePage("#page3",{transition:"slideup"});
+					});
 				}, confBtnDelay);
 				return false;
 			}
-		})
+		});
+		
 	}
 
 	function gameOver(timerloss) {
@@ -1005,6 +1039,59 @@ function devTools() {
 
 /* Ende: DevTools */
 
+
+/* Start: Highscore */
+
+function showHighscore() {
+	Highscore.sort(function(a, b){		// Sortiere die Einträge die aus highscore.json gelesen wurden nach Punkten absteigend (b - a)
+		return b.Punkte - a.Punkte;
+	});
+
+	$("#highscore-punkte").html(Highscore[0]["Punkte"]);	// Erste Zeile als html
+	$("#highscore-name").html(Highscore[0]["Name"]);
+	for (var i = 1; i < Highscore.length; i++) {		// Append solange wie es Einträge gibt
+		$("#highscore-punkte").append("<br>" + Highscore[i]["Punkte"]);
+
+		$("#highscore-name").append("<br>" + Highscore[i]["Name"]);
+	}
+}
+
+function showHighscoreEndScreen() {
+	Highscore.sort(function(a, b){		// Sortiere die Einträge die aus highscore.json gelesen wurden nach Punkten absteigend (b - a)
+		return b.Punkte - a.Punkte;
+	});
+
+	$("#belohnung").html(meldungen.endscreen[0]);
+
+	$("#highscore-punkte").html(Highscore[0]["Punkte"]);	// Erste Zeile als html
+	$("#highscore-name").html(Highscore[0]["Name"]);
+	for (var i = 1; i < Highscore.length; i++) {		// Append solange wie es Einträge gibt
+		$("#highscore-punkte").append("<br>" + Highscore[i]["Punkte"]);
+
+		$("#highscore-name").append("<br>" + Highscore[i]["Name"]);
+	}
+}
+
+function saveToFile() {
+
+	var x =JSON.stringify(Highscore);
+	
+	// $.post("saveHighscore.php", {data : x}, function(){alert("File saved successfully")});
+	$.post("saveHighscore.php", {data : x});
+
+}
+
+function writeHighscore(endScore) {
+
+	Highscore.push({Punkte: endScore , Name: playername});
+	showHighscoreEndScreen()
+	saveToFile();
+}
+
+
+
+
+/* Ende: Highscore */
 
 /* Noch unbenutzt */
 
