@@ -245,7 +245,7 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
   display: block;
   margin: 0 auto;
   height: 60vh;
-  margin-top: 10vh;
+  margin-top: -10vh;
 }
 
 #main-karte {
@@ -278,7 +278,7 @@ button.missionbtn.otherbtn.ui-btn.ui-btn-inline {
   #karte-wrapper {
     width: 500px;
     height: 90vh;
-    margin-top: 2vh;
+    /* margin-top: 2vh; */
   }
   #missionbtn1 {
     left: 250px;
@@ -470,4 +470,10 @@ g {
 #timer.normal {
   color: forestgreen;
   filter: drop-shadow(-1px 0px 5px forestgreen);
+}
+
+
+
+#devtoolsbtn {
+  display: none;
 }

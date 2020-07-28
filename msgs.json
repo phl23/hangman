@@ -113,44 +113,44 @@
 		], 
 		"item1": {
 			"name": [
-				"Baum"
+				"Kratzbaum"
 			],
 			"stärke": [
 				1
 			],
 			"title": [
-				"Baum"
+				"Kratzbaum"
 			],
 			"text": [
-				"Ist halt nen Baum"
+				"Erfreut sich bei Felis catus weltweit großer Beliebtheit."
 			]
 		},
 		"item2": {
 			"name": [
-				"Eiche"
+				"Laser-Pointer"
 			],
 			"stärke": [
 				2
 			],
 			"title": [
-				"Eiche"
+				"Laser-Pointer"
 			],
 			"text": [
-				"Deutsche Eiche"
+				"Bei Dozenten und diversen Vierbeinern sehr beliebt."
 			]
 		},
 		"item3": {
 			"name": [
-				"Löffel"
+				"Katzenminze"
 			],
 			"stärke": [
 				3
 			],
 			"title": [
-				"Löffel"
+				"Katzenminze"
 			],
 			"text": [
-				"Aus Holz! Sehr präzise."
+				"Eine Prohibition würde zu weltweiten Demonstrationen führen."
 			]
 		}		
 	}

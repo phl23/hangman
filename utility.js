@@ -226,6 +226,7 @@
 	}
 
 	function useItem(itemId) {
+		
 		var index = items.indexOf(itemId); // Wenn es nicht existiert wird -1 ausgegeben ansonsten die Position im array
 		var stärke = 0;		// Bestimmt die Anzahl der gezeigten Buchstaben (wird durch Gegenstand bestimmt)
 
@@ -473,6 +474,10 @@
 		var htmlitem2 = [];
 		var htmlitem3 = [];
 
+		var Item1 = meldungen.items.item1.name[0];
+		var Item2 = meldungen.items.item2.name[0];
+		var Item3 = meldungen.items.item3.name[0];
+
 		var fstItem = items.includes(meldungen.items.item1.name[0]);	// Checken ob Item vorhanden
 		var sndItem = items.includes(meldungen.items.item2.name[0]);
 		var trdItem = items.includes(meldungen.items.item3.name[0]);
@@ -496,9 +501,9 @@
 			input: 'select',
 			// inputValue: '1',
 			inputOptions: {
-				'Baum': 'Baum',
-				'Eiche': 'Eiche',
-				'Löffel': 'Löffel',
+				'Item1' : Item1,
+				'Item2' : Item2,
+				'Item3' : Item3,
 			},
 			inputPlaceholder: 'Wähle einen Gegenstand',
 			// title: 'Inventar',
@@ -514,7 +519,16 @@
 			preConfirm: function(value) {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
 				confBtnAnimation(".confirm-button-inventar");
 				setTimeout(function() {
-					useItem(value);
+					if (value == 'Item1') {
+						useItem(Item1)
+					};
+					if (value == 'Item2') {
+						useItem(Item2)
+					};
+					if (value == 'Item3') {
+						useItem(Item3)
+					};
+					
 					$('.inventarpopup').remove();
 				}, confBtnDelay);
 				return false;
@@ -525,16 +539,16 @@
 		
 		var selectcontainer = document.querySelector(".inventar-input");
 		if (fstItem == false) {
-			var match = selectcontainer.querySelectorAll("option[value='Baum']");
+			var match = selectcontainer.querySelectorAll("option[value='Item1']");
 			match[0].style.display = 'none';
 			
 		}
 		if (sndItem == false) {
-			var match = selectcontainer.querySelectorAll("option[value='Eiche']");
+			var match = selectcontainer.querySelectorAll("option[value='Item2']");
 			match[0].style.display = 'none';
 		}
 		if (trdItem == false) {
-			var match = selectcontainer.querySelectorAll("option[value='Löffel']");
+			var match = selectcontainer.querySelectorAll("option[value='Item3']");
 			match[0].style.display = 'none';
 		}
 	}
@@ -824,7 +838,7 @@
 			allowOutsideClick: false,
 			animation: true,
 			grow: false,
-			allowEscapeKey: true,				// Nur für Testzwecke  später nur durch confirmButton weiter
+			allowEscapeKey: false,				// Nur für Testzwecke  später nur durch confirmButton weiter
 			confirmButtonText: 'Klasse! Trag mich in den Highscore ein!',
 			preConfirm: function() {		// Mit return false bleibt das Popup offen, setTimeout sorgt dafür, dass die Aktion verzögert startet
 				confBtnAnimation(".confirm-button-siegmsg");

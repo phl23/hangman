@@ -6,7 +6,7 @@ var maxFails = 10;																		// Maximale Fails bevor zurück zu Missionsa
 var timerZeitInSec = 120;																// Nicht mehr Konstante, da von Mission zu Mission unterschiedlich
 const timerLastSecValue = 20;															// Verbleibende Zeit in Sekunden ab wo der Timer die Farbe wechselt!
 var liste = "spiele";																	// Voreingestellte Wortliste
-var items = ['Baum',];																	// Hier kommen die Items rein ( im Klartext z.b. 'baum') bestimmt auch StartItems
+var items = ['Kratzbaum',];																	// Hier kommen die Items rein ( im Klartext z.b. 'baum') bestimmt auch StartItems
 var minPunkteItemReward = 0;															// Hier kommt die Mindestpunktzahl, die zum erhalten eines Items benötgt wird, rein.
 var consoleOutput = false;																// Schatet die Ausgabe in der Console um
 var input;																				// Initialisierung der Variable für User-Eingabe
@@ -29,9 +29,9 @@ var playername = "anonymous"															// Standard Spieler Name für Highsco
 
 
 /* Confirm Button Style */
-	const confBtnDelay = 360;															// Dauer der Confirm Button Animation
-	const confBtnTiming = "ease-in";													// Timing der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#type-of-ease
-	const confBtnInteraction = "jelly";													// Art der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#interactions
+	var confBtnDelay = 360;																// Dauer der Confirm Button Animation
+	var confBtnTiming = "ease-in";														// Timing der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#type-of-ease
+	var confBtnInteraction = "jelly";													// Art der Confirm Button Animation siehe: https://webkul.github.io/micron/docs.html#interactions
 
 //var newMaxLength = maxLength;															// Hilfsvariable für Wortlängen-Errechnung, siehe Z. 86 (im Init)
 var firstButtonPressed = false;															// Hilfsvariable für Timer-Start
