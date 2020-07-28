@@ -17,10 +17,10 @@
                 <!-- jquery.js für mobile usage siehe https://api.jquerymobile.com/ --> 
                         <script crossorigin src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
                 <!-- sweetalert2.js für Popup Benachrichtigungn siehe https://sweetalert2.github.io/#usage --> 
-                        <script crossorigin src="https://cdn.jsdelivr.net/npm/sweetalert2@9.12.0/dist/sweetalert2.all.min.js"></script>
+                        <script crossorigin src="https://cdn.jsdelivr.net/npm/sweetalert2@9.12.0/dist/sweetalert2.all.min.js"></script>   
                 <!-- Eigene -->
-                        <script src="utility.js"></script>
-                        <script src="main.js"></script>
+                        <script src="./utility.js"></script>
+                        <script src="./main.js"></script>
         <!-- CSS Imports -->
                 <!-- External -->
                         <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -68,7 +68,7 @@
                                                 <button class="ui-btn ui-btn-inline btmbtn" onclick="tutorialmsg()">Regeln</button>
                                         </li>
                                         <li>
-                                                <a href="#page3" data-role="button" data-transition="slideup">Info</a>
+                                                <a href="#page3" data-role="button" data-transition="slideup">Highscore & Info</a>
                                         </li>
                                 </ul>
                         </div>
@@ -366,26 +366,34 @@
 
                         <div class="miscdiv col-sm-12">
 				<div class="miscdiv col-sm-12">
-                                        <div id="impressum" style="height: 40em;">
+                                        <div id="impressum" style="min-height: 4em;">
                                                 <span></span>
                                         </div>
                                 
                                 </div>
-        
-                                <!-- <div id="mapwrapper" class="outer">
-                                        <img id="map" class="bg"
-                                                src="https://www.guineapigcagesstore.com/resize/Shared/Images/Product/Standard-Grid/standard-grid.jpg"></img>
-                                        <img id="location1" class="fg"
-                                                src="https://img.icons8.com/pastel-glyph/2x/shop.png" height="80em"
-                                                onclick="locationAlert(1)"></img>
-                                </div> -->
+                                <div class="miscdiv col-sm-12">
+                                        <div class="row">
+                                                <div class="miscdiv col-sm-12" id="highscore">
+                                                        <div id="highscore-punkte">
+                                                                
+                                                        </div>
+                                                        <div id="highscore-name">
+                                                                
+                                                        </div>
+                                                </div>
+                                        </div>
+                                
+                                </div>
+                                <div class="miscdiv col-sm-12">
+                                        <div id="belohnung" style="position: fixed;bottom: 2em;margin: 0 auto;left: 0%;width: 100%;">
+                                                <span></span>
+                                        </div>
+                                
+                                </div>
+                        </div>
 
                         <!-- Content Ende -->
 
-
-                        
-
-                        </div>
                 </main>
 
                 <footer data-role="footer" data-position="fixed">
@@ -393,7 +401,7 @@
                         <div data-role="navbar">
                                 <ul>
                                         <li>
-                                                <a href="#page1" data-role="button" data-transition="slidedown">Zurück</a>
+                                                <a href="#page1" id="infoback" data-role="button" data-transition="slidedown">Zurück</a>
                                         </li>
                                 </ul>
                         </div>

@@ -2,6 +2,22 @@ main {
   padding: 0vw !important;
 }
 
+/* Fix für Balken unten wegen mobile Bootstrap */
+.ui-page .ui-footer-fixed.ui-fixed-hidden {
+  position: fixed;
+}
+
+
+#highscore-punkte {
+  float: left;
+  margin-left: 15%;
+}
+
+#highscore-name {
+  float: right;
+  margin-right: 15%;
+}
+
 input:focus {
   outline: none;
   color: dodgerblue;
